@@ -18,3 +18,12 @@ print(pinetree1.height)
 # __name__ == "__main__" when run python test_notes.py
 # __name__=="test_notes" when run from another file
 print('test_notes:', __name__)
+
+#TODO: search diff between tuple and list
+#TODO: for loop, while loop, keyword, function, method, field, object, varible(global, local), value, type
+#TODO: collections(lsit,set)
+
+yeet= ["?","!","."]
+
+# while 1==1:
+#     print ('YEET OR BE YOTE')#infinite while loop
