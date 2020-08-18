@@ -6,7 +6,7 @@ print(letters[::2]) # ac
 print(numbers[::2]) # [1, 3]
 
 class Tree: #class is used to make an object
-    def __init__(self, treetype, height):
+    def __init__(self, treetype:str, height:int):
         self.treetype = treetype #self refers to the object
         self.height = height
 
@@ -27,3 +27,20 @@ yeet= ["?","!","."]
 
 # while 1==1:
 #     print ('YEET OR BE YOTE')#infinite while loop
+
+dictionary = {
+    "type":"water",
+    "hp":"50"
+}
+
+print(dictionary)
+
+list1=[1,2,3,4,5,6,7,8,9,0]
+
+print (list1[5])
+
+for i in list1:
+    print ("for number of things in list1 print that amount")
+
+#print = [0,1,2,3] this is an example of a keyword print
+
