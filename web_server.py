@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse
 import json
 import socket
+from tic_tac_toe import processData
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -43,7 +44,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             'query': parsed_path.query,
             'request_version': self.request_version,
             'protocol_version': self.protocol_version,
-            'body': data
+            'body': processData(data)
         }).encode())
         return
 
@@ -60,4 +61,3 @@ if __name__ == '__main__':
     server = HTTPServer(('localhost', 8000), RequestHandler)
     print('Starting server at http://localhost:8000')
     server.serve_forever()
-
