@@ -20,21 +20,24 @@ def processData(data: dict):
         leaders[p2name] = processScore(score2)+leaders.get(p2name)
     else:
         leaders[p2name] = processScore(score2)
-        
+
     return sortDict(leaders)
+
 
 def processScore(score: str):
     if score == "win":
         return 1
-    elif score =="lose":
+    elif score == "lose":
         return -1
     else:
         return 0
 
-def sortDict(dictionary:dict):
+
+def sortDict(dictionary: dict):
     list = []
-    ordered_dict = OrderedDict(sorted(dictionary.items(), key=lambda x:x[1], reverse=True))
+    ordered_dict = OrderedDict(
+        sorted(dictionary.items(), key=lambda x: x[1], reverse=True))
     for item in ordered_dict.items():
-        dict1 = {item[0]:item[1]}
+        dict1 = {item[0]: item[1]}
         list.append(dict1)
     return list
