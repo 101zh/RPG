@@ -4,6 +4,7 @@ import json
 import socket
 from tic_tac_toe import processData
 
+
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
@@ -55,6 +56,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
+
 
 if __name__ == '__main__':
     print('localhost', 'ip', socket.gethostbyname(socket.gethostname()))
