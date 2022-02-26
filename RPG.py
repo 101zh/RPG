@@ -1,11 +1,11 @@
 userhealth=100
-userbackuphealth=100
+usermaxhealth=100
 userattack=25
 userxp=0
 money=15
 iteminput="empty"
 monsterhealth=100
-mosnterbackuphealth=100
+monstermaxhealth=100
 monsterattack=15
 import random
 
@@ -27,8 +27,8 @@ while True:
                 print("you have died you lost "+loss+" coins\n\n")
                 loss=int(loss)
                 money-=loss
-                userhealth=userbackuphealth
-                monsterhealth=mosnterbackuphealth
+                userhealth=usermaxhealth
+                monsterhealth=monstermaxhealth
                 break
             elif monsterhealth==0:
                 a=9
@@ -38,8 +38,8 @@ while True:
                 print("you have defeated the monster and you recieved "+reward+" coins\n\n")
                 reward=int(reward)
                 money+=reward
-                mosnterbackuphealth+=10
-                monsterhealth=mosnterbackuphealth
+                monstermaxhealth+=10
+                monsterhealth=monstermaxhealth
                 monsterattack+=5
                 break
             attackinput=input("You can Run or attack what do you want to do?\n\n")
@@ -106,7 +106,7 @@ while True:
                 elif iteminput=="10":
                     print("purchased sucessfully +10 Health\n\n")
                     userhealth+=10
-                    userbackuphealth+=10
+                    usermaxhealth+=10
                     money-=20
                     break
                 elif money < 50:
@@ -114,7 +114,7 @@ while True:
                 elif iteminput=="25":
                     print("purchased sucessfully +25 Health\n\n")
                     userhealth+=25
-                    userbackuphealth+=25
+                    usermaxhealth+=25
                     money-=50
                     break
                 elif money < 100:
@@ -122,7 +122,7 @@ while True:
                 elif iteminput=="50":
                     print("purchased sucessfully +50 Health\n\n")
                     userhealth+=50
-                    userbackuphealth+=50
+                    usermaxhealth+=50
                     money-=100
                     break
                 elif money < 200:
@@ -130,7 +130,7 @@ while True:
                 elif iteminput=="100":
                     print("purchased sucessfully +100 Health\n\n")
                     userhealth+=100
-                    userbackuphealth+=100
+                    usermaxhealth+=100
                     money-=200
                     break
                 else:
@@ -147,7 +147,7 @@ while True:
                     print("you don't have enough money\n\n")
                     break
                 elif userinput=="yes":
-                    userhealth=userbackuphealth
+                    userhealth=usermaxhealth
                     print("you have been fully healed\n\n")
                     break
 
@@ -160,15 +160,15 @@ while True:
     # shows the stats of a player
     elif userinput=="stats":
         userhealth=str(userhealth)
-        userbackuphealth=str(userbackuphealth)
+        usermaxhealth=str(usermaxhealth)
         userattack=str(userattack)
         money=str(money)
         print(user+"'s stats")
-        print("\n\n"+userhealth+"/"+userbackuphealth+" Health")
+        print("\n\n"+userhealth+"/"+usermaxhealth+" Health")
         print(userattack+" Attack")
         print(money+ " Money\n\n")
         userhealth=int(userhealth)
-        userbackuphealth=int(userbackuphealth)
+        usermaxhealth=int(usermaxhealth)
         userattack=int(userattack)
         money=int(money)
     else:
