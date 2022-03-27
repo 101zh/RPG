@@ -9,7 +9,6 @@ class items:
         self.strength=strength
         self.speed=speed
         self.equip=equip
-        
 
     def info(self, character):
         print(self.name+"'s stats")

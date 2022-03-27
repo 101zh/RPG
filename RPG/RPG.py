@@ -1,5 +1,7 @@
 from character import characters
 import random
+import pygame
+pygame.init()
 
 # started at 7:49 6/17 8:20
 player=characters.createCharacter()
