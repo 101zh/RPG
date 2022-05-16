@@ -3,16 +3,16 @@ from urllib.parse import parse_qs
 import pandas as pd
 from item import items
 
-startHelmet=items("Helmet","Starter Gear", 5, 0, 5, 0, -5, -5, True)
-startChestplate=items("Chestplate","Starter Gear", 5, 0, 5, 0, -5, -5, True)
-startLeggings=items("Leggings","Starter Gear", 5, 0, 5, 0, -5, -5, True)
-startBoots=items("Boots","Starter Gear", 5, 0, 5, 0, -5, -5, True)
+startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5, True)
+startChestplate=items("chestplate","Starter Chestplate", 5, 0, 5, 0, -5, -5, True)
+startLeggings=items("leggings","Starter Leggings", 5, 0, 5, 0, -5, -5, True)
+startBoots=items("boots","Starter Boots", 5, 0, 5, 0, -5, -5, True)
 
-startStaff=items("Weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2, True)
-startSword=items("Weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4, True)
-startDagger=items("Weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, True)
+startStaff=items("weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2, True)
+startSword=items("weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4, True)
+startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, True)
 
-null=items("", "null", 0, 0, 0, 0, 0, 0, False)
+null=items("usable", "null", 0, 0, 0, 0, 0, 0, False)
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon:str, helmet:str, chestplate:str, leggings:str, boots:str, inv:list):
@@ -38,7 +38,7 @@ class characters: #class is used to make an object
         self.inv=inv
 
     def mageSetup(name):
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [startBoots, null])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [startStaff, startHelmet, startChestplate, startLeggings, startBoots, null])
 
     def rogueSetup(name):
         return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, startDagger, startHelmet, startChestplate, startLeggings, startBoots, [])
@@ -78,20 +78,44 @@ class characters: #class is used to make an object
         print("Strength: "+str(self.strength))
         print()
 
-    def use(self, item, amount):
-        pastinv=self.inv
-        for x in range(amount):
-            for i in self.inv:
-                if i.name.lower()==item.lower():
-                    self.inv.remove(i)
-                    break
-        if pastinv==self.inv:
-            print("You don't have that")
-        return self.inv
+    def showInv(self):
+        weaponstr=""
+        armorstr=""
+        otherstr=""
+        for i in self.inv:
+            if i.typeofitem=="boots" or i.typeofitem=="leggings" or i.typeofitem=="helmet" or i.typeofitem=="chestplate":
+                armorstr+="\n"+"    "+i.name
+        for i in self.inv:
+            if i.typeofitem=="weapon":
+                weaponstr+="\n"+"    "+i.name
+        for i in self.inv:
+            if i.typeofitem=="usable":
+                otherstr+="\n"+"    "+i.name
+        print("Armor:"+armorstr)
+        print("Weapons:"+weaponstr)
+        print("Others:"+otherstr)
+
+    def itemInfo(self, itemname):
+        for i in self.inv:
+            if itemname.lower()==i.name.lower():
+                print(i.name+':')
+                print("    HP bonus: "+str(i.hp))
+                print("    Mana bonus: "+str(i.mana))
+                print("    Defense bonus: "+str(i.defense))
+                print("    Intelligence bonus: "+str(i.intelligence))
+                print("    Strength bonus: "+str(i.strength))
+                print("    Speed bonus: "+str(i.speed))
+
+
+    # def equip(self, itemname):
+    #     for i in self.inv:
+    #         if itemname.lower()==i.name.lower():
+    #             self.inv.remove(i)
+    #             return self.inv
 
 
 player=characters.mageSetup("name")
-player.inv=player.use("NULL", 1)
 
-
-
+print(player.inv)
+player.inv=player.equip("starter boots")
+print(player.inv)
