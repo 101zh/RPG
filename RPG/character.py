@@ -112,6 +112,7 @@ class characters: #class is used to make an object
     #         if itemname.lower()==i.name.lower():
     #             self.inv.remove(i)
     #             return self.inv
+    #unfinished
 
 
 player=characters.mageSetup("name")
