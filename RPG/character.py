@@ -1,4 +1,5 @@
 import random
+import re
 from urllib.parse import parse_qs
 import pandas as pd
 from item import items
@@ -15,7 +16,7 @@ startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, True)
 null=items("usable", "null", 0, 0, 0, 0, 0, 0, False)
 
 class characters: #class is used to make an object
-    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon:str, helmet:str, chestplate:str, leggings:str, boots:str, inv:list):
+    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
         self.rpgclass = rpgclass
         self.name = name
         self.maxhp = maxhp #self refers to the object
@@ -70,11 +71,11 @@ class characters: #class is used to make an object
         print("Class: "+self.rpgclass)
         print("Level "+str(self.level)+" <-> "+str(self.xp)+"/"+str(self.xpcontainer)+" XP until next level")
         print("Coins: "+str(self.coins))
-        print("Health: "+str(self.hp)+"/"+str(self.maxhp))
-        print("Mana: "+str(self.mana)+"/"+str(self.maxmana))
-        print("Speed: "+str(self.speed))
-        print("Defense: "+str(self.defense))
-        print("Intelligence: "+str(self.intelligence))
+        print("Health: "+str(self.hp)+"/"+str(self.maxhp)+"     Helmet: "+str(self.helmet.name))
+        print("Mana: "+str(self.mana)+"/"+str(self.maxmana)+"       Chestplate: "+str(self.chestplate.name))
+        print("Speed: "+str(self.speed)+"           Leggings: "+str(self.leggings.name))
+        print("Defense: "+str(self.defense)+"          Boots: "+str(self.boots.name))
+        print("Intelligence: "+str(self.intelligence)+"     Weapon: "+str(self.weapon.name))
         print("Strength: "+str(self.strength))
         print()
 
@@ -107,16 +108,30 @@ class characters: #class is used to make an object
                 print("    Speed bonus: "+str(i.speed))
 
 
-    # def equip(self, itemname):
-    #     for i in self.inv:
-    #         if itemname.lower()==i.name.lower():
-    #             self.inv.remove(i)
-    #             return self.inv
-    #unfinished
+    def equip(self, itemname):
+        for i in self.inv:
+            if itemname.lower()==i.name.lower():
+                if i.typeofitem=="helmet":
+                    self.helmet=i
+                elif i.typeofitem=="chestplate":
+                    self.chestplate=i
+                elif i.typeofitem=="leggings":
+                    self.leggings=i
+                elif i.typeofitem=="boots":
+                    self.boots=i
+                else:
+                    self.weapon=i
+                self.inv.remove(i)
+                return [self.inv, self.helmet, self.chestplate, self.leggings, self.boots, self.weapon]
+            else:
+                print("That isn't an item you have")
+
+    def recieve(self):
+        print("developing")
 
 
 player=characters.mageSetup("name")
-
-print(player.inv)
-player.inv=player.equip("starter boots")
-print(player.inv)
+player.stats()
+# print(player.inv)
+# player.inv=player.equip("starter boots")
+# print(player.inv)
