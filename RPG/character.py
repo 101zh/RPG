@@ -106,6 +106,8 @@ class characters: #class is used to make an object
                 print("    Intelligence bonus: "+str(i.intelligence))
                 print("    Strength bonus: "+str(i.strength))
                 print("    Speed bonus: "+str(i.speed))
+            else:
+              print("You do not have this item yet")
 
 
     def equip(self, itemname):
@@ -113,21 +115,39 @@ class characters: #class is used to make an object
             if itemname.lower()==i.name.lower():
                 if i.typeofitem=="helmet":
                     self.helmet=i
+                    eqitem="helmet"
                 elif i.typeofitem=="chestplate":
                     self.chestplate=i
+                    eqitem="chestplate"
                 elif i.typeofitem=="leggings":
                     self.leggings=i
+                    eqitem="leggings"
                 elif i.typeofitem=="boots":
                     self.boots=i
-                else:
+                    eqitem="boots"
+                elif i.typofitem=="weapon":
                     self.weapon=i
+                    eqitem="weapon"
                 self.inv.remove(i)
-                return [self.inv, self.helmet, self.chestplate, self.leggings, self.boots, self.weapon]
+                return [self.inv, self.helmet, self.chestplate, self.leggings, self.boots, self.weapon, eqitem]
             else:
                 print("That isn't an item you have")
 
-    def recieve(self):
-        print("developing")
+    def recieve(self, eqeditem):
+      self.inv=eqeditem[0]
+      typeofitem=eqeditem[7]
+      if typeofitem=="helmet":
+          self.helmet=eqeditem[1]
+      elif typeofitem=="chestplate":
+          self.chestplate=eqeditem[2]
+      elif typeofitem=="leggings":
+          self.leggings=eqeditem[3]
+      elif typeofitem=="boots":
+          self.boots=eqeditem[4]
+      elif typeofitem=="weapon":
+          self.weapon=eqeditem[5]
+      else:
+        print("ERROR")
 
 
 player=characters.mageSetup("name")
