@@ -12,7 +12,7 @@ width=40
 height=60
 vel=5
 
-fight_btn=pygame.image.load("fightbtn.png").convert_alpha()
+fight_btn=pygame.image.load("My_Python/fightbtn.png").convert_alpha()
 
 class btn():
 	def __init__(self, x, y, image, scale):
