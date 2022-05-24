@@ -1,8 +1,13 @@
+import imp
 import random
 import re
 from urllib.parse import parse_qs
 import pandas as pd
 from item import items
+import colorama
+from colorama import init
+init()
+from colorama import Fore, Back, Style
 
 startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5, True)
 startChestplate=items("chestplate","Starter Chestplate", 5, 0, 5, 0, -5, -5, True)

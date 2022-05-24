@@ -41,10 +41,7 @@ class btn():
 		surface.blit(self.image, (self.rect.x, self.rect.y))
 
 		return action
-
 fight_btn= btn(200, 200, fight_btn, 10)
-
-
 run = True
 while run:
 
@@ -60,8 +57,17 @@ while run:
 			run = False
 
 	pygame.display.update()
-
 pygame.quit()
+
+import colorama
+from colorama import init
+from colorama import Fore, Back, Style
+init()
+print(Fore.RED+"red text")
+print("doesn't reset automatically")
+init(autoreset=True)
+print(Fore.RED + 'more red text')
+print('automatically back to default color again')
 
 # letters = 'abcd'
 # numbers = [1,2,3,4]
