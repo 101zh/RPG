@@ -6,7 +6,7 @@ import pandas as pd
 from item import items
 import colorama
 from colorama import init
-init()
+init(autoreset=True)
 from colorama import Fore, Back, Style
 
 startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5, True)
@@ -76,12 +76,12 @@ class characters: #class is used to make an object
         print("Class: "+self.rpgclass)
         print("Level "+str(self.level)+" <-> "+str(self.xp)+"/"+str(self.xpcontainer)+" XP until next level")
         print("Coins: "+str(self.coins))
-        print("Health: "+str(self.hp)+"/"+str(self.maxhp)+"     Helmet: "+str(self.helmet.name))
-        print("Mana: "+str(self.mana)+"/"+str(self.maxmana)+"       Chestplate: "+str(self.chestplate.name))
-        print("Speed: "+str(self.speed)+"           Leggings: "+str(self.leggings.name))
-        print("Defense: "+str(self.defense)+"          Boots: "+str(self.boots.name))
-        print("Intelligence: "+str(self.intelligence)+"     Weapon: "+str(self.weapon.name))
-        print("Strength: "+str(self.strength))
+        print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+"     Helmet: "+str(self.helmet.name))
+        print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+"/"+str(self.maxmana)+Style.RESET_ALL+"       Chestplate: "+str(self.chestplate.name))
+        print("✦ Speed: "+str(self.speed)+"           Leggings: "+str(self.leggings.name))
+        print(Fore.GREEN+"❈ Defense: "+str(self.defense)+Style.RESET_ALL+"          Boots: "+str(self.boots.name))
+        print(Fore.CYAN+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"     Weapon: "+str(self.weapon.name))
+        print(Fore.RED+"❁ Strength: "+str(self.strength))
         print()
 
     def showInv(self):
@@ -140,7 +140,7 @@ class characters: #class is used to make an object
 
     def recieve(self, eqeditem):
       self.inv=eqeditem[0]
-      typeofitem=eqeditem[7]
+      typeofitem=eqeditem[6]
       if typeofitem=="helmet":
           self.helmet=eqeditem[1]
       elif typeofitem=="chestplate":
@@ -157,6 +157,6 @@ class characters: #class is used to make an object
 
 player=characters.mageSetup("name")
 player.stats()
-# print(player.inv)
-# player.inv=player.equip("starter boots")
-# print(player.inv)
+print(player.inv)
+player.recieve(player.equip("starter boots"))
+print(player.inv)
