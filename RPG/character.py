@@ -1,4 +1,3 @@
-import imp
 import random
 import re
 from urllib.parse import parse_qs
@@ -18,7 +17,8 @@ startStaff=items("weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2, True)
 startSword=items("weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4, True)
 startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, True)
 
-null=items("usable", "null", 0, 0, 0, 0, 0, 0, False)
+null=items("weapon", "null", 0, 0, 0, 0, 0, 0, False)
+nullBoots=items("boots", "null boots", 0, 0, 0, 0, 0, 0, False)
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
@@ -44,13 +44,16 @@ class characters: #class is used to make an object
         self.inv=inv
 
     def mageSetup(name):
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [startStaff, startHelmet, startChestplate, startLeggings, startBoots, null])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [])
 
     def rogueSetup(name):
         return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, startDagger, startHelmet, startChestplate, startLeggings, startBoots, [])
 
     def warriorSetup(name):
         return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 20, 0, 25, startSword, startHelmet, startChestplate, startLeggings, startBoots, [])
+        
+    def testSetup(name):
+        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [startStaff, startHelmet, startChestplate, startLeggings, startBoots, null, nullBoots])
 
     def createCharacter():
         name = input("What is your name? ")
@@ -117,46 +120,40 @@ class characters: #class is used to make an object
 
     def equip(self, itemname):
         for i in self.inv:
+            eqitem=""
             if itemname.lower()==i.name.lower():
                 if i.typeofitem=="helmet":
-                    self.helmet=i
                     eqitem="helmet"
                 elif i.typeofitem=="chestplate":
-                    self.chestplate=i
                     eqitem="chestplate"
                 elif i.typeofitem=="leggings":
-                    self.leggings=i
                     eqitem="leggings"
                 elif i.typeofitem=="boots":
-                    self.boots=i
                     eqitem="boots"
-                elif i.typofitem=="weapon":
-                    self.weapon=i
+                elif i.typeofitem=="weapon":
                     eqitem="weapon"
-                self.inv.remove(i)
-                return [self.inv, self.helmet, self.chestplate, self.leggings, self.boots, self.weapon, eqitem]
-            else:
-                print("That isn't an item you have")
+            self.inv.remove(i)
+            return [i ,eqitem]
 
     def recieve(self, eqeditem):
-      self.inv=eqeditem[0]
-      typeofitem=eqeditem[6]
+      typeofitem=eqeditem[1]
       if typeofitem=="helmet":
-          self.helmet=eqeditem[1]
+          self.helmet=eqeditem[0]
       elif typeofitem=="chestplate":
-          self.chestplate=eqeditem[2]
+          self.chestplate=eqeditem[0]
       elif typeofitem=="leggings":
-          self.leggings=eqeditem[3]
+          self.leggings=eqeditem[0]
       elif typeofitem=="boots":
-          self.boots=eqeditem[4]
+          self.boots=eqeditem[0]
       elif typeofitem=="weapon":
-          self.weapon=eqeditem[5]
+          self.weapon=eqeditem[0]
       else:
-        print("ERROR")
+        print("Item cannot be equipped or doesn't exist")
 
 
-player=characters.mageSetup("name")
+player=characters.testSetup("name")
 player.stats()
 print(player.inv)
-player.recieve(player.equip("starter boots"))
+player.recieve(player.equip("a"))
 print(player.inv)
+player.stats()
