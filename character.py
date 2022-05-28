@@ -82,9 +82,10 @@ class characters: #class is used to make an object
         print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+"     Helmet: "+str(self.helmet.name))
         print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+"/"+str(self.maxmana)+Style.RESET_ALL+"       Chestplate: "+str(self.chestplate.name))
         print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+Style.RESET_ALL+"           Leggings: "+str(self.leggings.name))
-        print(Fore.BLUE+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"          Boots: "+str(self.boots.name))
-        print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"     Weapon: "+str(self.weapon.name))
-        print("✦ Speed: "+str(self.speed)
+        print(Fore.BLUE+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"        Boots: "+str(self.boots.name))
+        print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+str(self.weapon.name))
+        print("✦ Speed: "+str(self.speed))
+        print()
 
 
     def showInv(self):
