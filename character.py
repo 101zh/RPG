@@ -8,17 +8,17 @@ from colorama import init
 init(autoreset=True)
 from colorama import Fore, Back, Style
 
-startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5)
-startChestplate=items("chestplate","Starter Chestplate", 5, 0, 5, 0, -5, -5)
-startLeggings=items("leggings","Starter Leggings", 5, 0, 5, 0, -5, -5)
-startBoots=items("boots","Starter Boots", 5, 0, 5, 0, -5, -5)
+startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5, 5)
+startChestplate=items("chestplate","Starter Chestplate", 5, 0, 5, 0, -5, -5, 5)
+startLeggings=items("leggings","Starter Leggings", 5, 0, 5, 0, -5, -5, 5)
+startBoots=items("boots","Starter Boots", 5, 0, 5, 0, -5, -5, 5)
 
-startStaff=items("weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2)
-startSword=items("weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4)
-startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6)
+startStaff=items("weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2, 5)
+startSword=items("weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4, 5)
+startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, 5)
 
-null=items("weapon", "null", 0, 0, 0, 0, 0, 0)
-nullBoots=items("boots", "null boots", 0, 0, 0, 0, 0, 0)
+null=items("weapon", "null", 0, 0, 0, 0, 0, 0, 0)
+nullBoots=items("boots", "null boots", 0, 0, 0, 0, 0, 0, 0)
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
