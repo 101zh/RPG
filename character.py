@@ -8,7 +8,7 @@ from colorama import init
 init(autoreset=True)
 from colorama import Fore, Back, Style
 import item
-from item import itemList
+from item import itemDict
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
@@ -34,16 +34,20 @@ class characters: #class is used to make an object
         self.inv=inv
 
     def mageSetup(name):
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, itemList[4], itemList[0], itemList[1], itemList[2], itemList[3], [])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, itemDict["wizard's staff"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [])
 
     def rogueSetup(name):
-        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, itemList[5], itemList[0], itemList[1], itemList[2], itemList[3], [])
+        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, itemDict["rogue's dagger"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [])
 
     def warriorSetup(name):
-        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 20, 0, 25, itemList[6], itemList[0], itemList[1], itemList[2], itemList[3], [])
+        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 20, 0, 25, itemDict["warrior's sword"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [])
         
     def testSetup(name):
-        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemList[7], itemList[0], itemList[1], itemList[2], itemList[3], itemList)
+        inv=[]
+        for key, value in itemDict.items():
+            temp = value
+            inv.append(temp)
+        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv)
 
     def createCharacter():
         name = input("What is your name? ")
@@ -97,7 +101,7 @@ class characters: #class is used to make an object
 
     def itemInfo(self, itemname):
         found=False
-        for i in itemList:
+        for i in itemDict:
             if itemname.lower()==i.name.lower():
                 i.info()
                 found=True
