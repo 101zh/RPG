@@ -7,18 +7,8 @@ import colorama
 from colorama import init
 init(autoreset=True)
 from colorama import Fore, Back, Style
-
-startHelmet=items("helmet","Starter Helmet", 5, 0, 5, 0, -5, -5, 5)
-startChestplate=items("chestplate","Starter Chestplate", 5, 0, 5, 0, -5, -5, 5)
-startLeggings=items("leggings","Starter Leggings", 5, 0, 5, 0, -5, -5, 5)
-startBoots=items("boots","Starter Boots", 5, 0, 5, 0, -5, -5, 5)
-
-startStaff=items("weapon", "Wizard Staff", 0, 10, 0, 10, -2, 2, 5)
-startSword=items("weapon", "Warrior Sword", 0, -5, 0, 0, 8, -4, 5)
-startDagger=items("weapon", "Rogue's Dagger", 0, -2, 0, -2, 6, 6, 5)
-
-null=items("weapon", "null", 0, 0, 0, 0, 0, 0, 0)
-nullBoots=items("boots", "null boots", 0, 0, 0, 0, 0, 0, 0)
+import item
+from item import itemList
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
@@ -44,16 +34,16 @@ class characters: #class is used to make an object
         self.inv=inv
 
     def mageSetup(name):
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, itemList[4], itemList[0], itemList[1], itemList[2], itemList[3], [])
 
     def rogueSetup(name):
-        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, startDagger, startHelmet, startChestplate, startLeggings, startBoots, [])
+        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 20, 0, 25, itemList[5], itemList[0], itemList[1], itemList[2], itemList[3], [])
 
     def warriorSetup(name):
-        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 20, 0, 25, startSword, startHelmet, startChestplate, startLeggings, startBoots, [])
+        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 20, 0, 25, itemList[6], itemList[0], itemList[1], itemList[2], itemList[3], [])
         
     def testSetup(name):
-        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, startStaff, startHelmet, startChestplate, startLeggings, startBoots, [null, nullBoots])
+        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemList[7], itemList[0], itemList[1], itemList[2], itemList[3], itemList)
 
     def createCharacter():
         name = input("What is your name? ")
@@ -106,27 +96,14 @@ class characters: #class is used to make an object
         print("Others:"+otherstr)
 
     def itemInfo(self, itemname):
-        for i in self.inv:
+        found=False
+        for i in itemList:
             if itemname.lower()==i.name.lower():
                 i.info()
-                break
-            elif itemname.lower()==self.helmet.name.lower():
-              self.helmet.info()
-              break
-            elif itemname.lower()==self.chestplate.name.lower():
-              self.chestplate.info()
-              break
-            elif itemname.lower()==self.leggings.name.lower():
-              self.leggings.info()
-              break
-            elif itemname.lower()==self.boots.name.lower():
-              self.boots.info()
-              break
-            elif itemname.lower()==self.weapon.name.lower():
-              self.weapon.info()
-              break
-            else:
-              print("This item doesn't exist or You don't have it")
+                found=True
+            
+        if not found==True:
+            print("This item doesn't exist")
 
 
     def equip(self, itemname):
@@ -153,14 +130,19 @@ class characters: #class is used to make an object
     def recieve(self, eqeditem):
       typeofitem=eqeditem[1]
       if typeofitem=="helmet":
+          self.inv.append(self.helmet)
           self.helmet=eqeditem[0]
       elif typeofitem=="chestplate":
+          self.inv.append(self.chestplate)
           self.chestplate=eqeditem[0]
       elif typeofitem=="leggings":
+          self.inv.append(self.leggings)
           self.leggings=eqeditem[0]
       elif typeofitem=="boots":
+          self.inv.append(self.boots)
           self.boots=eqeditem[0]
       elif typeofitem=="weapon":
+          self.inv.append(self.weapon)
           self.weapon=eqeditem[0]
       else:
         print("Item cannot be equipped or doesn't exist")
@@ -168,8 +150,8 @@ class characters: #class is used to make an object
 
 player=characters.testSetup("name")
 player.stats()
-# print(player.inv)
-# player.recieve(player.equip("null boots"))
-# print(player.inv)
-# player.stats()
-player.itemInfo("starter helmet")
+print(player.inv)
+player.recieve(player.equip("null boots"))
+print(player.inv)
+player.stats()
+
