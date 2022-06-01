@@ -153,9 +153,9 @@ class characters: #class is used to make an object
 
 
 player=characters.testSetup("name")
-player.stats()
-print(player.inv)
-player.recieve(player.equip("null boots"))
-print(player.inv)
-player.stats()
+# player.stats()
+# print(player.inv)
+# player.recieve(player.equip("null boots"))
+# print(player.inv)
+# player.stats()
 

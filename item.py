@@ -13,6 +13,7 @@ class items:
         self.strength=strength
         self.speed=speed
         self.cost=cost
+        self.buyable=buyable
         itemDict[self.name.lower()]= self
 
     def info(self):
@@ -32,6 +33,9 @@ startBoots=items("boots",True,"Starter Boots", 5, 0, 5, 0, -5, -5, 5)
 startStaff=items("weapon", True,"Wizard's Staff", 0, 10, 0, 10, -2, 2, 5)
 startSword=items("weapon", True,"Warrior's Sword", 0, -5, 0, 0, 8, -4, 5)
 startDagger=items("weapon", True,"Rogue's Dagger", 0, -2, 0, -2, 6, 6, 5)
+
+shppot=items("usable", True, "Small Health Potion", 25,0,0,0,0,0,10)
+lhppot=items("usable", True, "Large Health Potion", 50,0,0,0,0,0,20)
 
 null=items("weapon",False, "null", 0, 0, 0, 0, 0, 0, 0)
 nullBoots=items("boots", False,"null boots", 0, 0, 0, 0, 0, 0, 0)
