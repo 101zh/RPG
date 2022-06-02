@@ -6,11 +6,11 @@ player=characters.testSetup("jafidjsif")
 player.coins+=2000
 
 
-def shop(user):
+def shop():
     shoplist=[]
     for key, value in itemDict.items():
         temp=value
-        shoplist.append(value)
+        shoplist.append(temp)
     print("Welcome to the shop!")
     while True:
         print("\nArmor\nWeapons\nOther Items\nLeave")
@@ -36,4 +36,4 @@ def shop(user):
 
         
         
-shop(player)
+shop()

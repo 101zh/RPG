@@ -117,19 +117,27 @@ class characters: #class is used to make an object
                 if i.typeofitem=="helmet":
                     eqitem="helmet"
                     self.inv.remove(i)
+                    return [i ,eqitem]
                 elif i.typeofitem=="chestplate":
                     eqitem="chestplate"
                     self.inv.remove(i)
+                    return [i ,eqitem]
                 elif i.typeofitem=="leggings":
                     eqitem="leggings"
                     self.inv.remove(i)
+                    return [i ,eqitem]
                 elif i.typeofitem=="boots":
                     eqitem="boots"
                     self.inv.remove(i)
+                    return [i ,eqitem]
                 elif i.typeofitem=="weapon":
                     eqitem="weapon"
                     self.inv.remove(i)
-                return [i ,eqitem]
+                    return [i ,eqitem]
+                else:
+                    eqitem="¯\_(ツ)_/¯"
+                    return [i, eqitem]
+                
 
     def recieve(self, eqeditem):
       typeofitem=eqeditem[1]
@@ -153,9 +161,8 @@ class characters: #class is used to make an object
 
 
 player=characters.testSetup("name")
-# player.stats()
-# print(player.inv)
-# player.recieve(player.equip("null boots"))
-# print(player.inv)
-# player.stats()
-
+player.stats()
+player.recieve(player.equip("null boots"))
+player.stats()
+player.recieve(player.equip("a"))
+player.stats()

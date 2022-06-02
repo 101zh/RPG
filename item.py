@@ -36,6 +36,8 @@ startDagger=items("weapon", True,"Rogue's Dagger", 0, -2, 0, -2, 6, 6, 5)
 
 shppot=items("usable", True, "Small Health Potion", 25,0,0,0,0,0,10)
 lhppot=items("usable", True, "Large Health Potion", 50,0,0,0,0,0,20)
+smppot=items("usable", True, "Small Mana Potion", 0,25,0,0,0,0,10)
+lmppot=items("usable", True, "Large Mana Potion", 0,50,0,0,0,0,20)
 
 null=items("weapon",False, "null", 0, 0, 0, 0, 0, 0, 0)
 nullBoots=items("boots", False,"null boots", 0, 0, 0, 0, 0, 0, 0)
