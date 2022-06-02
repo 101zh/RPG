@@ -40,4 +40,5 @@ smppot=items("usable", True, "Small Mana Potion", 0,25,0,0,0,0,10)
 lmppot=items("usable", True, "Large Mana Potion", 0,50,0,0,0,0,20)
 
 null=items("weapon",False, "null", 0, 0, 0, 0, 0, 0, 0)
+nullpotion=items("usable",False, "null potion", 0, 0, 0, 0, 0, 0, 0)
 nullBoots=items("boots", False,"null boots", 0, 0, 0, 0, 0, 0, 0)

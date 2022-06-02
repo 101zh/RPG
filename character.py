@@ -112,50 +112,28 @@ class characters: #class is used to make an object
 
     def equip(self, itemname):
         for i in self.inv:
-            eqitem=""
             if itemname.lower()==i.name.lower():
-                if i.typeofitem=="helmet":
-                    eqitem="helmet"
-                    self.inv.remove(i)
-                    return [i ,eqitem]
-                elif i.typeofitem=="chestplate":
-                    eqitem="chestplate"
-                    self.inv.remove(i)
-                    return [i ,eqitem]
-                elif i.typeofitem=="leggings":
-                    eqitem="leggings"
-                    self.inv.remove(i)
-                    return [i ,eqitem]
-                elif i.typeofitem=="boots":
-                    eqitem="boots"
-                    self.inv.remove(i)
-                    return [i ,eqitem]
-                elif i.typeofitem=="weapon":
-                    eqitem="weapon"
-                    self.inv.remove(i)
-                    return [i ,eqitem]
-                else:
-                    eqitem="¯\_(ツ)_/¯"
-                    return [i, eqitem]
+                return i
+            else:
+                return itemDict["null potion"]
                 
 
     def recieve(self, eqeditem):
-      typeofitem=eqeditem[1]
-      if typeofitem=="helmet":
+      if eqeditem.typeofitem=="helmet":
           self.inv.append(self.helmet)
-          self.helmet=eqeditem[0]
-      elif typeofitem=="chestplate":
+          self.helmet=eqeditem
+      elif eqeditem.typeofitem=="chestplate":
           self.inv.append(self.chestplate)
-          self.chestplate=eqeditem[0]
-      elif typeofitem=="leggings":
+          self.chestplate=eqeditem
+      elif eqeditem.typeofitem=="leggings":
           self.inv.append(self.leggings)
-          self.leggings=eqeditem[0]
-      elif typeofitem=="boots":
+          self.leggings=eqeditem
+      elif eqeditem.typeofitem=="boots":
           self.inv.append(self.boots)
-          self.boots=eqeditem[0]
-      elif typeofitem=="weapon":
+          self.boots=eqeditem
+      elif eqeditem.typeofitem=="weapon":
           self.inv.append(self.weapon)
-          self.weapon=eqeditem[0]
+          self.weapon=eqeditem
       else:
         print("Item cannot be equipped or doesn't exist")
 
@@ -164,5 +142,5 @@ player=characters.testSetup("name")
 player.stats()
 player.recieve(player.equip("null boots"))
 player.stats()
-player.recieve(player.equip("a"))
+player.recieve(player.equip("aaaa"))
 player.stats()
