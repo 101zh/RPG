@@ -34,6 +34,8 @@ class characters: #class is used to make an object
         self.inv=inv
 
     def mageSetup(name):
+        itemDict["rogue's dagger"].amount=0
+        itemDict["warrior's sword"].amount=0
         return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 20, 0, 25, itemDict["wizard's staff"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [])
 
     def rogueSetup(name):
@@ -46,6 +48,7 @@ class characters: #class is used to make an object
         inv=[]
         for key, value in itemDict.items():
             temp = value
+            temp.amount=1
             inv.append(temp)
         return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv)
 
@@ -88,13 +91,13 @@ class characters: #class is used to make an object
         otherstr=""
         for i in self.inv:
             if i.typeofitem=="boots" or i.typeofitem=="leggings" or i.typeofitem=="helmet" or i.typeofitem=="chestplate":
-                armorstr+="\n"+"    "+i.name
+                armorstr+="\n"+"    "+i.name+" x"+str(i.amount)
         for i in self.inv:
             if i.typeofitem=="weapon":
-                weaponstr+="\n"+"    "+i.name
+                weaponstr+="\n"+"    "+i.name+" x"+str(i.amount)
         for i in self.inv:
             if i.typeofitem=="usable":
-                otherstr+="\n"+"    "+i.name
+                otherstr+="\n"+"    "+i.name+" x"+str(i.amount)
         print("Armor:"+armorstr)
         print("Weapons:"+weaponstr)
         print("Others:"+otherstr)
@@ -137,10 +140,26 @@ class characters: #class is used to make an object
       else:
         print("Item cannot be equipped or doesn't exist")
 
+    def buy(self, buyitem):
+      buyitem.lower()
+      try:
+        buyitem=itemDict[buyitem]
+        if buyitem.cost>self.coins:
+          print("You don't have enough coins to buy this item")
+        else:
+          if buyitem in self.inv:
+            pos=self.inv.index(buyitem)
+            self.inv[pos].amount+=1
+            self.coins-=buyitem.cost
+          else: 
+            self.coins-=buyitem.cost
+            self.inv.append(buyitem)
+      except KeyError:
+        print("Did you misspell? because this item doesn't exist")
 
-player=characters.testSetup("name")
-player.stats()
-player.recieve(player.equip("null boots"))
-player.stats()
-player.recieve(player.equip("aaaa"))
-player.stats()
+
+# player=characters.testSetup("name")
+
+# player.showInv()
+# player.buy("small health potion")
+# player.showInv()
