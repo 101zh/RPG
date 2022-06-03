@@ -48,7 +48,6 @@ class characters: #class is used to make an object
         inv=[]
         for key, value in itemDict.items():
             temp = value
-            temp.amount=1
             inv.append(temp)
         return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv)
 
@@ -117,7 +116,8 @@ class characters: #class is used to make an object
         for i in self.inv:
             if itemname.lower()==i.name.lower():
                 if i.amount>1:
-                    i.amount-=1
+                    pos=self.inv.index(i)
+                    self.inv[pos].amount-=1
                     if i.typeofitem=="helmet":
                         if self.helmet in self.inv:
                             pos=self.inv.index(self.helmet)
@@ -125,7 +125,7 @@ class characters: #class is used to make an object
                         else:
                             self.helmet.amount=1
                             self.inv.append(self.helmet)
-                        i.amount=0
+          
                         self.helmet=i
                     elif i.typeofitem=="chestplate":
                         if self.chestplate in self.inv:
@@ -134,7 +134,7 @@ class characters: #class is used to make an object
                         else:
                             self.chestplate.amount=1
                             self.inv.append(self.chestplate)
-                        i.amount=0
+          
                         self.chestplate=i
                     elif i.typeofitem=="leggings":
                         if self.leggings in self.inv:
@@ -143,7 +143,7 @@ class characters: #class is used to make an object
                         else:
                             self.leggings.amount=1
                             self.inv.append(self.leggings)
-                        i.amount=0
+          
                         self.leggings=i
                     elif i.typeofitem=="boots":
                         if self.boots in self.inv:
@@ -152,7 +152,7 @@ class characters: #class is used to make an object
                         else:
                             self.boots.amount=1
                             self.inv.append(self.boots)
-                        i.amount=0
+          
                         self.boots=i
                     elif i.typeofitem=="weapon":
                         if self.weapon in self.inv:
@@ -161,7 +161,7 @@ class characters: #class is used to make an object
                         else:
                             self.weapon.amount=1
                             self.inv.append(self.weapon)
-                        i.amount=0
+          
                         self.weapon=i
                     else:
                         print("Item cannot be equipped")
@@ -172,9 +172,8 @@ class characters: #class is used to make an object
                             pos=self.inv.index(self.helmet)
                             self.inv[pos].amount+=1
                         else:
-                            self.helmet.amount=1
-                            self.inv.append(self.helmet)
-                        i.amount=0
+                          self.helmet.amount=1
+                          self.inv.append(self.helmet)
                         self.helmet=i
                     elif i.typeofitem=="chestplate":
                         if self.chestplate in self.inv:
@@ -183,7 +182,7 @@ class characters: #class is used to make an object
                         else:
                             self.chestplate.amount=1
                             self.inv.append(self.chestplate)
-                        i.amount=0
+          
                         self.chestplate=i
                     elif i.typeofitem=="leggings":
                         if self.leggings in self.inv:
@@ -192,7 +191,7 @@ class characters: #class is used to make an object
                         else:
                             self.leggings.amount=1
                             self.inv.append(self.leggings)
-                        i.amount=0
+          
                         self.leggings=i
                     elif i.typeofitem=="boots":
                         if self.boots in self.inv:
@@ -201,7 +200,7 @@ class characters: #class is used to make an object
                         else:
                             self.boots.amount=1
                             self.inv.append(self.boots)
-                        i.amount=0
+          
                         self.boots=i
                     elif i.typeofitem=="weapon":
                         if self.weapon in self.inv:
@@ -210,7 +209,7 @@ class characters: #class is used to make an object
                         else:
                             self.weapon.amount=1
                             self.inv.append(self.weapon)
-                        i.amount=0
+          
                         self.weapon=i
                     else:
                         print("Item cannot be equipped")
@@ -237,7 +236,8 @@ class characters: #class is used to make an object
 
 
 player=characters.testSetup("name")
-
+player.stats()
 player.showInv()
-player.equip("starter chestplate")
+player.equip("null boots")
 player.showInv()
+player.stats()
