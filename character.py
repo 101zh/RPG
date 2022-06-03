@@ -116,29 +116,106 @@ class characters: #class is used to make an object
     def equip(self, itemname):
         for i in self.inv:
             if itemname.lower()==i.name.lower():
-                return i
-            else:
-                return itemDict["null potion"]
-                
+                if i.amount>1:
+                    i.amount-=1
+                    if i.typeofitem=="helmet":
+                        if self.helmet in self.inv:
+                            pos=self.inv.index(self.helmet)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.helmet.amount=1
+                            self.inv.append(self.helmet)
+                        i.amount=0
+                        self.helmet=i
+                    elif i.typeofitem=="chestplate":
+                        if self.chestplate in self.inv:
+                            pos=self.inv.index(self.chestplate)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.chestplate.amount=1
+                            self.inv.append(self.chestplate)
+                        i.amount=0
+                        self.chestplate=i
+                    elif i.typeofitem=="leggings":
+                        if self.leggings in self.inv:
+                            pos=self.inv.index(self.leggings)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.leggings.amount=1
+                            self.inv.append(self.leggings)
+                        i.amount=0
+                        self.leggings=i
+                    elif i.typeofitem=="boots":
+                        if self.boots in self.inv:
+                            pos=self.inv.index(self.boots)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.boots.amount=1
+                            self.inv.append(self.boots)
+                        i.amount=0
+                        self.boots=i
+                    elif i.typeofitem=="weapon":
+                        if self.weapon in self.inv:
+                            pos=self.inv.index(self.weapon)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.weapon.amount=1
+                            self.inv.append(self.weapon)
+                        i.amount=0
+                        self.weapon=i
+                    else:
+                        print("Item cannot be equipped")
+                else:
+                    self.inv.remove(i)
+                    if i.typeofitem=="helmet":
+                        if self.helmet in self.inv:
+                            pos=self.inv.index(self.helmet)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.helmet.amount=1
+                            self.inv.append(self.helmet)
+                        i.amount=0
+                        self.helmet=i
+                    elif i.typeofitem=="chestplate":
+                        if self.chestplate in self.inv:
+                            pos=self.inv.index(self.chestplate)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.chestplate.amount=1
+                            self.inv.append(self.chestplate)
+                        i.amount=0
+                        self.chestplate=i
+                    elif i.typeofitem=="leggings":
+                        if self.leggings in self.inv:
+                            pos=self.inv.index(self.leggings)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.leggings.amount=1
+                            self.inv.append(self.leggings)
+                        i.amount=0
+                        self.leggings=i
+                    elif i.typeofitem=="boots":
+                        if self.boots in self.inv:
+                            pos=self.inv.index(self.boots)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.boots.amount=1
+                            self.inv.append(self.boots)
+                        i.amount=0
+                        self.boots=i
+                    elif i.typeofitem=="weapon":
+                        if self.weapon in self.inv:
+                            pos=self.inv.index(self.weapon)
+                            self.inv[pos].amount+=1
+                        else:
+                            self.weapon.amount=1
+                            self.inv.append(self.weapon)
+                        i.amount=0
+                        self.weapon=i
+                    else:
+                        print("Item cannot be equipped")
 
-    def recieve(self, eqeditem):
-      if eqeditem.typeofitem=="helmet":
-          self.inv.append(self.helmet)
-          self.helmet=eqeditem
-      elif eqeditem.typeofitem=="chestplate":
-          self.inv.append(self.chestplate)
-          self.chestplate=eqeditem
-      elif eqeditem.typeofitem=="leggings":
-          self.inv.append(self.leggings)
-          self.leggings=eqeditem
-      elif eqeditem.typeofitem=="boots":
-          self.inv.append(self.boots)
-          self.boots=eqeditem
-      elif eqeditem.typeofitem=="weapon":
-          self.inv.append(self.weapon)
-          self.weapon=eqeditem
-      else:
-        print("Item cannot be equipped or doesn't exist")
+                
 
     def buy(self, buyitem):
       buyitem.lower()
@@ -153,13 +230,14 @@ class characters: #class is used to make an object
             self.coins-=buyitem.cost
           else: 
             self.coins-=buyitem.cost
+            buyitem.amount=1
             self.inv.append(buyitem)
       except KeyError:
         print("Did you misspell? because this item doesn't exist")
 
 
-# player=characters.testSetup("name")
+player=characters.testSetup("name")
 
-# player.showInv()
-# player.buy("small health potion")
-# player.showInv()
+player.showInv()
+player.equip("starter chestplate")
+player.showInv()

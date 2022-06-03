@@ -40,8 +40,8 @@ def shop(player):
           print("Bye! Come back again!\n")
           break
 
-player.stats()
-player.showInv()
-shop(player)
-player.stats()
-player.showInv()
+# player.stats()
+# player.showInv()
+# shop(player)
+# player.stats()
+# player.showInv()
