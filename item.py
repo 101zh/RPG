@@ -26,10 +26,15 @@ class items:
         print(Fore.RED+"❁ Strength bonus: "+str(self.strength))
         print("✦ Speed bonus: "+str(self.speed))
 
-startHelmet=items("helmet",True,"Starter Helmet", 5, 0, 5, 0, -5, -5, 5, 1)
-startChestplate=items("chestplate",True,"Starter Chestplate", 5, 0, 5, 0, -5, -5, 5, 1)
-startLeggings=items("leggings",True,"Starter Leggings", 5, 0, 5, 0, -5, -5, 5, 1)
-startBoots=items("boots",True,"Starter Boots", 5, 0, 5, 0, -5, -5, 5, 1)
+startHelmet=items("helmet",True,"Starter Helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
+startChestplate=items("chestplate",True,"Starter Chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
+startLeggings=items("leggings",True,"Starter Leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
+startBoots=items("boots",True,"Starter Boots", 5 , 0, 5, 0, -2, -2, 10, 1)
+
+wizardHat=items("chestplate",True,"Wizard Hat", 5, 20, -5, 5, -5, 4, 20, 1)
+wizardRobe=items("chestplate",True,"Wizard Robe", 5, 20, -5, 5, -5, 4, 20, 1)
+wizardPants=items("chestplate",True,"Wizard Pants", 5, 20, -5, 5, -5, 4, 20, 1)
+wizardBoots=items("chestplate",True,"Wizard Boots", 5, 20, -5, 5, -5, 4, 20, 1)
 
 startStaff=items("weapon", True,"Wizard's Staff", 0, 10, 0, 10, -2, 2, 5, 1)
 startSword=items("weapon", True,"Warrior's Sword", 0, -5, 0, 0, 8, -4, 5, 1)

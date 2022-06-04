@@ -218,26 +218,27 @@ class characters: #class is used to make an object
 
     def buy(self, buyitem):
       buyitem.lower()
-      try:
-        buyitem=itemDict[buyitem]
-        if buyitem.cost>self.coins:
-          print("You don't have enough coins to buy this item")
-        else:
-          if buyitem in self.inv:
-            pos=self.inv.index(buyitem)
-            self.inv[pos].amount+=1
-            self.coins-=buyitem.cost
-          else: 
-            self.coins-=buyitem.cost
-            buyitem.amount=1
-            self.inv.append(buyitem)
-      except KeyError:
-        print("Did you misspell? because this item doesn't exist")
+      if not buyitem[:1]=="l":
+        try:
+            buyitem=itemDict[buyitem]
+            if buyitem.cost>self.coins:
+                print("You don't have enough coins to buy this item")
+            else:
+                if buyitem in self.inv:
+                    pos=self.inv.index(buyitem)
+                    self.inv[pos].amount+=1
+                    self.coins-=buyitem.cost
+                else: 
+                    self.coins-=buyitem.cost
+                    buyitem.amount=1
+                    self.inv.append(buyitem)
+        except KeyError:
+            print("Did you misspell? because this item doesn't exist")
 
 
-player=characters.testSetup("name")
-player.stats()
-player.showInv()
-player.equip("null boots")
-player.showInv()
-player.stats()
+# player=characters.testSetup("name")
+# player.stats()
+# player.showInv()
+# player.equip("null boots")
+# player.showInv()
+# player.stats()

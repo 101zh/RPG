@@ -1,3 +1,4 @@
+from re import A, T
 from numpy import True_, place
 from character import characters
 import item
@@ -5,6 +6,14 @@ from item import itemDict
 player=characters.testSetup("jafidjsif")
 player.coins+=2000
 
+def inputcheck(message:str):
+    while True:
+        try:
+            message=int(input(message))
+            break
+        except ValueError:
+            print("Try again with a num")
+    return message
 
 def shop(player):
     shoplist=[]
@@ -16,25 +25,27 @@ def shop(player):
         print("\nArmor\nWeapons\nOther Items\nLeave")
         shopinput = input("What would you like to buy? ").lower()
         if shopinput[:1]=="a":
+            pages=inputcheck("Which page do you want to go to? (1-2 pages) ")
             print("\nArmor:")
             for i in shoplist:
                 if i.buyable==True and (i.typeofitem=="helmet" or i.typeofitem=="chestplate" or i.typeofitem=="boots" or i.typeofitem=="leggings"):
-                     print(str(i.cost)+"$    "+str(i.name))
-            shopinput=input("\nWhat do you want to buy? ")
+                    if shoplist.index(i)<=pages*3:
+                        print(str(i.cost)+"$    "+str(i.name))
+            shopinput=input("\nWhat do you want to buy? (type leave not buy) ")
             player.buy(shopinput)
         elif shopinput[:1]=="w":
             print("\nWeapons:")
             for i in shoplist:
                 if i.typeofitem=="weapon" and i.buyable==True:
                     print(str(i.cost)+"$    "+str(i.name))
-            shopinput=input("\nWhat do you want to buy? ")
+            shopinput=input("\nWhat do you want to buy? (type leave not buy) ")
             player.buy(shopinput)
         elif shopinput[:1]=="o":
             print("\nOther Items:")
             for i in shoplist:
                 if i.typeofitem=="usable" and i.buyable==True:
                     print(str(i.cost)+"$    "+str(i.name))
-            shopinput=input("\nWhat do you want to buy? ")
+            shopinput=input("\nWhat do you want to buy? (type leave not buy) ")
             player.buy(shopinput)
         elif shopinput[:1]=="l":
           print("Bye! Come back again!\n")
@@ -42,6 +53,6 @@ def shop(player):
 
 # player.stats()
 # player.showInv()
-# shop(player)
+shop(player)
 # player.stats()
 # player.showInv()
