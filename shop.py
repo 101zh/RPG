@@ -17,6 +17,7 @@ def inputcheck(message:str):
 
 def shop(player):
     shoplist=[]
+    templist=[]
     for key, value in itemDict.items():
         temp=value
         shoplist.append(temp)
@@ -27,11 +28,15 @@ def shop(player):
         if shopinput[:1]=="a":
             pages=inputcheck("Which page do you want to go to? (1-2 pages) ")
             print("\nArmor:")
+            pages*=4
             for i in shoplist:
                 if i.buyable==True and (i.typeofitem=="helmet" or i.typeofitem=="chestplate" or i.typeofitem=="boots" or i.typeofitem=="leggings"):
-                    if shoplist.index(i)<=pages*3:
-                        print(str(i.cost)+"$    "+str(i.name))
-            shopinput=input("\nWhat do you want to buy? (type leave not buy) ")
+                    templist.append(i)
+                    tempamount=range(len(templist))        
+            for armor in tempamount:
+                if armor<pages and armor>pages-5:
+                    print(str(templist[armor].cost)+"$    "+str(templist[armor].name))
+            shopinput=input("\nWhat do you want to buy?(type leave to not buy) ")
             player.buy(shopinput)
         elif shopinput[:1]=="w":
             print("\nWeapons:")
