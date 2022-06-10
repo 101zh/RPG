@@ -15,13 +15,19 @@ class characters: #class is used to make an object
         self.rpgclass = rpgclass
         self.name = name
         self.maxhp = maxhp #self refers to the object
+        self.extrahp = 0
         self.hp = hp
         self.maxmana = maxmana
+        self.extramana = 0
         self.mana = mana
         self.defense = defense
+        self.extradefense = 0
         self.intelligence = intelligence
+        self.extraintelligence = 0
         self.strength = strength
+        self.extrastrength = 0
         self.speed = speed
+        self.extraspeed = 0
         self.xp = xp
         self.xpcontainer = xpcontainer
         self.level = level
@@ -32,6 +38,60 @@ class characters: #class is used to make an object
         self.leggings=leggings
         self.boots=boots
         self.inv=inv
+
+      
+    def applystats(self):
+        self.extrahp=0
+        self.extramana=0
+        self.extradefense=0
+        self.extraintelligence=0
+        self.extrastrength=0
+        self.extraspeed=0
+        stats=vars(self.weapon)
+        self.extrahp+=stats["hp"]
+        self.extramana+=stats["mana"]
+        self.extradefense+=stats["defense"]
+        self.extraintelligence+=stats["intelligence"]
+        self.extrastrength+=stats["strength"]
+        self.extraspeed+=stats["speed"]
+        stats=vars(self.helmet)
+        self.extrahp+=stats["hp"]
+        self.extramana+=stats["mana"]
+        self.extradefense+=stats["defense"]
+        self.extraintelligence+=stats["intelligence"]
+        self.extrastrength+=stats["strength"]
+        self.extraspeed+=stats["speed"]
+        stats=vars(self.chestplate)
+        self.extrahp+=stats["hp"]
+        self.extramana+=stats["mana"]
+        self.extradefense+=stats["defense"]
+        self.extraintelligence+=stats["intelligence"]
+        self.extrastrength+=stats["strength"]
+        self.extraspeed+=stats["speed"]
+        stats=vars(self.leggings)
+        self.extrahp+=stats["hp"]
+        self.extramana+=stats["mana"]
+        self.extradefense+=stats["defense"]
+        self.extraintelligence+=stats["intelligence"]
+        self.extrastrength+=stats["strength"]
+        self.extraspeed+=stats["speed"]
+        stats=vars(self.boots)
+        self.extrahp+=stats["hp"]
+        self.extramana+=stats["mana"]
+        self.extradefense+=stats["defense"]
+        self.extraintelligence+=stats["intelligence"]
+        self.extrastrength+=stats["strength"]
+        self.extraspeed+=stats["speed"]
+        
+        
+        self.maxhp+=self.extrahp
+        self.maxmana+=self.extramana
+        self.defense+=self.extradefense
+        self.intelligence+=self.extraintelligence
+        self.strength+=self.extrastrength
+        self.speed+=self.extraspeed
+
+            
 
     def mageSetup(name):
         itemDict["rogue's dagger"].amount=0
@@ -236,9 +296,15 @@ class characters: #class is used to make an object
             print("Did you misspell? because this item doesn't exist")
 
 
+
+          
+
+
 # player=characters.testSetup("name")
 # player.stats()
 # player.showInv()
-# player.equip("null boots")
+# player.applystats()
 # player.showInv()
 # player.stats()
+
+    
