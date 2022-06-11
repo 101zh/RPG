@@ -89,9 +89,7 @@ class characters: #class is used to make an object
         self.defense+=self.extradefense
         self.intelligence+=self.extraintelligence
         self.strength+=self.extrastrength
-        self.speed+=self.extraspeed
-
-            
+        self.speed+=self.extraspeed    
 
     def mageSetup(name):
         itemDict["rogue's dagger"].amount=0
@@ -128,8 +126,8 @@ class characters: #class is used to make an object
                 print("That isn't a valid choice")
                 print()
                 
-
     def stats(self):
+        self.applystats()
         print()
         print("----------------"+self.name+"'s Stats----------------")
         print("Class: "+self.rpgclass)
@@ -142,7 +140,6 @@ class characters: #class is used to make an object
         print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+str(self.weapon.name))
         print("✦ Speed: "+str(self.speed))
         print()
-
 
     def showInv(self):
         weaponstr=""
@@ -170,7 +167,6 @@ class characters: #class is used to make an object
             
         if not found==True:
             print("This item doesn't exist")
-
 
     def equip(self, itemname):
         for i in self.inv:
@@ -273,9 +269,8 @@ class characters: #class is used to make an object
                         self.weapon=i
                     else:
                         print("Item cannot be equipped")
-
+        self.applystats()
                 
-
     def buy(self, buyitem):
       buyitem.lower()
       if not buyitem[:1]=="l":
