@@ -42,7 +42,6 @@ class characters: #class is used to make an object
     def restore(self):
         self.mana=self.maxmana
         self.hp=self.maxhp
-        return self
       
     def applystats(self):
         self.extrahp=0
@@ -111,7 +110,7 @@ class characters: #class is used to make an object
         for key, value in itemDict.items():
             temp = value
             inv.append(temp)
-        return characters("Human", name, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv)
+        return characters("Human", name, 100, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv)
 
     def createCharacter():
         name = input("What is your name? ")
@@ -131,7 +130,6 @@ class characters: #class is used to make an object
                 print()
                 
     def stats(self):
-        self.applystats()
         print()
         print("----------------"+self.name+"'s Stats----------------")
         print("Class: "+self.rpgclass)
@@ -301,7 +299,6 @@ class characters: #class is used to make an object
 
 player=characters.testSetup("name")
 player.stats()
-player.applystats()
 player.restore()
 player.stats()
 
