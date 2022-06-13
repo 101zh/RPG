@@ -39,6 +39,10 @@ class characters: #class is used to make an object
         self.boots=boots
         self.inv=inv
 
+    def restore(self):
+        self.mana=self.maxmana
+        self.hp=self.maxhp
+        return self
       
     def applystats(self):
         self.extrahp=0
@@ -295,11 +299,10 @@ class characters: #class is used to make an object
           
 
 
-# player=characters.testSetup("name")
-# player.stats()
-# player.showInv()
-# player.applystats()
-# player.showInv()
-# player.stats()
+player=characters.testSetup("name")
+player.stats()
+player.applystats()
+player.restore()
+player.stats()
 
     

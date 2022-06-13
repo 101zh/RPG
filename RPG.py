@@ -11,7 +11,7 @@ def battle(p):
     print("not ready yet...")
 
 def helpmenu():
-    typehelp=input("What do you want help with?(shop, player, items) ").lower()
+    typehelp=input("What do you want help with?(shop, player, items, hunting) ").lower()
     if typehelp[:1]=="s":
         print("     Type: buy (item) - to buy an item")
         print("     Type: shop - to visit the shop")
@@ -23,6 +23,8 @@ def helpmenu():
     elif typehelp[:1]=="p":
         print("     Type: stats - to show stats")
         print("     Type: showinv - to show inventory")
+    elif typehelp[:1]=="b":
+        print("     Nothing for now")
 
 
 while True:
@@ -38,12 +40,17 @@ while True:
     print("     Type: help - for more commands")
     print("     Type: equip (itemname) - to equip items")
     print("     Type: stats - to show stats")
-    print("     Type: showinv - to show inventory")
+    print("     Type: inventory - to show inventory")
     print("     Type: info (itemname) - to show info of that item")
     input("OK? ")
     print("\n"*100)
     player=characters.createCharacter()
     print("\nThis is what you look like:")
+    player.restore()
     player.stats()
+    print("Shop")
+    print("Hunt")
+    print("Inventory")
+    pinput=input("What would you like to do? ").lower()
 
     break
