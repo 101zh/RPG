@@ -10,6 +10,13 @@ from colorama import Fore, Back, Style
 import item
 from item import itemDict
 
+class attacks:
+    def init(self, burn:int, freeze:int, stun:int, flinch:int, damage:int, specfunc:int, specfuncinput:list):
+      self.burn=burn
+
+
+
+
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
         self.rpgclass = rpgclass
@@ -297,9 +304,9 @@ class characters: #class is used to make an object
           
 
 
-player=characters.testSetup("name")
-player.stats()
-player.restore()
-player.stats()
+# player=characters.testSetup("name")
+# player.stats()
+# player.restore()
+# player.stats()
 
     

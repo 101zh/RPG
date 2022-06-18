@@ -7,6 +7,9 @@ from colorama import Fore,Back,Style
 import random
 import time
 
+def damage(p,m,typeattack):
+  print("Not ready")
+
 def battle(p):
     print("not ready yet...")
 
@@ -27,7 +30,7 @@ def helpmenu():
         print("     Nothing for now")
 
 
-while True:
+def start():
     print("\n"*100)
     print("Initializing...")
     time.sleep(2)
@@ -41,16 +44,31 @@ while True:
     print("     Type: equip (itemname) - to equip items")
     print("     Type: stats - to show stats")
     print("     Type: inventory - to show inventory")
+    print("     Type: shop - to go to shop")
+    print("     Type: hunt - to hunt monsters")
     print("     Type: info (itemname) - to show info of that item")
     input("OK? ")
     print("\n"*100)
     player=characters.createCharacter()
     print("\nThis is what you look like:")
+    player.applystats()
     player.restore()
     player.stats()
-    print("Shop")
-    print("Hunt")
-    print("Inventory")
-    pinput=input("What would you like to do? ").lower()
+    while True:
+        player.applystats()
+        player.restore()
+        print("Shop")
+        print("Hunt")
+        print("Inventory")
+        print("Exit")
+        pinput=input("What would you like to do? ").lower()
+        if pinput[:1]=="s":
+            shop(player)
+        elif pinput[:1]=="h":
+            battle(player)
+        elif pinput[:1]=="inv":
+            player.showInv()
+        elif pinput[:1]=="ex":
+            break
 
-    break
+start()
