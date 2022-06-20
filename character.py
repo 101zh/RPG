@@ -43,13 +43,21 @@ class characters: #class is used to make an object
         self.mana=self.maxmana
         self.hp=self.maxhp
       
-    def applystats(self):
+    def applystats(self, buff):
+        self.maxhp-=self.extrahp
+        self.maxmana-=self.extramana
+        self.defense-=self.extradefense
+        self.intelligence-=self.extraintelligence
+        self.strength-=self.extrastrength
+        self.speed-=self.extraspeed
+
         self.extrahp=0
         self.extramana=0
         self.extradefense=0
         self.extraintelligence=0
         self.extrastrength=0
         self.extraspeed=0
+        
         stats=vars(self.weapon)
         self.extrahp+=stats["hp"]
         self.extramana+=stats["mana"]
@@ -86,7 +94,17 @@ class characters: #class is used to make an object
         self.extrastrength+=stats["strength"]
         self.extraspeed+=stats["speed"]
         
-        
+        if buff[1]=="defense":
+            self.extradefense+=buff[0]
+        elif buff[1]=="intelligence":
+            self.extraintelligence+=buff[0]:
+        elif buff[1]=="strength":
+            self.strength+=buff[0]
+        elif buff[1]=="speed":
+            self.extraspeed+=buff[0]
+        else:
+            print("ERROR")
+          
         self.maxhp+=self.extrahp
         self.maxmana+=self.extramana
         self.defense+=self.extradefense
@@ -292,7 +310,11 @@ class characters: #class is used to make an object
         except KeyError:
             print("Did you misspell? because this item doesn't exist")
 
-
+    def levelup(self):
+        if self.xp>=self.xpcontainer:
+            self.xp=int(self.xp-self.xpcontainer)
+            self.level+=1
+            self.xpcontainer=int(self.xpcontainer)
 
           
 
