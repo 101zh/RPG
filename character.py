@@ -1,21 +1,14 @@
 import random
-import re
-from urllib.parse import parse_qs
 import pandas as pd
-from item import items
 import colorama
 from colorama import init
 init(autoreset=True)
 from colorama import Fore, Back, Style
 import item
+from item import items
 from item import itemDict
-
-class attacks:
-    def init(self, burn:int, freeze:int, stun:int, flinch:int, damage:int, specfunc:int, specfuncinput:list):
-      self.burn=burn
-
-
-
+import attack
+from attack import attacks
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list):
