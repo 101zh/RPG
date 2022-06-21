@@ -1,19 +1,10 @@
-from re import A, T
-from numpy import True_, place
 from character import characters
+from character import inputcheck
 import item
 from item import itemDict
 player=characters.testSetup("jafidjsif")
 player.coins+=2000
 
-def inputcheck(message:str):
-    while True:
-        try:
-            message=int(input(message))
-            break
-        except ValueError:
-            print("Try again with a num")
-    return message
 
 def shop(player):
     shoplist=[]

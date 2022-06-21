@@ -11,6 +11,15 @@ import attack
 from attack import attacks
 from attack import attackDict
 
+def inputcheck(message:str):
+    while True:
+        try:
+            message=int(input(message))
+            break
+        except ValueError:
+            print("Try again with a num")
+    return message
+
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list, attackmoves:list):
         self.rpgclass = rpgclass
@@ -316,39 +325,53 @@ class characters: #class is used to make an object
         except KeyError:
             print("Did you misspell? because this item doesn't exist")
 
+    def checkLevel(self):
+        if self.level==8:
+            if self.rpgclass.lower()=="mage":
+                print("Congragulations!")
+                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["fireball"].color+" Fireball")
+                input("Next ")
+                print("\n"*100)
+                self.attackMenu()
+                slot=inputcheck("Which slot would you like to put the move "+attackDict["fireball"].color+"Fireball? ")
+                self.attackmoves[int(slot-1)]=attackDict["fireball"]
+            elif self.rpgclass.lower()=="warrior":
+                print("Congragulations!")
+                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["shieldbash"].color+" Shield Bash")
+                input("Next ")
+                print("\n"*100)
+                self.attackMenu()
+                slot=inputcheck("Which slot would you like to put the move "+attackDict["shieldbash"].color+"Shield Bash? ")
+                self.attackmoves[int(slot-1)]=attackDict["shieldbash"]
+            elif self.rpgclass.lower()=="rogue":
+                print("Congragulations!")
+                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["daggerthrow"].color+" Dagger Throw")
+                input("Next ")
+                print("\n"*100)
+                self.attackMenu()
+                slot=inputcheck("Which slot would you like to put the move "+attackDict["daggerthrow"].color+"Shield Bash? ")
+                self.attackmoves[int(slot-1)]=attackDict["daggerthrow"]
+
     def levelup(self):
-        if self.xp>=self.xpcontainer:
+        while self.xp>=self.xpcontainer:
             self.xp=int(self.xp-self.xpcontainer)
             self.level+=1
             self.xpcontainer=int(self.xpcontainer*1.2)
+            print(Fore.YELLOW+"You Leveled Up!"+Style.RESET_ALL+"      You are now level: "+Fore.YELLOW+str(self.level))
+            self.checkLevel()
 
     def attackMenu(self):
         moves=[]
         for i in self.attackmoves:
             moves.append(i)
-        print("Move 1: "+moves[0].name+"Move 3: "+moves[2].name)
-        print("Move 2: "+moves[1].name+"Move 4: "+moves[3].name)
+        print("Move 1: "+moves[0].color+moves[0].name+Style.RESET_ALL+"Move 3: "+moves[2].color+moves[2].name)
+        print("Move 2: "+moves[1].color+moves[1].name+Style.RESET_ALL+"Move 4: "+moves[3].color+moves[3].name)
 
-
-    def getMoves(self):
-        if self.level==8:
-            if self.rpgclass.lower()=="mage":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+Fore.LIGHTRED_EX+" Fireball")
-
-                self.attackmoves.append(attackDict["fireball"])
-            elif self.rpgclass.lower()=="warrior":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+Fore.LIGHTGREEN_EX+" Shield Bash")
-                self.attackmoves.append(attackDict["shield bash"])
-            elif self.rpgclass.lower()=="rogue":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+Fore.LIGHTRED_EX+" Dagger Throw")
-                self.attackmoves.append(attackDict["dagger throw"])
           
 
 
-# player=characters.testSetup("name")
-# player.attackMenu()
+player=characters.mageSetup("name")
+player.xp+=100000000
+player.levelup()
 
     
