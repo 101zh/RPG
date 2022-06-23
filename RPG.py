@@ -7,11 +7,14 @@ from colorama import Fore,Back,Style
 import random
 import time
 
+
 def damage(p,m,typeattack):
-  print("Not ready")
+    print("Not ready")
 
 def battle(p):
-    print("not ready yet...")
+    m=characters.mageSetup()
+    while p.health>0 and m.health>0:
+        print("not ready yet...")
 
 def helpmenu():
     typehelp=input("What do you want help with?(shop, player, items, hunting) ").lower()
@@ -55,8 +58,6 @@ def start():
     player.restore()
     player.stats()
     while True:
-        player.applystats()
-        player.restore()
         print("Shop")
         print("Hunt")
         print("Inventory")

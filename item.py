@@ -3,7 +3,7 @@ from colorama import Fore, Back, Style
 itemDict={}
 
 class items:
-    def __init__(self, typeofitem:str, buyable:bool, name:str, hp:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, cost:float, amount:int):
+    def __init__(self,name:str, typeofitem:str, buyable:bool, hp:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, cost:float, amount:int):
         self.typeofitem=typeofitem
         self.name=name
         self.hp=hp
@@ -15,7 +15,7 @@ class items:
         self.cost=cost
         self.buyable=buyable
         self.amount=amount
-        itemDict[self.name.lower()]= self
+        itemDict[self.name.replace(" ","").lower()]= self
 
     def info(self):
         print(self.name+"'s stats")
@@ -30,6 +30,8 @@ startHelmet=items("helmet",True,"Starter Helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
 startChestplate=items("chestplate",True,"Starter Chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
 startLeggings=items("leggings",True,"Starter Leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
 startBoots=items("boots",True,"Starter Boots", 5 , 0, 5, 0, -2, -2, 10, 1)
+
+skelsword=items("weapon", True,"Skeleton Sword", 0, 15, 0, 0, 8, -4, 5, 1)
 
 wizardHat=items("chestplate",True,"Wizard Hat", 5, 20, -5, 5, -5, 4, 20, 1)
 wizardRobe=items("chestplate",True,"Wizard Robe", 5, 20, -5, 5, -5, 4, 20, 1)
@@ -48,3 +50,8 @@ lmppot=items("usable", True, "Large Mana Potion", 0,50,0,0,0,0,20, 1)
 null=items("weapon",False, "null", 0, 0, 0, 0, 0, 0, 0, 1)
 nullpotion=items("usable",False, "null potion", 0, 0, 0, 0, 0, 0, 0, 1)
 nullBoots=items("boots", False,"null boots", 0, 0, 0, 0, 0, 0, 0, 1)
+
+# items("Starter Helmet",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
+# items("Starter Chestplate",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
+# items("Starter Leggings",True,"leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
+# items("Starter Boots",True,"boots", 5 , 0, 5, 0, -2, -2, 10, 1)

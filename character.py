@@ -10,6 +10,7 @@ from item import itemDict
 import attack
 from attack import attacks
 from attack import attackDict
+monlist=[]
 
 def inputcheck(message:str):
     while True:
@@ -49,6 +50,8 @@ class characters: #class is used to make an object
         self.boots=boots
         self.inv=inv
         self.attackmoves=attackmoves
+        if self.rpgclass=="Monster":
+            monlist.append(self)
 
     def restore(self):
         self.mana=self.maxmana
@@ -126,13 +129,13 @@ class characters: #class is used to make an object
     def mageSetup(name):
         itemDict["rogue's dagger"].amount=0
         itemDict["warrior's sword"].amount=0
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 25, 0, 25, itemDict["wizard's staff"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 25, 0, 25, itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
 
     def rogueSetup(name):
-        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 25, 0, 25, itemDict["rogue's dagger"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 25, 0, 25, itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
 
     def warriorSetup(name):
-        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 25, 0, 25, itemDict["warrior's sword"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
         
     def testSetup(name):
         inv=[]
@@ -143,7 +146,7 @@ class characters: #class is used to make an object
         for key, value in attackDict.items():
             temp=value
             testattacks.append(temp)
-        return characters("Human", name, 100, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starter helmet"], itemDict["starter chestplate"], itemDict["starter leggings"], itemDict["starter boots"], inv, testattacks)
+        return characters("Human", name, 100, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
 
     def createCharacter():
         name = input("What is your name? ")
@@ -195,9 +198,9 @@ class characters: #class is used to make an object
 
     def itemInfo(self, itemname):
         found=False
-        for i in itemDict:
-            if itemname.lower()==i.name.lower():
-                i.info()
+        for key,data in itemDict:
+            if itemname.lower()==data.name.lower():
+                data.info()
                 found=True
             
         if not found==True:
@@ -307,7 +310,7 @@ class characters: #class is used to make an object
         self.applystats()
                 
     def buy(self, buyitem):
-      buyitem.lower()
+      buyitem.replace(" ", "").lower()
       if not buyitem[:1]=="l":
         try:
             buyitem=itemDict[buyitem]
@@ -370,8 +373,10 @@ class characters: #class is used to make an object
           
 
 
-player=characters.mageSetup("name")
-player.xp+=100000000
-player.levelup()
+# player=characters.mageSetup("name")
+# player.xp+=100000000
+# player.levelup()
 
-    
+area1skel=characters("Monster", "Skeleton", 100, 100, 20, 20,25, 0, 20,25, 0,0,3,15,attackDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+area1gob=characters("Monster", "Goblin", 80, 80, 40, 40, 15, 5, 20,25, 0,0,3,20,attackDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+area1orc=characters("Monster", "Orc", 120, 120, 30, 30, 25, 5, 38, 15, 0,0,3,20,attackDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
