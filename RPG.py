@@ -1,4 +1,7 @@
+from attack import attacks
 from character import characters
+from character import monlist
+from character import inputcheck
 from item import items
 from item import itemDict
 from shop import shop
@@ -8,13 +11,39 @@ import random
 import time
 
 
-def damage(p,m,typeattack):
-    print("Not ready")
+def damageCalc(p:characters,m:characters,attack:attacks):
+    if attack.type=="Physical":
+        buff=int(p.strength/1.752243)
+        damage=attack.damage+buff
 
-def battle(p):
-    m=characters.mageSetup()
-    while p.health>0 and m.health>0:
-        print("not ready yet...")
+    elif attack.type=="Magic":
+        buff=(p.intelligence/5)/100
+        damage=attack.damage*(buff+1)
+    else:
+        print("ERROR")
+
+def monsterSelection():
+    m=random.randint(0,2)
+    m=monlist[m]
+    return m
+
+def battle(p:characters):
+    m:characters=monsterSelection()
+    print(Fore.LIGHTBLUE_EX+p.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
+    while p.hp>0 and m.hp>0:
+        p.attackMenu()
+        while True:
+            move=inputcheck("Which move would you like to use? ")
+            try:
+                move:attacks=p.attackmoves[move-1]
+                if not move.type=="nonexistent":
+                    break
+                else:
+                    print("Try again with a valid move1")
+            except IndexError:
+                print("Try again with a valid move")
+        damageCalc(p,m,move)
+        
 
 def helpmenu():
     typehelp=input("What do you want help with?(shop, player, items, hunting) ").lower()
@@ -31,7 +60,6 @@ def helpmenu():
         print("     Type: showinv - to show inventory")
     elif typehelp[:1]=="b":
         print("     Nothing for now")
-
 
 def start():
     print("\n"*100)
@@ -72,4 +100,8 @@ def start():
         elif pinput[:1]=="ex":
             break
 
-start()
+# start()
+player=characters.mageSetup("aaaaaaaaaaa")
+player.applystats()
+player.restore()
+battle(player)

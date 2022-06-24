@@ -57,7 +57,7 @@ class characters: #class is used to make an object
         self.mana=self.maxmana
         self.hp=self.maxhp
       
-    def applystats(self, buff):
+    def applystats(self):
         self.maxhp-=self.extrahp
         self.maxmana-=self.extramana
         self.defense-=self.extradefense
@@ -107,17 +107,6 @@ class characters: #class is used to make an object
         self.extraintelligence+=stats["intelligence"]
         self.extrastrength+=stats["strength"]
         self.extraspeed+=stats["speed"]
-        
-        if buff[1]=="defense":
-            self.extradefense+=buff[0]
-        elif buff[1]=="intelligence":
-            self.extraintelligence+=buff[0]
-        elif buff[1]=="strength":
-            self.strength+=buff[0]
-        elif buff[1]=="speed":
-            self.extraspeed+=buff[0]
-        else:
-            print("ERROR")
           
         self.maxhp+=self.extrahp
         self.maxmana+=self.extramana
@@ -127,15 +116,13 @@ class characters: #class is used to make an object
         self.speed+=self.extraspeed    
 
     def mageSetup(name):
-        itemDict["rogue's dagger"].amount=0
-        itemDict["warrior's sword"].amount=0
-        return characters("Mage", name, 85, 85, 125, 125, 15, 25, 15, 20, 0, 25, 0, 25, itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
+        return characters("Mage", name, 85, 85, 125, 125, 15, 30, 10, 20, 0, 25, 0, 25, itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
 
     def rogueSetup(name):
-        return characters("Rogue", name, 100, 100, 70, 70, 18, 15, 18, 25, 0, 25, 0, 25, itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Rogue", name, 100, 100, 70, 70, 18, 20, 20, 25, 0, 25, 0, 25, itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
 
     def warriorSetup(name):
-        return characters("Warrior", name, 110, 110, 50, 50, 22, 12, 22, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Warrior", name, 110, 110, 50, 50, 22, 10, 30, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
         
     def testSetup(name):
         inv=[]

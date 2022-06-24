@@ -21,7 +21,7 @@ class attacks:
       # self.specfuncinput=specfuncinput
       attackDict[self.name.replace(" ","").lower()]= self
 
-zed= attacks("               ", 0, 0, 0, 0, 0,0, "", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
+zed= attacks("               ", 0, 0, 0, 0, 0,0, "nonexistent", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
 
 bonk=attacks("Bonk           ", 0, 0, 0, 5, 25,0, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
 slash=attacks("Slash          ", 0, 0, 0, 5, 35,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."],Fore.WHITE)

@@ -70,5 +70,5 @@ def shop(player):
           break
 
 
-shop(player)
+# shop(player)
 
