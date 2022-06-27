@@ -296,8 +296,8 @@ class characters: #class is used to make an object
                         print("Item cannot be equipped")
         self.applystats()
                 
-    def buy(self, buyitem):
-      buyitem.replace(" ", "").lower()
+    def buy(self, buyitem:items):
+      buyitem=buyitem.replace(" ", "").lower()
       if not buyitem[:1]=="l":
         try:
             buyitem=itemDict[buyitem]

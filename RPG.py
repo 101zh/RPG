@@ -13,7 +13,7 @@ import time
 
 def damageCalc(p:characters,attack:attacks):
     if attack.type=="Physical":
-        buff=int(p.strength/1.752243)
+        buff=int(p.strength/2.25)
         damage=attack.damage+buff
         return damage
     elif attack.type=="Magic":
