@@ -11,14 +11,15 @@ import random
 import time
 
 
-def damageCalc(p:characters,m:characters,attack:attacks):
+def damageCalc(p:characters,attack:attacks):
     if attack.type=="Physical":
         buff=int(p.strength/1.752243)
         damage=attack.damage+buff
-
+        return damage
     elif attack.type=="Magic":
         buff=(p.intelligence/5)/100
         damage=attack.damage*(buff+1)
+        return damage
     else:
         print("ERROR")
 
@@ -29,8 +30,11 @@ def monsterSelection():
 
 def battle(p:characters):
     m:characters=monsterSelection()
+    m.applystats()
+    m.restore()
     print(Fore.LIGHTBLUE_EX+p.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
     while p.hp>0 and m.hp>0:
+        # Player selection of moves
         p.attackMenu()
         while True:
             move=inputcheck("Which move would you like to use? ")
@@ -39,10 +43,17 @@ def battle(p:characters):
                 if not move.type=="nonexistent":
                     break
                 else:
-                    print("Try again with a valid move1")
+                    print("Try again with a valid move")
             except IndexError:
                 print("Try again with a valid move")
-        damageCalc(p,m,move)
+        # Monster selecion of moves
+        while True:
+            monmove:attacks=random.randint(0,3)
+            if not m.attackmoves[monmove].type=="nonexistent":
+                monmove=m.attackmoves[monmove]
+                break
+        damageCalc(m,monmove)
+        damageCalc(p,move)
         
 
 def helpmenu():
