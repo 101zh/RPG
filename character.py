@@ -1,4 +1,5 @@
 import random
+import numpy
 import pandas as pd
 import colorama
 from colorama import init
@@ -167,21 +168,31 @@ class characters: #class is used to make an object
         print()
 
     def showInv(self):
-        weaponstr=""
-        armorstr=""
-        otherstr=""
-        for i in self.inv:
-            if i.typeofitem=="boots" or i.typeofitem=="leggings" or i.typeofitem=="helmet" or i.typeofitem=="chestplate":
-                armorstr+="\n"+"    "+i.name+" x"+str(i.amount)
-        for i in self.inv:
-            if i.typeofitem=="weapon":
-                weaponstr+="\n"+"    "+i.name+" x"+str(i.amount)
-        for i in self.inv:
-            if i.typeofitem=="usable":
-                otherstr+="\n"+"    "+i.name+" x"+str(i.amount)
-        print("Armor:"+armorstr)
-        print("Weapons:"+weaponstr)
-        print("Others:"+otherstr)
+        weaponslist=[]
+        armorlist=[]
+        otherslist=[]
+        for item in self.inv:
+            item:items
+            if item.typeofitem=="boots" or item.typeofitem=="leggings" or item.typeofitem=="helmet" or item.typeofitem=="chestplate":
+                armorlist.append(item)
+            elif item.typeofitem=="weapon":
+                weaponslist.append(item)
+            if item.typeofitem=="usable":
+                otherslist.append(item)
+            
+        categories=[weaponslist, armorlist, otherslist]
+            
+        most= categories[numpy.argmax([len(l) for l in categories])]
+        while len(armorlist)<len(most):
+            armorlist.append(itemDict[""])
+        while len(weaponslist)<len(most):
+            weaponslist.append(itemDict[""])
+        while len(otherslist)<len(most):
+            otherslist.append(itemDict[""])
+        print("Armor:                                 Weapons:                                 Others:")
+        for item in range(len(most)):
+            print("     "+armorlist[item].name+" "+str(armorlist[item].amount)+"x              "+weaponslist[item].name+" "+str(weaponslist[item].amount)+"x              "+otherslist[item].name+" "+str(otherslist[item].amount)+"x")
+        print("\n")
 
     def itemInfo(self, itemname):
         found=False
@@ -360,9 +371,8 @@ class characters: #class is used to make an object
           
 
 
-# player=characters.mageSetup("name")
-# player.xp+=100000000
-# player.levelup()
+player:characters=characters.testSetup('AAAA')
+player.showInv()
 
 area1skel=characters("Monster", "Skeleton", 100, 100, 20, 20,25, 0, 20,25, 0,0,3,15,itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1gob=characters("Monster", "Goblin", 80, 80, 40, 40, 15, 5, 20,25, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])

@@ -26,6 +26,8 @@ class items:
         print(Fore.RED+"❁ Strength bonus: "+str(self.strength))
         print("✦ Speed bonus: "+str(self.speed))
 
+none=items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0)
+
 startHelmet=items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
 startChestplate=items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
 startLeggings=items("Starter Leggings       ",True,"leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
@@ -50,6 +52,7 @@ lmppot=items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1)
 null=items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1)
 nullpotion=items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1)
 nullBoots=items("null boots             ", False,"boots", 0, 0, 0, 0, 0, 0, 0, 1)
+# items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0)
 
 # items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
 # items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
