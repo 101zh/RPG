@@ -243,123 +243,81 @@ class characters: #class is used to make an object
                     # Finds the item position to subtract 1 from it because it is no longer in inv
                     pos=self.inv.index(item)
                     self.inv[pos].amount-=1
-                    # Checks if it's a helmet
-                    if item.typeofitem=="helmet":
-                        # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                        # (So items can be stackable)
-                        if self.helmet in self.inv:
-                            pos=self.inv.index(self.helmet)
-                            self.inv[pos].amount+=1
-                        # If not in the inventory set the amount to 1 and add the new item to inventory
-                        else:
-                            self.helmet.amount=1
-                            self.inv.append(self.helmet)
-          
-                        self.helmet=item
-                        # Checks if it's a chestplate
-                    elif item.typeofitem=="chestplate":
-                        # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                        # (So items can be stackable)
-                        if self.chestplate in self.inv:
-                            pos=self.inv.index(self.chestplate)
-                            self.inv[pos].amount+=1
-                        # If not in the inventory set the amount to 1 and add the new item to inventory
-                        else:
-                            self.chestplate.amount=1
-                            self.inv.append(self.chestplate)
-          
-                        self.chestplate=item
-                        # Checks if it's leggings
-                    elif item.typeofitem=="leggings":
-                        # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                        # (So items can be stackable)
-                        if self.leggings in self.inv:
-                            pos=self.inv.index(self.leggings)
-                            self.inv[pos].amount+=1
-                        # If not in the inventory set the amount to 1 and add the new item to inventory
-                        else:
-                            self.leggings.amount=1
-                            self.inv.append(self.leggings)
-          
-                        self.leggings=item
-                        # Checks if it's boots
-                    elif item.typeofitem=="boots":
-                        # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                        # (So items can be stackable)
-                        if self.boots in self.inv:
-                            pos=self.inv.index(self.boots)
-                            self.inv[pos].amount+=1
-                        # If not in the inventory set the amount to 1 and add the new item to inventory
-                        else:
-                            self.boots.amount=1
-                            self.inv.append(self.boots)
-          
-                        self.boots=item
-                        # Checks if it's a weapon
-                    elif item.typeofitem=="weapon":
-                        # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                        # (So items can be stackable)
-                        if self.weapon in self.inv:
-                            pos=self.inv.index(self.weapon)
-                            self.inv[pos].amount+=1
-                        # If not in the inventory set the amount to 1 and add the new item to inventory
-                        else:
-                            self.weapon.amount=1
-                            self.inv.append(self.weapon)
-          
-                        self.weapon=item
-                    else:
-                        # If it can't be equipped it tells the player and then gives back the item tooken away at the start
-                        print("Item cannot be equipped")
-                        self.inv[pos].amount+=1
+                    inside=True
                 else:
                     self.inv.remove(item)
-                    if item.typeofitem=="helmet":
-                        if self.helmet in self.inv:
-                            pos=self.inv.index(self.helmet)
-                            self.inv[pos].amount+=1
-                        else:
-                          self.helmet.amount=1
-                          self.inv.append(self.helmet)
-                        self.helmet=item
-                    elif item.typeofitem=="chestplate":
-                        if self.chestplate in self.inv:
-                            pos=self.inv.index(self.chestplate)
-                            self.inv[pos].amount+=1
-                        else:
-                            self.chestplate.amount=1
-                            self.inv.append(self.chestplate)
-          
-                        self.chestplate=item
-                    elif item.typeofitem=="leggings":
-                        if self.leggings in self.inv:
-                            pos=self.inv.index(self.leggings)
-                            self.inv[pos].amount+=1
-                        else:
-                            self.leggings.amount=1
-                            self.inv.append(self.leggings)
-          
-                        self.leggings=item
-                    elif item.typeofitem=="boots":
-                        if self.boots in self.inv:
-                            pos=self.inv.index(self.boots)
-                            self.inv[pos].amount+=1
-                        else:
-                            self.boots.amount=1
-                            self.inv.append(self.boots)
-          
-                        self.boots=item
-                    elif item.typeofitem=="weapon":
-                        if self.weapon in self.inv:
-                            pos=self.inv.index(self.weapon)
-                            self.inv[pos].amount+=1
-                        else:
-                            self.weapon.amount=1
-                            self.inv.append(self.weapon)
-          
-                        self.weapon=item
+                    inside=False
+                    # Checks if it's a helmet
+                if item.typeofitem=="helmet":
+                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
+                    # (So items can be stackable)
+                    if self.helmet in self.inv:
+                        pos=self.inv.index(self.helmet)
+                        self.inv[pos].amount+=1
+                    # If not in the inventory set the amount to 1 and add the new item to inventory
                     else:
-                        print("Item cannot be equipped")
+                        self.helmet.amount=1
+                        self.inv.append(self.helmet)
+        
+                    self.helmet=item
+                    # Checks if it's a chestplate
+                elif item.typeofitem=="chestplate":
+                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
+                    # (So items can be stackable)
+                    if self.chestplate in self.inv:
+                        pos=self.inv.index(self.chestplate)
+                        self.inv[pos].amount+=1
+                    # If not in the inventory set the amount to 1 and add the new item to inventory
+                    else:
+                        self.chestplate.amount=1
+                        self.inv.append(self.chestplate)
+        
+                    self.chestplate=item
+                    # Checks if it's leggings
+                elif item.typeofitem=="leggings":
+                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
+                    # (So items can be stackable)
+                    if self.leggings in self.inv:
+                        pos=self.inv.index(self.leggings)
+                        self.inv[pos].amount+=1
+                    # If not in the inventory set the amount to 1 and add the new item to inventory
+                    else:
+                        self.leggings.amount=1
+                        self.inv.append(self.leggings)
+        
+                    self.leggings=item
+                    # Checks if it's boots
+                elif item.typeofitem=="boots":
+                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
+                    # (So items can be stackable)
+                    if self.boots in self.inv:
+                        pos=self.inv.index(self.boots)
+                        self.inv[pos].amount+=1
+                    # If not in the inventory set the amount to 1 and add the new item to inventory
+                    else:
+                        self.boots.amount=1
+                        self.inv.append(self.boots)
+        
+                    self.boots=item
+                    # Checks if it's a weapon
+                elif item.typeofitem=="weapon":
+                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
+                    # (So items can be stackable)
+                    if self.weapon in self.inv:
+                        pos=self.inv.index(self.weapon)
+                        self.inv[pos].amount+=1
+                    # If not in the inventory set the amount to 1 and add the new item to inventory
+                    else:
+                        self.weapon.amount=1
+                        self.inv.append(self.weapon)
+        
+                    self.weapon=item
+                else:
+                    # If it can't be equipped it tells the player and then gives back the item tooken away at the start
+                    print("Item cannot be equipped")
+                    if inside:
+                        self.inv[pos].amount+=1
+                    else:
                         self.inv.append(item)
         self.applystats()
                 
