@@ -128,18 +128,22 @@ class characters: #class is used to make an object
         self.strength+=self.extrastrength
         self.speed+=self.extraspeed    
 
+    # Mage charcter
     def mageSetup(name):
         # Just returns a character object
         return characters("Mage", name, 85, 85, 125, 125, 15, 30, 10, 20, 0, 25, 0, 25, itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
 
+    # Rogue character
     def rogueSetup(name):
         # Just returns a character object
         return characters("Rogue", name, 100, 100, 70, 70, 18, 20, 20, 25, 0, 25, 0, 25, itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
 
+    # Warrior character
     def warriorSetup(name):
         # Just returns a character object
         return characters("Warrior", name, 110, 110, 50, 50, 22, 10, 30, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
         
+    # Testing character
     def testSetup(name):
         inv=[]
         testattacks=[]
@@ -153,6 +157,7 @@ class characters: #class is used to make an object
             testattacks.append(temp)
         return characters("Human", name, 100, 200, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
 
+    # Goes through character creation
     def createCharacter():
         # Gets name
         name = input("What is your name? ")
@@ -187,7 +192,7 @@ class characters: #class is used to make an object
         print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+str(self.weapon.name))
         print("✦ Speed: "+str(self.speed))
         print()
-
+    
     # Shows the inventory of that character
     def showInv(self):
         # Declaring separate lists to organize into sections
@@ -220,19 +225,8 @@ class characters: #class is used to make an object
         for item in range(len(most)):
             print("     "+armorlist[item].name+" "+str(armorlist[item].amount)+"x              "+weaponslist[item].name+" "+str(weaponslist[item].amount)+"x              "+otherslist[item].name+" "+str(otherslist[item].amount)+"x")
         print("\n")
-
-    def itemInfo(self, itemname):
-        # Declares a variable used to determine if item was found
-        found=False
-        # Looks through the entire dictionary to find if any item names match
-        for key,value in itemDict:
-            if itemname.lower()==value.name.lower():
-                value.info()
-                found=True
-        # If the item wasn't found then it prints that the item doesn't exist
-        if not found==True:
-            print("This item doesn't exist")
-
+    
+    # Equips items
     def equip(self, itemname):
         # Looks through entire inventory
         for item in self.inv:
@@ -321,60 +315,73 @@ class characters: #class is used to make an object
                         self.inv.append(item)
         self.applystats()
                 
+    # Player buys item from shop
     def buy(self, buyitem:items):
-      buyitem=buyitem.replace(" ", "").lower()
-      if not buyitem[:1]=="l":
-        try:
-            buyitem=itemDict[buyitem]
-            if buyitem.cost>self.coins:
-                print("You don't have enough coins to buy this item")
-            else:
-                if buyitem in self.inv:
-                    pos=self.inv.index(buyitem)
-                    self.inv[pos].amount+=1
-                    self.coins-=buyitem.cost
-                else: 
-                    self.coins-=buyitem.cost
-                    buyitem.amount=1
-                    self.inv.append(buyitem)
-        except KeyError:
-            print("Did you misspell? because this item doesn't exist")
+        # Syntax because that is what the key for the data in dict is like
+        buyitem=buyitem.replace(" ", "").lower()
+        # if they type leave then nothing will happen
+        if not buyitem[:1]=="l":
+            try:
+                buyitem=itemDict[buyitem]
+                # checks if they have enought coins
+                if buyitem.cost>self.coins:
+                    print("You don't have enough coins to buy this item")
+                else:
+                    # if it's in they inventory then the amount goes up by 1
+                    if buyitem in self.inv:
+                        pos=self.inv.index(buyitem)
+                        self.inv[pos].amount+=1
+                        self.coins-=buyitem.cost
+                    # if it's not in the inventory then it adds new item to inventory
+                    else: 
+                        self.coins-=buyitem.cost
+                        buyitem.amount=1
+                        self.inv.append(buyitem)
+            # If encounters KeyError then the player must of mispelled
+            except KeyError:
+                print("Did you misspell? because this item doesn't exist")
 
+    # Assigns a move to character and allows them to choose which slot to put it in
+    def addMoves(self, move:attacks):
+        # Made so I can type less code
+        print("Congragulations!")
+        print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+move.color+move.name)
+        input("Next ")
+        print("\n"*100)
+        self.attackMenu()
+        while True:
+            slot=inputcheck("Which slot would you like to put the move "+move.color+move.name.replace(" ", "")+Style.RESET_ALL+"? ")
+            # Makes sure in valid slot
+            if slot<=4 and slot>=1:
+                break
+            else:
+                print("Put it in a valid move slot")
+        self.attackmoves[int(slot-1)]=move
+
+    # Checks the level of players if they are a certain level then it gives them new attacks
     def checkLevel(self):
         if self.level==8:
+            # New attacks for mage
             if self.rpgclass.lower()=="mage":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["fireball"].color+" Fireball")
-                input("Next ")
-                print("\n"*100)
-                self.attackMenu()
-                slot=inputcheck("Which slot would you like to put the move "+attackDict["fireball"].color+"Fireball? ")
-                self.attackmoves[int(slot-1)]=attackDict["fireball"]
+                self.addMoves(attackDict["fireball"])
+            # New attacks for warrior
             elif self.rpgclass.lower()=="warrior":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["shieldbash"].color+" Shield Bash")
-                input("Next ")
-                print("\n"*100)
-                self.attackMenu()
-                slot=inputcheck("Which slot would you like to put the move "+attackDict["shieldbash"].color+"Shield Bash? ")
-                self.attackmoves[int(slot-1)]=attackDict["shieldbash"]
+                self.addMoves(attackDict["shieldbash"])
+            # new attacks for rogue
             elif self.rpgclass.lower()=="rogue":
-                print("Congragulations!")
-                print(Fore.LIGHTYELLOW_EX+"You have obtained the attack: "+attackDict["daggerthrow"].color+" Dagger Throw")
-                input("Next ")
-                print("\n"*100)
-                self.attackMenu()
-                slot=inputcheck("Which slot would you like to put the move "+attackDict["daggerthrow"].color+"Shield Bash? ")
-                self.attackmoves[int(slot-1)]=attackDict["daggerthrow"]
-
+                self.addMoves(attackDict["daggerthrow"])
+    
+    # Levels up character
     def levelup(self):
+        # continuosly levels up until xp isn't over the cap
         while self.xp>=self.xpcontainer:
             self.xp=int(self.xp-self.xpcontainer)
             self.level+=1
-            self.xpcontainer=int(self.xpcontainer*1.2)
+            self.xpcontainer=int(self.xpcontainer*1.5)
             print(Fore.YELLOW+"You Leveled Up!"+Style.RESET_ALL+"      You are now level: "+Fore.YELLOW+str(self.level))
             self.checkLevel()
 
+    # Displays and attack menu
     def attackMenu(self):
         moves=[]
         for i in self.attackmoves:
@@ -382,12 +389,8 @@ class characters: #class is used to make an object
         print("Move 1: "+moves[0].color+moves[0].name+Style.RESET_ALL+"Move 3: "+moves[2].color+moves[2].name)
         print("Move 2: "+moves[1].color+moves[1].name+Style.RESET_ALL+"Move 4: "+moves[3].color+moves[3].name)
 
-          
 
-
-player:characters=characters.testSetup('AAAA')
-player.showInv()
-
+# Monsters
 area1skel=characters("Monster", "Skeleton", 100, 100, 20, 20,25, 0, 20,25, 0,0,3,15,itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1gob=characters("Monster", "Goblin", 80, 80, 40, 40, 15, 5, 20,25, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1orc=characters("Monster", "Orc", 120, 120, 30, 30, 25, 5, 38, 15, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
