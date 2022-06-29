@@ -31,7 +31,7 @@ dagger=attacks("Dagger Throw   ", 0, 0, 0, 40, 15,0, "Physical", ["The dagger hi
 bash=attacks("Shield Bash    ", 0, 0, 0, 30, 30,0, "Physical", ["Your shield hits the enemy and pushes him back dealing ", "You sprint at full speed knocking over your enemy dealing ", "You missed..."], Fore.LIGHTGREEN_EX)
 
 ember=attacks("Embers         ", 33, 0, 0, 5, 20,20, "Magic", ["The enemy's is burned by your embers dealing ", "You light the enemy's face on fire dealing ", "The embers couldn't reach the enemy"], Fore.RED)
-fireball= attacks("Fireball       ", 75, 0, 0, 5, 55,45, "Magic", ["The enemy's foot gets hit by a fireball dealing ", "You hit the enemy dead on dealing ", "You launched the fireball only to miss"], Fore.WHITE)
+fireball= attacks("Fireball       ", 75, 0, 0, 5, 55,45, "Magic", ["The enemy's foot gets hit by a fireball dealing ", "You hit the enemy dead on dealing ", "You launched the fireball only to miss"], Fore.RED)
 
 # attacks("               ", 0, 0, 0, 5, 25, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."])
 # attacks("Bonk           ", 0, 0, 0, 5, 25, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."])
