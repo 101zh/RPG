@@ -2,10 +2,8 @@ from character import characters
 from character import inputcheck
 import item
 from item import itemDict
-player=characters.testSetup("jafidjsif")
-player.coins+=2000
 
-
+# Shop func
 def shop(player):
     shoplist=[]
     templist=[]
@@ -85,7 +83,3 @@ def shop(player):
           print("Bye! Come back again!\n")
           break
 
-
-shop(player)
-
-player.showInv()

@@ -24,10 +24,10 @@ class attacks:
 zed= attacks("               ", 0, 0, 0, 0, 0,0, "nonexistent", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
 
 bonk=attacks("Bonk           ", 0, 0, 0, 5, 25,0, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
-slash=attacks("Slash          ", 0, 0, 0, 5, 35,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."],Fore.WHITE)
+slash=attacks("Slash          ", 0, 0, 0, 5, 35,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed...", " cuts you dealing ", " cuts your leg as blood trickles down dealing ", " missed..."],Fore.WHITE)
 cut=attacks("Cut            ", 0, 0, 0, 5, 25,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."], Fore.WHITE)
 
-dagger=attacks("Dagger Throw   ", 0, 0, 0, 40, 15,0, "Physical", ["The dagger hit his skin ", "You hit the enemy's eye dealing ", "You missed..."], Fore.LIGHTRED_EX)
+dagger=attacks("Dagger Throw   ", 0, 0, 0, 40, 15,0, "Physical", ["The dagger is lodged in its arm ", "You hit the enemy's eye dealing ", "You missed..."], Fore.LIGHTRED_EX)
 bash=attacks("Shield Bash    ", 0, 0, 0, 30, 30,0, "Physical", ["Your shield hits the enemy and pushes him back dealing ", "You sprint at full speed knocking over your enemy dealing ", "You missed..."], Fore.LIGHTGREEN_EX)
 
 ember=attacks("Embers         ", 33, 0, 0, 5, 20,20, "Magic", ["The enemy's is burned by your embers dealing ", "You light the enemy's face on fire dealing ", "The embers couldn't reach the enemy"], Fore.RED)
