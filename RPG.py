@@ -9,19 +9,6 @@ import time
 init(autoreset=True)
 
 
-# Finds the info of an item 
-def itemInfo(itemname:str):
-    # Declares a variable used to determine if item was found
-    found=False
-    # Looks through the entire dictionary to find if any item names match
-    for key,value in itemDict.items():
-        if itemname.replace(" ","").lower()==key:
-            value.info()
-            found=True
-    # If the item wasn't found then it prints that the item doesn't exist
-    if not found==True:
-        print("This item doesn't exist")
-
 def helpmenu():
     typehelp=input("What do you want help with?(shop, player, items, hunting) ").lower()
     if typehelp[:1]=="s":
@@ -35,8 +22,13 @@ def helpmenu():
     elif typehelp[:1]=="p":
         print("     Type: stats - to show stats")
         print("     Type: showinv - to show inventory")
+        print("     Type: equip (itemname) - to equip items")
+        print("     Type: use (itemname) - to use that item")
     elif typehelp[:1]=="b":
-        print("     Nothing for now")
+        print("1: Attack")
+        print("2: Use an item")
+        print("3: Status")
+        print("4: Run")
 
 def basicHelp():
     print("     Here is a basic guide to this game")
@@ -73,7 +65,7 @@ def start():
         print("Hunt")
         print("Inventory")
         print("Exit")
-        pinput=input("What would you like to do? ").lower()
+        pinput=input("What would you like to do? ").replace(" ","").lower()
         print()
         if pinput[:1]=="s":
             shop(player)
@@ -81,11 +73,20 @@ def start():
             player.battle()
         elif pinput[:1]=="inv":
             player.showInv()
+            pinput=input("What item do you want to use? ").replace(" ","").lower()
+            if not pinput=="":
+                player.use(pinput)
         elif pinput[:2]=="ex":
             break
         elif pinput[:4]=="info":
-            itemInfo(pinput.replace(" ","").lower()[4:])
+            items.itemInfo(pinput[4:])
             input()
+        elif pinput[:3]=="use":
+            player.use(pinput[3:])
+        elif pinput[:5]=="equip":
+            player.equip(pinput[5:])
+        elif pinput[:2]=="he":
+            help()
         else:
             print("That isn't a command")
             basicHelp()

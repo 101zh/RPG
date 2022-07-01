@@ -29,6 +29,20 @@ class items:
         print("✦ Speed bonus: "+str(self.speed))
 
 
+    # Finds the info of an item 
+    def itemInfo(itemname:str):
+        # Declares a variable used to determine if item was found
+        found=False
+        # Looks through the entire dictionary to find if any item names match
+        for key,value in itemDict.items():
+            if itemname.replace(" ","").lower()==key:
+                value.info()
+                found=True
+        # If the item wasn't found then it prints that the item doesn't exist
+        if not found==True:
+            print("This item doesn't exist")
+
+
 none=items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0, Fore.WHITE)
 
 startHelmet=items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -1, -1, 10, 1,Fore.WHITE)

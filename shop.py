@@ -54,7 +54,7 @@ def shop(player):
                     uihelp+=1
             # When it prints out all weapons it will ask what to buy
             except IndexError:
-                shopinput=input("\nWhat do you want to buy?(type leave to not buy) ")
+                shopinput=input("\nWhat do you want to buy?(type info (itemname) to get info of that item ) ")
                 templist=[]
                 player.buy(shopinput)
                 uihelp=0

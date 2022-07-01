@@ -18,7 +18,7 @@ def inputcheck(message:str):
             break
         except ValueError:
             print("Try again with a num")
-    return message
+    return message.lower()
 
 def monMoveSelect(m):
     while True:
@@ -178,7 +178,7 @@ class characters: #class is used to make an object
             print("What class would you like to be? ")
             print("You can be a Mage, Rogue, or a Warrior")
             rpgclass=input("")
-            rpgclass=rpgclass.lower()
+            rpgclass=rpgclass.replace(" ","").lower()
             # Determines what class they chose
             if rpgclass=="mage":
                 return characters.mageSetup(name)
@@ -352,6 +352,9 @@ class characters: #class is used to make an object
             # If encounters KeyError then the player must of mispelled
             except KeyError:
                 print("Did you misspell? because this item doesn't exist")
+        elif buyitem[:4]=="info":
+            items.itemInfo(buyitem.replace(" ","").lower()[4:])
+            input()
 
     # Assigns a move to character and allows them to choose which slot to put it in
     def addMoves(self, move:attacks):
@@ -540,13 +543,20 @@ class characters: #class is used to make an object
                     if self.battleCheck(m):
                         break
             elif battleinput==2:
-                self.showInv()
-                item=input("What item do you want to use? ")
-                if self.use(item):
-                    monmove=monMoveSelect(m)
-                    monmove=m.attackCalc(monmove, self)
-                    self.hp-=monmove[0]
-                    print("The "+m.name+monmove[1])
+                while True:
+                    self.showInv()
+                    item=input("What item do you want to use?(l to leave) ")
+                    if item.replace(" ","").lower()[:1]=="l":
+                        break
+                    elif item[:4]=="info":
+                        items.itemInfo(item.replace(" ","").lower()[4:])
+                        input()
+                    elif self.use(item):
+                        monmove=monMoveSelect(m)
+                        monmove=m.attackCalc(monmove, self)
+                        self.hp-=monmove[0]
+                        print("The "+m.name+monmove[1])
+                        break
             elif battleinput==3:
                 self.stats()
             elif battleinput==4:
