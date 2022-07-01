@@ -422,6 +422,7 @@ class characters: #class is used to make an object
                     i=vars(i)
                     self.hp+=i["hp"]
                     self.mana+=i["mana"]
+                    print("You gained "+Fore.RED+str(i["hp"])+" health"+Style.RESET_ALL+" and "+Fore.BLUE+str(i["mana"])+" mana")
                     return True
                 else:
                     print("Cannot use this item")
@@ -435,16 +436,16 @@ class characters: #class is used to make an object
         if self.rpgclass=="Monster":
             mondescrip=3
         crit=random.randint(1,1000)
-        crit=crit<self.speed*15
+        crit=crit<self.speed*8
         miss=random.randint(1,1000)
         miss=miss<receiver.speed*2
         attackmessage=attack.descrip[0+mondescrip]
         if attack.type=="Physical":
             buff=int(self.strength/2.25)
-            damage=int((receiver.defense-(receiver.defense/(receiver.defense+180)))*int(attack.damage+buff))
+            damage=int((1-(receiver.defense/(receiver.defense+180)))*int(attack.damage+buff))
         elif attack.type=="Magic":
             buff=(self.intelligence/5)/100
-            damage=int((receiver.defense-(receiver.defense/(receiver.defense+180)))*int(attack.damage*(buff+1)))
+            damage=int((1-(receiver.defense/(receiver.defense+180)))*int(attack.damage*(buff+1)))
             self.mana-=attack.manacost
         else:
             print("ERROR")
@@ -483,7 +484,11 @@ class characters: #class is used to make an object
         print(Fore.LIGHTBLUE_EX+self.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
         while self.hp>0 and m.hp>0:
             # Player selection of moves
-            print("1: Attack\n2: Use an item\n3: Status\n4: Run")
+            print()
+            print("1: Attack                "+Fore.RED+"❤  "+str(m.hp)+"/"+str(m.maxhp)+Style.RESET_ALL+" The "+m.name)
+            print("2: Use an item")
+            print("3: Status                "+Fore.RED+"❤  "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+" "+self.name)
+            print("4: Run")
             battleinput=inputcheck("What would you like to do? ")
             if battleinput==1:
                 self.attackMenu()
@@ -502,6 +507,7 @@ class characters: #class is used to make an object
                 # Calculates damage for both sides
                 monmove=m.attackCalc(monmove, self)
                 move=self.attackCalc(move, m)
+                print()
                 # If player speed> monster speed: player attacks first
                 if self.speed>m.speed:
                     m.hp-=move[0]
@@ -555,6 +561,7 @@ class characters: #class is used to make an object
                     monmove=m.attackCalc(monmove, self)
                     self.hp-=monmove[0]
                     print("The "+m.name+monmove[1])
+                    self.battleCheck(m)
             else:
                 print("Select a valid choice")
 
@@ -563,10 +570,11 @@ area1skel=characters("Monster", "Skeleton", 100, 100, 20, 20,25, 0, 20,25, 0,0,3
 area1gob=characters("Monster", "Goblin", 80, 80, 40, 40, 15, 5, 20,25, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1orc=characters("Monster", "Orc", 120, 120, 30, 30, 25, 5, 38, 15, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 
-player=characters.warriorSetup("aaaaaaaaaaa")
-player.applystats()
-player.restore()
-player.battle()
+# player=characters.mageSetup("aaaaaaaaaaa")
+# player.inv.append(itemDict["largehealthpotion"])
+# player.applystats()
+# player.restore()
+# player.battle()
 
 
 

@@ -24,15 +24,7 @@ def helpmenu():
     elif typehelp[:1]=="b":
         print("     Nothing for now")
 
-def start():
-    print("\n"*100)
-    print("Initializing...")
-    time.sleep(2)
-    print("\n"*100)
-    print("Loading......")
-    time.sleep(1)
-    print("\n"*100)
-    print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
+def basicHelp():
     print("     Here is a basic guide to this game")
     print("     Type: help - for more commands")
     print("     Type: equip (itemname) - to equip items")
@@ -42,13 +34,26 @@ def start():
     print("     Type: hunt - to hunt monsters")
     print("     Type: info (itemname) - to show info of that item")
     input("OK? ")
+
+def start():
+    print("\n"*100)
+    print("Initializing...")
+    time.sleep(2)
+    print("\n"*100)
+    print("Loading......")
+    time.sleep(1)
+    print("\n"*100)
+    print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
+    basicHelp()
     print("\n"*100)
     player=characters.createCharacter()
     print("\nThis is what you look like:")
     player.applystats()
     player.restore()
     player.stats()
+    input()
     while True:
+        print()
         print("Shop")
         print("Hunt")
         print("Inventory")
@@ -56,11 +61,16 @@ def start():
         pinput=input("What would you like to do? ").lower()
         if pinput[:1]=="s":
             shop(player)
-        elif pinput[:1]=="h":
+        elif pinput[:1]=="hu":
             player.battle()
         elif pinput[:1]=="inv":
             player.showInv()
-        elif pinput[:1]=="ex":
+        elif pinput[:2]=="ex":
             break
+        elif pinput[:4]=="info":
+            print("developing")
+        else:
+            print("That isn't a command")
+            basicHelp()
 
-# start()
+start()

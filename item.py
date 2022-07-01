@@ -58,10 +58,10 @@ startStaff=items("Wizard's Staff         ", True,"weapon", 0, 10, 0, 10, -2, 2, 
 startSword=items("Warrior's Sword        ", True,"weapon", 0, -5, 0, 0, 8, -4, 5, 1,Fore.WHITE)
 startDagger=items("Rogue's Dagger         ", True,"weapon", 0, -2, 0, -2, 6, 6, 5, 1,Fore.WHITE)
 
-shppot=items("Small Health Potion    ", True, "usable", 25,0,0,0,0,0,10, 1,Fore.LIGHTRED_EX)
-lhppot=items("Large Health Potion    ", True, "usable", 50,0,0,0,0,0,20, 1,Fore.LIGHTRED_EX)
-smppot=items("Small Mana Potion      ", True, "usable", 0,25,0,0,0,0,10, 1,Fore.LIGHTBLUE_EX)
-lmppot=items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1,Fore.LIGHTBLUE_EX)
+shppot=items("Small Health Potion    ", True, "usable", 35,0,0,0,0,0,10, 1,Fore.LIGHTRED_EX)
+lhppot=items("Large Health Potion    ", True, "usable", 75,0,0,0,0,0,20, 1,Fore.LIGHTRED_EX)
+smppot=items("Small Mana Potion      ", True, "usable", 0,35,0,0,0,0,10, 1,Fore.LIGHTBLUE_EX)
+lmppot=items("Large Mana Potion      ", True, "usable", 0,75,0,0,0,0,20, 1,Fore.LIGHTBLUE_EX)
 
 null=items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
 nullpotion=items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
