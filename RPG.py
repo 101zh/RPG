@@ -8,6 +8,20 @@ import random
 import time
 init(autoreset=True)
 
+
+# Finds the info of an item 
+def itemInfo(itemname:str):
+    # Declares a variable used to determine if item was found
+    found=False
+    # Looks through the entire dictionary to find if any item names match
+    for key,value in itemDict.items():
+        if itemname.replace(" ","").lower()==key:
+            value.info()
+            found=True
+    # If the item wasn't found then it prints that the item doesn't exist
+    if not found==True:
+        print("This item doesn't exist")
+
 def helpmenu():
     typehelp=input("What do you want help with?(shop, player, items, hunting) ").lower()
     if typehelp[:1]=="s":
@@ -36,17 +50,18 @@ def basicHelp():
     input("OK? ")
 
 def start():
-    print("\n"*100)
-    print("Initializing...")
-    time.sleep(2)
-    print("\n"*100)
-    print("Loading......")
-    time.sleep(1)
-    print("\n"*100)
-    print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
-    basicHelp()
-    print("\n"*100)
-    player=characters.createCharacter()
+    # print("\n"*100)
+    # print("Initializing...")
+    # time.sleep(2)
+    # print("\n"*100)
+    # print("Loading......")
+    # time.sleep(1)
+    # print("\n"*100)
+    # print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
+    # basicHelp()
+    # print("\n"*100)
+    # player=characters.createCharacter()
+    player=characters.mageSetup("aaaaaaa")
     print("\nThis is what you look like:")
     player.applystats()
     player.restore()
@@ -59,6 +74,7 @@ def start():
         print("Inventory")
         print("Exit")
         pinput=input("What would you like to do? ").lower()
+        print()
         if pinput[:1]=="s":
             shop(player)
         elif pinput[:1]=="hu":
@@ -68,7 +84,8 @@ def start():
         elif pinput[:2]=="ex":
             break
         elif pinput[:4]=="info":
-            print("developing")
+            itemInfo(pinput.replace(" ","").lower()[4:])
+            input()
         else:
             print("That isn't a command")
             basicHelp()

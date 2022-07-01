@@ -1,5 +1,6 @@
 import colorama
 from colorama import Fore, Back, Style
+
 itemDict={}
 
 class items:
@@ -19,7 +20,7 @@ class items:
         itemDict[self.name.replace(" ","").lower()]= self
     # Displays info of item
     def info(self):
-        print(self.name+"'s stats")
+        print(self.name+"stats")
         print(Fore.LIGHTRED_EX+"❤ HP bonus: "+str(self.hp)+Fore.LIGHTYELLOW_EX+"            Cost: "+str(self.cost))
         print(Fore.LIGHTGREEN_EX+"❈ Defense bonus: "+str(self.defense))
         print(Fore.LIGHTBLUE_EX+"🕮  Mana bonus: "+str(self.mana))
@@ -27,18 +28,6 @@ class items:
         print(Fore.RED+"❁ Strength bonus: "+str(self.strength))
         print("✦ Speed bonus: "+str(self.speed))
 
-    # Finds the info of an item 
-    def itemInfo(itemname):
-        # Declares a variable used to determine if item was found
-        found=False
-        # Looks through the entire dictionary to find if any item names match
-        for key,value in itemDict:
-            if itemname.lower()==value.name.lower():
-                value.info()
-                found=True
-        # If the item wasn't found then it prints that the item doesn't exist
-        if not found==True:
-            print("This item doesn't exist")
 
 none=items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0, Fore.WHITE)
 
