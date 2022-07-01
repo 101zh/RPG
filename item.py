@@ -3,7 +3,7 @@ from colorama import Fore, Back, Style
 itemDict={}
 
 class items:
-    def __init__(self,name:str,buyable:bool,  typeofitem:str, hp:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, cost:float, amount:int):
+    def __init__(self,name:str, buyable:bool,  typeofitem:str, hp:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, cost:float, amount:int, color):
         self.typeofitem=typeofitem
         self.name=name
         self.hp=hp
@@ -15,6 +15,7 @@ class items:
         self.cost=cost
         self.buyable=buyable
         self.amount=amount
+        self.color= color
         itemDict[self.name.replace(" ","").lower()]= self
     # Displays info of item
     def info(self):
@@ -39,58 +40,58 @@ class items:
         if not found==True:
             print("This item doesn't exist")
 
-none=items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0)
+none=items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0, Fore.WHITE)
 
-startHelmet=items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
-startChestplate=items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
-startLeggings=items("Starter Leggings       ",True,"leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
-startBoots=items("Starter Boots          ",True,"boots", 5 , 0, 5, 0, -2, -2, 10, 1)
+startHelmet=items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -1, -1, 10, 1,Fore.WHITE)
+startChestplate=items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -1, -1, 10, 1,Fore.WHITE)
+startLeggings=items("Starter Leggings       ",True,"leggings", 5 , 0, 5, 0, -1, -1, 10, 1,Fore.WHITE)
+startBoots=items("Starter Boots          ",True,"boots", 5 , 0, 5, 0, -1, -1, 10, 1,Fore.WHITE)
 
-skelsword=items("Skeleton Sword         ", True,"weapon", 0, 15, 0, 0, 8, -4, 5, 1)
+skelsword=items("Skeleton Sword         ", True,"weapon", 0, 15, 0, 0, 8, -4, 5, 1,Fore.WHITE)
 
-wizardHat=items("Wizard Hat             ",True,"helmet", 5, 20, -5, 5, -5, 4, 20, 1)
-wizardRobe=items("Wizard Robe            ",True,"chestplate", 5, 20, -5, 5, -5, 4, 20, 1)
-wizardPants=items("Wizard Pants           ",True,"leggings", 5, 20, -5, 5, -5, 4, 20, 1)
-wizardBoots=items("Wizard Boots           ",True,"boots", 5, 20, -5, 5, -5, 4, 20, 1)
+wizardHat=items("Wizard Hat             ",True,"helmet", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+wizardRobe=items("Wizard Robe            ",True,"chestplate", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+wizardPants=items("Wizard Pants           ",True,"leggings", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+wizardBoots=items("Wizard Boots           ",True,"boots", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
 
-startStaff=items("Wizard's Staff         ", True,"weapon", 0, 10, 0, 10, -2, 2, 5, 1)
-startSword=items("Warrior's Sword        ", True,"weapon", 0, -5, 0, 0, 8, -4, 5, 1)
-startDagger=items("Rogue's Dagger         ", True,"weapon", 0, -2, 0, -2, 6, 6, 5, 1)
+startStaff=items("Wizard's Staff         ", True,"weapon", 0, 10, 0, 10, -2, 2, 5, 1,Fore.WHITE)
+startSword=items("Warrior's Sword        ", True,"weapon", 0, -5, 0, 0, 8, -4, 5, 1,Fore.WHITE)
+startDagger=items("Rogue's Dagger         ", True,"weapon", 0, -2, 0, -2, 6, 6, 5, 1,Fore.WHITE)
 
-shppot=items("Small Health Potion    ", True, "usable", 25,0,0,0,0,0,10, 1)
-lhppot=items("Large Health Potion    ", True, "usable", 50,0,0,0,0,0,20, 1)
-smppot=items("Small Mana Potion      ", True, "usable", 0,25,0,0,0,0,10, 1)
-lmppot=items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1)
+shppot=items("Small Health Potion    ", True, "usable", 25,0,0,0,0,0,10, 1,Fore.LIGHTRED_EX)
+lhppot=items("Large Health Potion    ", True, "usable", 50,0,0,0,0,0,20, 1,Fore.LIGHTRED_EX)
+smppot=items("Small Mana Potion      ", True, "usable", 0,25,0,0,0,0,10, 1,Fore.LIGHTBLUE_EX)
+lmppot=items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1,Fore.LIGHTBLUE_EX)
 
-null=items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1)
-nullpotion=items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1)
-nullBoots=items("null boots             ", False,"boots", 0, 0, 0, 0, 0, 0, 0, 1)
+null=items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
+nullpotion=items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
+nullBoots=items("null boots             ", False,"boots", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
 
 
 # Used to make sure all strings have the same amount of spaces
 # items("                       ", False,"null", 0, 0, 0, 0, 0, 0, 0, 0)
 
-# items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1)
-# items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1)
-# items("Starter Leggings       ",True,"leggings", 5 , 0, 5, 0, -2, -2, 10, 1)
-# items("Starter Boots          ",True,"boots", 5 , 0, 5, 0, -2, -2, 10, 1)
+# items("Starter Helmet         ",True,"helmet", 5 , 0, 5, 0, -2, -2, 10, 1,Fore.WHITE)
+# items("Starter Chestplate     ",True,"chestplate", 5 , 0, 5, 0, -2, -2, 10, 1,Fore.WHITE)
+# items("Starter Leggings       ",True,"leggings", 5 , 0, 5, 0, -2, -2, 10, 1,Fore.WHITE)
+# items("Starter Boots          ",True,"boots", 5 , 0, 5, 0, -2, -2, 10, 1,Fore.WHITE)
 
-# items("Skeleton Sword         ", True,"weapon", 0, 15, 0, 0, 8, -4, 5, 1)
+# items("Skeleton Sword         ", True,"weapon", 0, 15, 0, 0, 8, -4, 5, 1,Fore.WHITE)
 
-# items("Wizard Hat             ",True,"helmet", 5, 20, -5, 5, -5, 4, 20, 1)
-# items("Wizard Robe            ",True,"chestplate", 5, 20, -5, 5, -5, 4, 20, 1)
-# items("Wizard Pants           ",True,"leggings", 5, 20, -5, 5, -5, 4, 20, 1)
-# items("Wizard Boots           ",True,"boots", 5, 20, -5, 5, -5, 4, 20, 1)
+# items("Wizard Hat             ",True,"helmet", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+# items("Wizard Robe            ",True,"chestplate", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+# items("Wizard Pants           ",True,"leggings", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
+# items("Wizard Boots           ",True,"boots", 5, 20, -5, 5, -5, 4, 20, 1,Fore.WHITE)
 
-# items("Wizard's Staff         ", True,"weapon", 0, 10, 0, 10, -2, 2, 5, 1)
-# items("Warrior's Sword        ", True,"weapon", 0, -5, 0, 0, 8, -4, 5, 1)
-# items("Rogue's Dagger         ", True,"weapon", 0, -2, 0, -2, 6, 6, 5, 1)
+# items("Wizard's Staff         ", True,"weapon", 0, 10, 0, 10, -2, 2, 5, 1,Fore.WHITE)
+# items("Warrior's Sword        ", True,"weapon", 0, -5, 0, 0, 8, -4, 5, 1,Fore.WHITE)
+# items("Rogue's Dagger         ", True,"weapon", 0, -2, 0, -2, 6, 6, 5, 1,Fore.WHITE)
 
-# items("Small Health Potion    ", True, "usable", 25,0,0,0,0,0,10, 1)
-# items("Large Health Potion    ", True, "usable", 50,0,0,0,0,0,20, 1)
-# items("Small Mana Potion      ", True, "usable", 0,25,0,0,0,0,10, 1)
-# items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1)
+# items("Small Health Potion    ", True, "usable", 25,0,0,0,0,0,10, 1,Fore.WHITE)
+# items("Large Health Potion    ", True, "usable", 50,0,0,0,0,0,20, 1,Fore.WHITE)
+# items("Small Mana Potion      ", True, "usable", 0,25,0,0,0,0,10, 1,Fore.WHITE)
+# items("Large Mana Potion      ", True, "usable", 0,50,0,0,0,0,20, 1,Fore.WHITE)
 
-# items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1)
-# items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1)
-# items("null boots             ", False,"boots", 0, 0, 0, 0, 0, 0, 0, 1)
+# items("null                   ",False, "weapon", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
+# items("null potion            ",False, "usable", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)
+# items("null boots             ", False,"boots", 0, 0, 0, 0, 0, 0, 0, 1,Fore.WHITE)

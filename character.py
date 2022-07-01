@@ -6,11 +6,9 @@ from colorama import init
 init(autoreset=True)
 from colorama import Fore, Back, Style
 import item
-from item import items
-from item import itemDict
+from item import items,itemDict
 import attack
-from attack import attacks
-from attack import attackDict
+from attack import attacks,attackDict
 monlist=[]
 
 def inputcheck(message:str):
@@ -21,6 +19,20 @@ def inputcheck(message:str):
         except ValueError:
             print("Try again with a num")
     return message
+
+def monMoveSelect(m):
+    while True:
+        monmove:attacks=random.randint(0,3)
+        if not m.attackmoves[monmove].type=="nonexistent":
+            monmove=m.attackmoves[monmove]
+            break
+    return monmove
+
+def monsterSelection():
+    m=random.randint(0,2)
+    m=monlist[m]
+    return m
+
 
 class characters: #class is used to make an object
     def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, maxmana:int, mana:int, defense:int, intelligence:int, strength:int, speed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list, attackmoves:list):
@@ -141,7 +153,7 @@ class characters: #class is used to make an object
     # Warrior character
     def warriorSetup(name):
         # Just returns a character object
-        return characters("Warrior", name, 110, 110, 50, 50, 22, 10, 30, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Warrior", name, 110, 110, 50, 50, 22, 10, 28, 14, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
         
     # Testing character
     def testSetup(name):
@@ -223,11 +235,11 @@ class characters: #class is used to make an object
         print("Armor:                                 Weapons:                                 Others:")
         # Prints the amount of times the largest list has to cover all items.
         for item in range(len(most)):
-            print("     "+armorlist[item].name+" "+str(armorlist[item].amount)+"x              "+weaponslist[item].name+" "+str(weaponslist[item].amount)+"x              "+otherslist[item].name+" "+str(otherslist[item].amount)+"x")
+            print("     "+armorlist[item].color+armorlist[item].name+Style.RESET_ALL+" "+str(armorlist[item].amount)+"x              "+weaponslist[item].color+weaponslist[item].name+Style.RESET_ALL+" "+str(weaponslist[item].amount)+"x              "+otherslist[item].color+otherslist[item].name+Style.RESET_ALL+" "+str(otherslist[item].amount)+"x")
         print("\n")
     
-    # Equips items
-    def equip(self, itemname):
+    # Equips items  
+    def equip(self, itemname:str):
         # Looks through entire inventory
         for item in self.inv:
             # if the names match then do below
@@ -316,13 +328,13 @@ class characters: #class is used to make an object
         self.applystats()
                 
     # Player buys item from shop
-    def buy(self, buyitem:items):
+    def buy(self, buyitem:str):
         # Syntax because that is what the key for the data in dict is like
         buyitem=buyitem.replace(" ", "").lower()
         # if they type leave then nothing will happen
         if not buyitem[:1]=="l":
             try:
-                buyitem=itemDict[buyitem]
+                buyitem:items=itemDict[buyitem]
                 # checks if they have enought coins
                 if buyitem.cost>self.coins:
                     print("You don't have enough coins to buy this item")
@@ -395,8 +407,166 @@ class characters: #class is used to make an object
             return True
         else:
             return False
+    
+    # allows user to regen mana and health by drinking potions
+    def use(self, item:str):
+        for i in self.inv:
+            i:items
+            if item.replace(" ", "").lower()==i.name.replace(" ","").lower():
+                if i.typeofitem=="usable":
+                    if i.amount==1:
+                        self.inv.remove(i)
+                    else:
+                        pos=self.inv.index(i)
+                        self.inv[pos].amount-1
+                    i=vars(i)
+                    self.hp+=i["hp"]
+                    self.mana+=i["mana"]
+                    return True
+                else:
+                    print("Cannot use this item")
+            else:
+                print("Couldn't find this item")
+        return False
+
+    # calculates the damage of an attack
+    def attackCalc(self, attack:attacks, receiver):
+        mondescrip=0
+        if self.rpgclass=="Monster":
+            mondescrip=3
+        crit=random.randint(1,1000)
+        crit=crit<self.speed*15
+        miss=random.randint(1,1000)
+        miss=miss<receiver.speed*2
+        attackmessage=attack.descrip[0+mondescrip]
+        if attack.type=="Physical":
+            buff=int(self.strength/2.25)
+            damage=int((receiver.defense-(receiver.defense/(receiver.defense+180)))*int(attack.damage+buff))
+        elif attack.type=="Magic":
+            buff=(self.intelligence/5)/100
+            damage=int((receiver.defense-(receiver.defense/(receiver.defense+180)))*int(attack.damage*(buff+1)))
+            self.mana-=attack.manacost
+        else:
+            print("ERROR")
+        if crit:
+            attackmessage=attack.descrip[1+mondescrip]
+            damage=int(damage*1.6)
+        if miss:
+            return [0,attack.descrip[2+mondescrip]+"0 damage"]
+        else:
+            return [damage,attackmessage+str(damage)+" damage"]
+
+    # Checks if anyone has died yet
+    def battleCheck(self,m):
+        m:characters
+        if m.isDead() and self.isDead():
+            print("You both are close to dying")
+            print("You are forced to run away")
+            return True
+        elif m.isDead():
+            print("The "+m.name+" is dead!")
+            reward=random.randint(5,20)
+            print("You Won! You found "+Fore.YELLOW+str(reward)+" coins")
+            self.coins+=reward
+            return True
+        elif self.isDead():
+            print("You almost died...")
+            print("You were still able to escape")
+            return True
+        return False
+    
+
+    def battle(self):
+        m:characters=monsterSelection()
+        m.applystats()
+        m.restore()
+        print(Fore.LIGHTBLUE_EX+self.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
+        while self.hp>0 and m.hp>0:
+            # Player selection of moves
+            print("1: Attack\n2: Use an item\n3: Status\n4: Run")
+            battleinput=inputcheck("What would you like to do? ")
+            if battleinput==1:
+                self.attackMenu()
+                while True:
+                    move=inputcheck("Which move would you like to use? ")
+                    try:
+                        move:attacks=self.attackmoves[move-1]
+                        if not move.type=="nonexistent":
+                            break
+                        else:
+                            print("Try again with a valid move")
+                    except IndexError:
+                        print("Try again with a valid move")
+                # Monster selecion of moves
+                monmove=monMoveSelect(m)
+                # Calculates damage for both sides
+                monmove=m.attackCalc(monmove, self)
+                move=self.attackCalc(move, m)
+                # If player speed> monster speed: player attacks first
+                if self.speed>m.speed:
+                    m.hp-=move[0]
+                    # Printing the attack move and then checking for death
+                    print(move[1])
+                    if self.battleCheck(m):
+                        break
+                    self.hp-=monmove[0]
+                    # Printing the attack move and then checking for death
+                    print("The "+m.name+monmove[1])
+                    if self.battleCheck(m):
+                        break
+                    print()
+                # If monster speed > player speed: monster attacks first
+                elif m.speed>self.speed:
+                    self.hp-=monmove[0]
+                    print("The "+m.name+monmove[1])               
+                    if self.battleCheck(m):
+                        break
+                    m.hp-=move[0]
+                    print(move[1])
+                    if self.battleCheck(m):
+                        break
+                # If monster speed==player speed(process of elimination): attack at the same time
+                else:
+                    self.hp-=monmove[0]
+                    m.hp-=move[0]
+                    print(move[1])
+                    print("The "+m.name+monmove[1])
+                    if self.battleCheck(m):
+                        break
+            elif battleinput==2:
+                self.showInv()
+                item=input("What item do you want to use? ")
+                if self.use(item):
+                    monmove=monMoveSelect(m)
+                    monmove=m.attackCalc(monmove, self)
+                    self.hp-=monmove[0]
+                    print("The "+m.name+monmove[1])
+            elif battleinput==3:
+                self.stats()
+            elif battleinput==4:
+                escapechance=random.randint(1,1000)
+                if self.speed*25<escapechance:
+                    print("You sucessfully escaped")
+                    print("\n"*150)
+                    break
+                else:
+                    print("You weren't able to escape")
+                    monmove=monMoveSelect(m)
+                    monmove=m.attackCalc(monmove, self)
+                    self.hp-=monmove[0]
+                    print("The "+m.name+monmove[1])
+            else:
+                print("Select a valid choice")
 
 # Monsters
 area1skel=characters("Monster", "Skeleton", 100, 100, 20, 20,25, 0, 20,25, 0,0,3,15,itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1gob=characters("Monster", "Goblin", 80, 80, 40, 40, 15, 5, 20,25, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 area1orc=characters("Monster", "Orc", 120, 120, 30, 30, 25, 5, 38, 15, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+
+player=characters.warriorSetup("aaaaaaaaaaa")
+player.applystats()
+player.restore()
+player.battle()
+
+
+
