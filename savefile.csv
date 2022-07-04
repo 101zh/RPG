@@ -1,0 +1,2 @@
+col0,rpgclass,name,maxhp,hp,extrahp,maxmana,mana,extramana,defense,extradefense,intelligence,extraintelligence,strength,extrastrength,speed,extraspeed,xp,xpcontainer,level,coins,weapon,helmet,chestplate,leggings,boots,inv,attackmoves
+player,Mage,aaaa,105,105,20,135,135,10,35,20,40,10,4,-6,18,-2,0,25,0,25,wizard'sstaff,starterhelmet,starterchestplate,starterleggings,starterboots,nullboots ,bonk embers   

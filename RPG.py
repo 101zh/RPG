@@ -1,8 +1,10 @@
-from attack import attacks
+import numpy
+from attack import attacks, attackDict
 from character import characters,monlist, inputcheck
 from item import items, itemDict
 from shop import shop
 import colorama
+import pandas as pd
 from colorama import Fore,Back,Style, init
 import random
 import time
@@ -29,6 +31,50 @@ def helpmenu():
         print("2: Use an item")
         print("3: Status")
         print("4: Run")
+
+def saveExit(p:characters):
+    save= pd.read_csv("RPG\savefile.csv", index_col="col0")
+    loops=1
+    p=p.__dict__
+    for key,data in p.items():
+        if loops<=20:
+            save.iloc[0, loops-1] = data
+            loops+=1
+    invstr=""
+    attackstr=""
+    for i in p["inv"]:
+        invstr+=i.name.replace(" ","").lower()+" "
+    for i in p["attackmoves"]:
+        attackstr+=i.name.replace(" ","").lower()+" "
+    save.loc['player', 'weapon']=p["weapon"].name.replace(" ","").lower()
+    save.loc['player', 'helmet']=p["helmet"].name.replace(" ","").lower()
+    save.loc['player', 'chestplate']=p["chestplate"].name.replace(" ","").lower()
+    save.loc['player', 'boots']=p["boots"].name.replace(" ","").lower()
+    save.loc['player', 'leggings']=p["leggings"].name.replace(" ","").lower()
+    save.loc['player', 'inv']=invstr
+    save.loc['player', 'attackmoves']=attackstr
+    save.to_csv('RPG\savefile.csv')
+
+def load():
+    save=pd.read_csv("RPG\savefile.csv", index_col="col0")
+    print(save.iloc[0,0])
+    if not save.loc["player","rpgclass"]=="new":
+        statslist=[]
+        for i in range(25):
+            statslist.append(save.iloc[0,i])
+            print(statslist)
+        inv=save.loc["player","inv"].rstrip()
+        inventory=inv.split(" ")
+        for i in inventory:
+            inventory[inventory.index(i)]=itemDict[i]
+        moves=save.loc["player", "attackmoves"].rstrip()
+        moves=moves.split(" ")
+        for i in moves:
+            moves[moves.index(i)]=attackDict[i]
+        while len(moves)<4:
+            moves.append(itemDict[""])
+        return characters(statslist[0],statslist[1],statslist[2],statslist[3],statslist[4],statslist[5],statslist[6],statslist[7],statslist[8],statslist[9],statslist[10],statslist[11],statslist[12],statslist[13],statslist[14],statslist[15],statslist[16],statslist[17],statslist[18],statslist[19],itemDict[statslist[20]],itemDict[statslist[21]],itemDict[statslist[22]],itemDict[statslist[23]],itemDict[statslist[24]], inventory, moves)
+    return False
 
 def basicHelp():
     print("     Here is a basic guide to this game")
@@ -77,6 +123,7 @@ def start():
             if not pinput=="":
                 player.use(pinput)
         elif pinput[:2]=="ex":
+            
             break
         elif pinput[:4]=="info":
             items.itemInfo(pinput[4:])
@@ -91,4 +138,15 @@ def start():
             print("That isn't a command")
             basicHelp()
 
-start()
+# start()
+p=characters.mageSetup("aaaa")
+p.applystats()
+p.restore()
+p.inv.append(itemDict["nullboots"])
+saveExit(p)
+p=load()
+
+p.stats()
+p.showInv()
+p.attackMenu()
+
