@@ -71,6 +71,8 @@ class characters: #class is used to make an object
     # Merges items together if they are the same type( so it takes less space in inv menu)
     def mergeItems(self):
         for item in self.inv:
+            if item.amount<=0:
+                self.inv.remove(item)
             for i in self.inv:
                 if i.name==item.name:
                     self.inv.remove(item)
@@ -256,87 +258,40 @@ class characters: #class is used to make an object
         for item in self.inv:
             # if the names match then do below
             if itemname.lower()==item.name.lower():
-                # If the amount of that item is 1 do what is indented
-                if item.amount>1:
-                    # Finds the item position to subtract 1 from it because it is no longer in inv
-                    pos=self.inv.index(item)
-                    self.inv[pos].amount-=1
-                    inside=True
-                else:
-                    self.inv.remove(item)
-                    inside=False
-                    # Checks if it's a helmet
+                # Gets pos of the item and then alter the amount of that item in the inv
+                pos=self.inv.index(item)
+                self.inv[pos].amount-=1
+                # Checks if it's a helmet
                 if item.typeofitem=="helmet":
-                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                    # (So items can be stackable)
-                    if self.helmet in self.inv:
-                        pos=self.inv.index(self.helmet)
-                        self.inv[pos].amount+=1
-                    # If not in the inventory set the amount to 1 and add the new item to inventory
-                    else:
-                        self.helmet.amount=1
-                        self.inv.append(self.helmet)
-        
+                    # Exchanges armor pieces
+                    self.inv.append(self.helmet)
                     self.helmet=item
-                    # Checks if it's a chestplate
+                # Checks if it's a chestplate
                 elif item.typeofitem=="chestplate":
-                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                    # (So items can be stackable)
-                    if self.chestplate in self.inv:
-                        pos=self.inv.index(self.chestplate)
-                        self.inv[pos].amount+=1
-                    # If not in the inventory set the amount to 1 and add the new item to inventory
-                    else:
-                        self.chestplate.amount=1
-                        self.inv.append(self.chestplate)
-        
+                    # Exchanges armor pieces
+                    self.inv.append(self.chestplate)       
                     self.chestplate=item
-                    # Checks if it's leggings
+                # Checks if it's leggings
                 elif item.typeofitem=="leggings":
-                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                    # (So items can be stackable)
-                    if self.leggings in self.inv:
-                        pos=self.inv.index(self.leggings)
-                        self.inv[pos].amount+=1
-                    # If not in the inventory set the amount to 1 and add the new item to inventory
-                    else:
-                        self.leggings.amount=1
-                        self.inv.append(self.leggings)
-        
+                    # Exchanges armor pieces
+                    self.inv.append(self.leggings)
                     self.leggings=item
-                    # Checks if it's boots
+                # Checks if it's boots
                 elif item.typeofitem=="boots":
-                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                    # (So items can be stackable)
-                    if self.boots in self.inv:
-                        pos=self.inv.index(self.boots)
-                        self.inv[pos].amount+=1
-                    # If not in the inventory set the amount to 1 and add the new item to inventory
-                    else:
-                        self.boots.amount=1
-                        self.inv.append(self.boots)
-        
+                    # Exchanges armor pieces
+                    self.inv.append(self.boots)        
                     self.boots=item
-                    # Checks if it's a weapon
+                # Checks if it's a weapon
                 elif item.typeofitem=="weapon":
-                    # If what the player is currently wearing is in the inventory increase the amount of it in inventory
-                    # (So items can be stackable)
-                    if self.weapon in self.inv:
-                        pos=self.inv.index(self.weapon)
-                        self.inv[pos].amount+=1
-                    # If not in the inventory set the amount to 1 and add the new item to inventory
-                    else:
-                        self.weapon.amount=1
-                        self.inv.append(self.weapon)
-        
+                    # Exchanges Weapons
+                    self.inv.append(self.weapon)
                     self.weapon=item
+                # If it can't be equipped it tells the player and then gives back the item tooken away at the start
                 else:
-                    # If it can't be equipped it tells the player and then gives back the item tooken away at the start
                     print("Item cannot be equipped")
-                    if inside:
-                        self.inv[pos].amount+=1
-                    else:
-                        self.inv.append(item)
+                    pos=self.inv.index(item)
+                    self.inv[pos].amount+=1
+        self.mergeItems()
         self.applystats()
                 
     # Player buys item from shop
@@ -352,7 +307,6 @@ class characters: #class is used to make an object
                     print("You don't have enough coins to buy this item")
                 else:
                     self.coins-=buyitem.cost
-                    buyitem.amount=1
                     self.inv.append(buyitem)
                     self.mergeItems()
             # If encounters KeyError then the player must of mispelled
@@ -423,15 +377,13 @@ class characters: #class is used to make an object
             i:items
             if item.replace(" ", "").lower()==i.name.replace(" ","").lower():
                 if i.typeofitem=="usable":
-                    if i.amount==1:
-                        self.inv.remove(i)
-                    else:
-                        pos=self.inv.index(i)
-                        self.inv[pos].amount-1
+                    pos=self.inv.index(i)
+                    self.inv[pos].amount-1
                     i=vars(i)
                     self.hp+=i["hp"]
                     self.mana+=i["mana"]
                     print("You gained "+Fore.RED+str(i["hp"])+" health"+Style.RESET_ALL+" and "+Fore.BLUE+str(i["mana"])+" mana")
+                    self.mergeItems()
                     return True
                 else:
                     print("Cannot use this item")
@@ -490,7 +442,7 @@ class characters: #class is used to make an object
                 else:
                     self.inv.append(loot)
                     print("You also obtained: "+loot.color+loot.name)
-
+            self.mergeItems()
             return True
         elif self.isDead():
             print("You almost died...")
