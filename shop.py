@@ -1,10 +1,10 @@
 from character import characters
 from character import inputcheck
-import item
-from item import itemDict
+from item import items, itemDict
+
 
 # Shop func
-def shop(player):
+def shop(player:characters):
     shoplist=[]
     templist=[]
     uihelp=0
@@ -22,7 +22,8 @@ def shop(player):
             print("\nArmor:")
             # Getting all armor into a list
             for item in shoplist:
-                if item.typeofitem=="helmet" or item.typeofitem=="chestplate" or item.typeofitem=="boots" or item.typeofitem=="leggings":
+                item:items
+                if (item.typeofitem=="helmet" or item.typeofitem=="chestplate" or item.typeofitem=="boots" or item.typeofitem=="leggings") and item.area==player.area.areanum:
                     templist.append(item)
                     tempamount=range(len(templist))
             
@@ -43,7 +44,7 @@ def shop(player):
             print("\nWeapons:")
             # Getting all weapons into a list
             for item in shoplist:
-                if item.typeofitem=="weapon":
+                if item.typeofitem=="weapon" and item.area==player.area.areanum:
                     templist.append(item)
                     tempamount=range(len(templist))        
             try:
@@ -62,9 +63,9 @@ def shop(player):
         elif shopinput[:1]=="o":
             print("\nOther Items:")
             # Getting all other items into a list
-            for i in shoplist:
-                if i.typeofitem=="usable" and i.buyable==True:
-                    templist.append(i)
+            for item in shoplist:
+                if item.typeofitem=="usable" and item.area==player.area.areanum:
+                    templist.append(item)
                     tempamount=range(len(templist))        
             try:  
                 # Prints out all other items 

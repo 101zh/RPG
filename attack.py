@@ -21,23 +21,17 @@ class attacks:
       # self.specfuncinput=specfuncinput
       attackDict[self.name.replace(" ","").lower()]= self
 
-zed= attacks("               ", 0, 0, 0, 0, 0,0, "nonexistent", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
+attacks("               ", 0, 0, 0, 0, 0,0, "nonexistent", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
 
-bonk=attacks("Bonk           ", 0, 0, 0, 5, 25,0, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."],Fore.WHITE)
-slash=attacks("Slash          ", 0, 0, 0, 5, 35,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed...", " cuts you dealing ", " cuts your leg as blood trickles down dealing ", " missed..."],Fore.WHITE)
-cut=attacks("Cut            ", 0, 0, 0, 5, 25,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."], Fore.WHITE)
+attacks("Pounce         ", 0, 0, 0, 10, 15, 0, "Physical", ["You pounce upon the enemy dealing ", "You bellyflop onto the enemy dealing ", "You missed...", " bouces on you dealing ", " covers you in slime as the pouce upon you dealing ", " missed..."], Fore.WHITE)
+attacks("Bonk           ", 0, 0, 0, 5, 25,0, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed...", " bonks you on the head dealing ", " bludgeon your head dealing ", " missed... "],Fore.WHITE)
+attacks("Slash          ", 0, 0, 0, 5, 30,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed...", " cuts you dealing ", " cuts your leg as blood trickles down dealing ", " missed..."],Fore.WHITE)
+attacks("Cut            ", 0, 0, 0, 5, 25,0, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."], Fore.WHITE)
 
-dagger=attacks("Dagger Throw   ", 0, 0, 0, 40, 15,0, "Physical", ["The dagger is lodged in its arm ", "You hit the enemy's eye dealing ", "You missed..."], Fore.LIGHTRED_EX)
-bash=attacks("Shield Bash    ", 0, 0, 0, 30, 30,0, "Physical", ["Your shield hits the enemy and pushes him back dealing ", "You sprint at full speed knocking over your enemy dealing ", "You missed..."], Fore.LIGHTGREEN_EX)
+attacks("Dagger Throw   ", 0, 0, 0, 40, 15,0, "Physical", ["The dagger is lodged in its arm ", "You hit the enemy's eye dealing ", "You missed..."], Fore.LIGHTRED_EX)
+attacks("Shield Bash    ", 0, 0, 0, 30, 30,0, "Physical", ["Your shield hits the enemy and pushes him back dealing ", "You sprint at full speed knocking over your enemy dealing ", "You missed..."], Fore.LIGHTGREEN_EX)
 
-ember=attacks("Embers         ", 33, 0, 0, 5, 20,20, "Magic", ["The enemy's is burned by your embers dealing ", "You light the enemy's face on fire dealing ", "The embers couldn't reach the enemy"], Fore.RED)
-fireball= attacks("Fireball       ", 75, 0, 0, 5, 55,45, "Magic", ["The enemy's foot gets hit by a fireball dealing ", "You hit the enemy dead on dealing ", "You launched the fireball only to miss"], Fore.RED)
+attacks("Embers         ", 33, 0, 0, 5, 20,20, "Magic", ["The enemy's is burned by your embers dealing ", "You light the enemy's face on fire dealing ", "The embers couldn't reach the enemy"], Fore.RED)
+attacks("Fireball       ", 75, 0, 0, 5, 55,45, "Magic", ["The enemy's foot gets hit by a fireball dealing ", "You hit the enemy dead on dealing ", "You launched the fireball only to miss"], Fore.RED)
 
-# attacks("               ", 0, 0, 0, 5, 25, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."])
-# attacks("Bonk           ", 0, 0, 0, 5, 25, "Physical", ["You hit the enemy's arm dealing ", "You bludgeon the enemy's head dealing ", "You missed..."])
-# attacks("Slash          ", 0, 0, 0, 5, 35, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."])
-# attacks("Cut            ", 0, 0, 0, 5, 25, "Physical", ["You cut the enemy dealing ", "You hit the enemy's eye dealing ", "You missed..."])
-# attacks("Dagger Throw   ", 0, 0, 0, 40, 15, "Physical", ["The dagger hit his skin ", "You hit the enemy's eye dealing ", "You missed..."])
-# attacks("Shield Bash    ", 0, 0, 0, 30, 30, "Physical", ["Your shield hits the enemy and pushes him back dealing ", "You sprint at full speed knocking over your enemy dealing ", "You missed..."])
-# attacks("Embers         ", 33, 0, 0, 5, 20, "Magic", ["The enemy's is burned by your embers dealing ", "You light the enemy's face on fire dealing ", "The embers couldn't reach the enemy"])
-# attacks("Fireball       ", 75, 0, 0, 5, 55, "Magic", ["The enemy's foot gets hit by a fireball dealing ", "You hit the enemy dead on dealing ", "You launched the fireball only to miss"])
+

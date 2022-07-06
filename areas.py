@@ -18,6 +18,6 @@ class area:
                 self.shopitems.append(data)
 
 
-area("Null", 1, [],[])
+area("Null", 0, [],[])
 area("Green Hills", 1, [],[])
-
+area("Enchanting Forest", 2, [],[])

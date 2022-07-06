@@ -5,6 +5,7 @@ from item import items, itemDict
 from shop import shop
 import colorama
 import pandas as pd
+from areas import area, areaDict
 from colorama import Fore,Back,Style, init
 import random
 import time
@@ -46,6 +47,7 @@ def saveExit(p:characters):
         invstr+=i.name.replace(" ","").lower()+" "
     for i in p["attackmoves"]:
         attackstr+=i.name.replace(" ","").lower()+" "
+    save.loc['player', 'area']=p['area'].areanum
     save.loc['player', 'weapon']=p["weapon"].name.replace(" ","").lower()
     save.loc['player', 'helmet']=p["helmet"].name.replace(" ","").lower()
     save.loc['player', 'chestplate']=p["chestplate"].name.replace(" ","").lower()
@@ -60,7 +62,7 @@ def load():
     print(save.iloc[0,0])
     if not save.loc["player","rpgclass"]=="new":
         statslist=[]
-        for i in range(25):
+        for i in range(26):
             statslist.append(save.iloc[0,i])
             print(statslist)
         inv=save.loc["player","inv"].rstrip()
@@ -73,7 +75,7 @@ def load():
             moves[moves.index(i)]=attackDict[i]
         while len(moves)<4:
             moves.append(itemDict[""])
-        return characters(statslist[0],statslist[1],statslist[2],statslist[3],statslist[4],statslist[5],statslist[6],statslist[7],statslist[8],statslist[9],statslist[10],statslist[11],statslist[12],statslist[13],statslist[14],statslist[15],statslist[16],statslist[17],statslist[18],statslist[19],itemDict[statslist[20]],itemDict[statslist[21]],itemDict[statslist[22]],itemDict[statslist[23]],itemDict[statslist[24]], inventory, moves)
+        return characters(statslist[0],statslist[1],statslist[2],statslist[3],statslist[4],statslist[5],statslist[6],statslist[7],statslist[8],statslist[9],statslist[10],statslist[11],statslist[12],statslist[13],statslist[14],statslist[15],statslist[16],statslist[17],statslist[18],statslist[19],areaDict[statslist[20]],itemDict[statslist[21]],itemDict[statslist[22]],itemDict[statslist[23]],itemDict[statslist[24]],itemDict[statslist[25]], inventory, moves)
     return False
 
 def basicHelp():
@@ -85,26 +87,32 @@ def basicHelp():
     print("     Type: shop - to go to shop")
     print("     Type: hunt - to hunt monsters")
     print("     Type: info (itemname) - to show info of that item")
+    print("     Type: movearea (areanum) - to move to that area")
     input("OK? ")
 
 def start():
-    # print("\n"*100)
-    # print("Initializing...")
-    # time.sleep(2)
-    # print("\n"*100)
-    # print("Loading......")
-    # time.sleep(1)
-    # print("\n"*100)
-    # print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
-    # basicHelp()
-    # print("\n"*100)
-    # player=characters.createCharacter()
-    player=characters.mageSetup("aaaaaaa")
-    print("\nThis is what you look like:")
-    player.applystats()
-    player.restore()
-    player.stats()
-    input()
+    print("\n"*100)
+    print("Initializing...")
+    for key, data in areaDict:
+        data.init(monlist, itemDict)
+    time.sleep(2)
+    print("\n"*100)
+    print("Loading......")
+    time.sleep(1)
+    print("\n"*100)
+    print(Fore.LIGHTYELLOW_EX+"WELCOME TO A GENERIC RPG")
+    basicHelp()
+    print("\n"*100)
+    if load():
+        player=characters.createCharacter()
+        player.area=areaDict[1]
+        print("\nThis is what you look like:")
+        player.applystats()
+        player.restore()
+        player.stats()
+        input()
+    else:
+        player=load()
     while True:
         print()
         print("Shop")
@@ -123,7 +131,7 @@ def start():
             if not pinput=="":
                 player.use(pinput)
         elif pinput[:2]=="ex":
-            
+            saveExit(player)
             break
         elif pinput[:4]=="info":
             items.itemInfo(pinput[4:])
@@ -132,21 +140,16 @@ def start():
             player.use(pinput[3:])
         elif pinput[:5]=="equip":
             player.equip(pinput[5:])
+        elif pinput[:8]=="movearea":
+            try:
+                player.moveArea(int(pinput[8:]))
+            except ValueError:
+                print("Type in a number")
         elif pinput[:2]=="he":
             help()
         else:
             print("That isn't a command")
             basicHelp()
 
-# start()
-p=characters.mageSetup("aaaa")
-p.applystats()
-p.restore()
-p.inv.append(itemDict["nullboots"])
-saveExit(p)
-p=load()
-
-p.stats()
-p.showInv()
-p.attackMenu()
+start()
 

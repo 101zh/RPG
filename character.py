@@ -3,11 +3,10 @@ import numpy
 import pandas as pd
 import colorama
 from colorama import init
+from areas import area, areaDict
 init(autoreset=True)
 from colorama import Fore, Back, Style
-import item
 from item import items,itemDict
-import attack
 from attack import attacks,attackDict
 monlist=[]
 
@@ -28,14 +27,16 @@ def monMoveSelect(m):
             break
     return monmove
 
-def monsterSelection():
-    m=random.randint(0,2)
-    m=monlist[m]
-    return m
+def monsterSelection(player):
+    while True:
+        m=random.randint(0,len(monlist))
+        if m.area==player.area:
+            m=monlist[m]
+            return m
 
 
 class characters: #class is used to make an object
-    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, extrahp:int, maxmana:int, mana:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, weapon, helmet, chestplate, leggings, boots, inv:list, attackmoves:list):
+    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, extrahp:int, maxmana:int, mana:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, area:area, weapon, helmet, chestplate, leggings, boots, inv:list, attackmoves:list):
         self.rpgclass = rpgclass
         self.name = name
         self.maxhp = maxhp #self refers to the object
@@ -56,6 +57,7 @@ class characters: #class is used to make an object
         self.xpcontainer = xpcontainer
         self.level = level
         self.coins = coins
+        self.area= area
         self.weapon= weapon
         self.helmet=helmet
         self.chestplate=chestplate
@@ -66,6 +68,15 @@ class characters: #class is used to make an object
         if self.rpgclass=="Monster":
             monlist.append(self)
 
+    # Merges items together if they are the same type( so it takes less space in inv menu)
+    def mergeItems(self):
+        for item in self.inv:
+            for i in self.inv:
+                if i.name==item.name:
+                    self.inv.remove(item)
+                    itempos=self.inv.index(i)
+                    self.inv[itempos].amount+=item.amount
+    
     # Restores health and mana
     def restore(self):
         self.mana=self.maxmana
@@ -143,17 +154,17 @@ class characters: #class is used to make an object
     # Mage charcter
     def mageSetup(name):
         # Just returns a character object
-        return characters("Mage", name, 85, 85,0, 125, 125,0, 15,0, 30,0, 10,0, 20,0, 0, 25, 0, 25, itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
+        return characters("Mage", name, 85, 85,0, 125, 125,0, 15,0, 25,0, 10,0, 20,0, 0, 25, 0, 25, areaDict[1], itemDict["wizard'sstaff"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["bonk"],attackDict["embers"], attackDict[""],attackDict[""]])
 
     # Rogue character
     def rogueSetup(name):
         # Just returns a character object
-        return characters("Rogue", name, 100, 100, 0, 70, 70,0, 18,0, 20,0, 20,0, 25,0, 0, 25, 0, 25, itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
-
+        return characters("Rogue", name, 100, 100, 0, 70, 70,0, 18,0, 20,0, 20,0, 25,0, 0, 25, 0, 25,areaDict[1], itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], [], [attackDict["cut"],attackDict[""],attackDict[""],attackDict[""]])
+    
     # Warrior character
     def warriorSetup(name):
         # Just returns a character object
-        return characters("Warrior", name, 110, 110,0, 50, 50,0, 22,0, 10,0, 280,0, 14,0, 0, 25, 0, 25, itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+        return characters("Warrior", name, 110, 110,0, 50, 50,0, 22,0, 10,0, 280,0, 14,0, 0, 25, 0, 25, areaDict[1], itemDict["warrior'ssword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[], [attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
         
     # Testing character
     def testSetup(name):
@@ -163,11 +174,12 @@ class characters: #class is used to make an object
         for key, value in itemDict.items():
             temp = value
             inv.append(temp)
+            inv.append(temp)
         # Giving test character all attacks
         for key, value in attackDict.items():
             temp=value
             testattacks.append(temp)
-        return characters("Human", name, 100, 100,0, 100, 100,0, 100,0, 100,0, 100,0, 100,0, 100, 100, 100, 100, itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
+        return characters("Human", name, 100, 100,0, 100, 100,0, 100,0, 100,0, 100,0, 100,0, 100, 100, 100, 100,areaDict[1], itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
 
     # Goes through character creation
     def createCharacter():
@@ -339,16 +351,10 @@ class characters: #class is used to make an object
                 if buyitem.cost>self.coins:
                     print("You don't have enough coins to buy this item")
                 else:
-                    # if it's in they inventory then the amount goes up by 1
-                    if buyitem in self.inv:
-                        pos=self.inv.index(buyitem)
-                        self.inv[pos].amount+=1
-                        self.coins-=buyitem.cost
-                    # if it's not in the inventory then it adds new item to inventory
-                    else: 
-                        self.coins-=buyitem.cost
-                        buyitem.amount=1
-                        self.inv.append(buyitem)
+                    self.coins-=buyitem.cost
+                    buyitem.amount=1
+                    self.inv.append(buyitem)
+                    self.mergeItems()
             # If encounters KeyError then the player must of mispelled
             except KeyError:
                 print("Did you misspell? because this item doesn't exist")
@@ -462,7 +468,6 @@ class characters: #class is used to make an object
 
     # Checks if anyone has died yet
     def battleCheck(self,m):
-        m:characters
         if m.isDead() and self.isDead():
             print("You both are close to dying")
             print("You are forced to run away")
@@ -470,8 +475,22 @@ class characters: #class is used to make an object
         elif m.isDead():
             print("The "+m.name+" is dead!")
             reward=random.randint(5,20)
+            loot=random.randint(1,100)
             print("You Won! You found "+Fore.YELLOW+str(reward)+" coins")
             self.coins+=reward
+            if loot<=100:
+                loot=random.choice(["weapon","helmet","chestplate","leggings", "boots","inv"])
+                loot=m.__dict__[loot]
+                if isinstance(loot, list):
+                    loot=random.randint(0,len(loot))
+                    inv=m.__dict__["inv"]
+                    loot=inv[loot]
+                    self.inv.append(loot)
+                    print("You also obtained: "+loot.color+loot.name)
+                else:
+                    self.inv.append(loot)
+                    print("You also obtained: "+loot.color+loot.name)
+
             return True
         elif self.isDead():
             print("You almost died...")
@@ -479,9 +498,8 @@ class characters: #class is used to make an object
             return True
         return False
     
-
     def battle(self):
-        m:characters=monsterSelection()
+        m:characters=monsterSelection(self)
         m.applystats()
         m.restore()
         print(Fore.LIGHTBLUE_EX+self.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
@@ -575,16 +593,19 @@ class characters: #class is used to make an object
             else:
                 print("Select a valid choice")
 
+    def moveArea(self, areas):
+        try:
+            self.area=areaDict[areas]
+        except KeyError:
+            print("That area doesn't exist")
+
+
 # Monsters
-area1skel=characters("Monster", "Skeleton", 100, 100,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
-area1gob=characters("Monster", "Goblin", 80, 80,0, 40, 40,0, 15, 0,5,0, 20,0,25,0, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
-area1orc=characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,20,itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+characters("Monster", "Slime", 75, 75, 0, 50, 50,0, 20,0, 5,0, 12,0,18,0, 0,0,3,15,areaDict[1],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+characters("Monster", "Goblin", 80, 80,0, 40, 40,0, 15, 0,5,0, 20,0,25,0, 0,0,3,20,areaDict[1],itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,20,areaDict[1],itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 
-# player=characters.mageSetup("aaaaaaaaaaa")
-# player.inv.append(itemDict["largehealthpotion"])
-# player.applystats()
-# player.restore()
-# player.battle()
-
+characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,areaDict[2],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["calciumdrink"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+# characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[2])
 
 
