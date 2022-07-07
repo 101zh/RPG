@@ -67,7 +67,7 @@ items("Small Health Potion      ", True, "usable", 35,0,0,0,0,0,10, 1,1,Fore.LIG
 items("Large Health Potion      ", True, "usable", 75,0,0,0,0,0,20, 1,1,Fore.LIGHTRED_EX)
 items("Small Mana Potion        ", True, "usable", 0,35,0,0,0,0,10, 1,1,Fore.LIGHTBLUE_EX)
 items("Large Mana Potion        ", True, "usable", 0,75,0,0,0,0,20, 1,1,Fore.LIGHTBLUE_EX)
-items("\x1b[7;35;40mSmall Restoration Potion \x1b[0m", True, "usable", 35, 50, 0, 0, 0, 0, 40, 1, 3, Fore.WHITE)
+items("Small Restoration Potion ", True, "usable", 35, 50, 0, 0, 0, 0, 40, 1, 3, Fore.MAGENTA)
 items("Calcium Drink            ", False, "usable", 0, 0, 4, 0, 0, 0, 0, 1, 0, Fore.WHITE)
 
 items("ALL POTION               ",False, "usable", 100, 100, 100, 100, 100, 100, 100000, 1,0,Fore.LIGHTYELLOW_EX)
