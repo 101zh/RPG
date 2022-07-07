@@ -36,7 +36,7 @@ def monsterSelection(player):
 
 
 class characters: #class is used to make an object
-    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, extrahp:int, maxmana:int, mana:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, area:area, weapon, helmet, chestplate, leggings, boots, inv:list, attackmoves:list):
+    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, extrahp:int, maxmana:int, mana:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, area:area, weapon:items, helmet:items, chestplate:items, leggings:items, boots:items, inv:list, attackmoves:list):
         self.rpgclass = rpgclass
         self.name = name
         self.maxhp = maxhp #self refers to the object
@@ -75,9 +75,10 @@ class characters: #class is used to make an object
                 self.inv.remove(item)
             for i in self.inv:
                 if i.name==item.name:
-                    self.inv.remove(item)
-                    itempos=self.inv.index(i)
-                    self.inv[itempos].amount+=item.amount
+                    if not self.inv.index(i) ==self.inv.index(item):
+                        self.inv.remove(item)
+                        itempos=self.inv.index(i)
+                        self.inv[itempos].amount+=item.amount
     
     # Restores health and mana
     def restore(self):
@@ -211,11 +212,11 @@ class characters: #class is used to make an object
         print("Class: "+self.rpgclass)
         print("Level "+str(self.level)+" <-> "+str(self.xp)+"/"+str(self.xpcontainer)+" XP until next level")
         print(Fore.LIGHTYELLOW_EX+"Coins: "+str(self.coins))
-        print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+"     Helmet: "+str(self.helmet.name))
-        print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+"/"+str(self.maxmana)+Style.RESET_ALL+"       Chestplate: "+str(self.chestplate.name))
-        print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+Style.RESET_ALL+"           Leggings: "+str(self.leggings.name))
-        print(Fore.BLUE+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"        Boots: "+str(self.boots.name))
-        print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+str(self.weapon.name))
+        print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+"     Helmet: "+self.helmet.color+str(self.helmet.name))
+        print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+"/"+str(self.maxmana)+Style.RESET_ALL+"       Chestplate: "+self.chestplate.color+str(self.chestplate.name))
+        print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+Style.RESET_ALL+"           Leggings: "+self.leggings.color+str(self.leggings.name))
+        print(Fore.LIGHTBLUE_EX+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"        Boots: "+self.boots.color+str(self.boots.name))
+        print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+self.weapon.color+str(self.weapon.name))
         print("✦ Speed: "+str(self.speed))
         print()
     
@@ -256,8 +257,9 @@ class characters: #class is used to make an object
     def equip(self, itemname:str):
         # Looks through entire inventory
         for item in self.inv:
+            item:items
             # if the names match then do below
-            if itemname.lower()==item.name.lower():
+            if item.name.lower().__contains__(itemname.replace(" ","").lower()):
                 # Gets pos of the item and then alter the amount of that item in the inv
                 pos=self.inv.index(item)
                 self.inv[pos].amount-=1
@@ -375,14 +377,31 @@ class characters: #class is used to make an object
     def use(self, item:str):
         for i in self.inv:
             i:items
-            if item.replace(" ", "").lower()==i.name.replace(" ","").lower():
+            if i.name.replace(" ","").lower().__contains__(item.replace(" ", "").lower()):
                 if i.typeofitem=="usable":
                     pos=self.inv.index(i)
                     self.inv[pos].amount-1
                     i=vars(i)
                     self.hp+=i["hp"]
                     self.mana+=i["mana"]
-                    print("You gained "+Fore.RED+str(i["hp"])+" health"+Style.RESET_ALL+" and "+Fore.BLUE+str(i["mana"])+" mana")
+                    self.defense+=i["defense"]
+                    self.strength+=i["strength"]
+                    self.intelligence+=i["intelligence"]
+                    self.speed+=i["speed"]
+                    usestr="You gained "
+                    if i["hp"]>0:
+                        usestr+=Fore.RED+str(i["hp"])+" health"+Style.RESET_ALL+" and "
+                    if i["mana"]>0:
+                        usestr+=Fore.BLUE+str(i["mana"])+" mana"+Style.RESET_ALL+" and "
+                    if i["defense"]>0:
+                        usestr+=Fore.LIGHTGREEN_EX+str(i["defense"])+" permanent defense"+Style.RESET_ALL+" and "
+                    if i["intelligence"]>0:
+                        usestr+=Fore.LIGHTBLUE_EX+str(i["intelligence"])+" permanent intelligence"+Style.RESET_ALL+" and "
+                    if i["strength"]>0:
+                        usestr+=Fore.RED+str(i["strength"])+" permanent strength"+Style.RESET_ALL+" and "
+                    if i["speed"]>0:
+                        usestr+=str(i["speed"])+" permanent speed"+Style.RESET_ALL+" and "
+                    print(usestr.rstrip("and "))
                     self.mergeItems()
                     return True
                 else:
@@ -560,4 +579,8 @@ characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,
 characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,areaDict[2],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["calciumdrink"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 # characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[2])
 
+player=characters.mageSetup("           a")
+player.inv.append(itemDict["smallrestorationpotion"])
+player.use("smallrestorationpotion")
+player.stats()
 
