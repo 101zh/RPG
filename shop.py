@@ -1,13 +1,14 @@
-from character import characters
+from character import characters, monlist
 from character import inputcheck
 from item import items, itemDict
-
+from areas import area, areaDict
 
 # Shop func
 def shop(player:characters):
     shoplist=[]
     templist=[]
     uihelp=0
+    tempamount=0
     # Getting all the buyable items for the shop
     for key, value in itemDict.items():
         if value.buyable==True:
@@ -23,13 +24,13 @@ def shop(player:characters):
             # Getting all armor into a list
             for item in shoplist:
                 item:items
-                if (item.typeofitem=="helmet" or item.typeofitem=="chestplate" or item.typeofitem=="boots" or item.typeofitem=="leggings") and item.area==player.area.areanum:
+                if (item.typeofitem=="helmet" or item.typeofitem=="chestplate" or item.typeofitem=="boots" or item.typeofitem=="leggings") and item in player.area.items:
                     templist.append(item)
-                    tempamount=range(len(templist))
+                    tempamount=len(templist)
             
             try:
                 # Prints out all armor  
-                for item in tempamount:
+                for item in range(tempamount):
                     item+=uihelp
                     print(str(templist[item].cost)+"$    "+str(templist[item].name)+"     |   "+str(templist[item+1].cost)+"$    "+str(templist[item+1].name))
                     uihelp+=1
@@ -44,12 +45,12 @@ def shop(player:characters):
             print("\nWeapons:")
             # Getting all weapons into a list
             for item in shoplist:
-                if item.typeofitem=="weapon" and item.area==player.area.areanum:
+                if item.typeofitem=="weapon" and item in player.area.items:
                     templist.append(item)
-                    tempamount=range(len(templist))        
+                    tempamount=len(templist)   
             try:
                 # Prints out all weapons  
-                for item in tempamount:
+                for item in range(tempamount):
                     item+=uihelp
                     print(str(templist[item].cost)+"$    "+str(templist[item].name)+"     |   "+str(templist[item+1].cost)+"$    "+str(templist[item+1].name))
                     uihelp+=1
@@ -64,12 +65,12 @@ def shop(player:characters):
             print("\nOther Items:")
             # Getting all other items into a list
             for item in shoplist:
-                if item.typeofitem=="usable" and item.area==player.area.areanum:
+                if item.typeofitem=="usable" and item in player.area.items:
                     templist.append(item)
-                    tempamount=range(len(templist))        
+                    tempamount=len(templist)
             try:  
                 # Prints out all other items 
-                for item in tempamount:
+                for item in range(tempamount):
                     item+=uihelp
                     print(str(templist[item].cost)+"$    "+str(templist[item].name)+"     |   "+str(templist[item+1].cost)+"$    "+str(templist[item+1].name))
                     uihelp+=1
@@ -83,4 +84,10 @@ def shop(player:characters):
         elif shopinput[:1]=="l":
           print("Bye! Come back again!\n")
           break
+
+
+player=characters.mageSetup("aaa")
+player.area=areaDict[3]
+player.area.init(monlist,itemDict)
+shop(player)
 

@@ -307,6 +307,8 @@ class characters: #class is used to make an object
                 # checks if they have enought coins
                 if buyitem.cost>self.coins:
                     print("You don't have enough coins to buy this item")
+                elif not buyitem in self.area.items:
+                    print("Not in this area")
                 else:
                     self.coins-=buyitem.cost
                     self.inv.append(buyitem)
@@ -579,8 +581,4 @@ characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,
 characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,areaDict[2],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["calciumdrink"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 # characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[2])
 
-player=characters.mageSetup("           a")
-player.inv.append(itemDict["smallrestorationpotion"])
-player.use("smallrestorationpotion")
-player.stats()
 
