@@ -36,14 +36,14 @@ def monsterSelection(player):
 
 
 class characters: #class is used to make an object
-    def __init__(self, rpgclass:str, name:str, maxhp:int, hp:int, extrahp:int, maxmana:int, mana:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, area:area, weapon:items, helmet:items, chestplate:items, leggings:items, boots:items, inv:list, attackmoves:list):
+    def __init__(self, rpgclass:str, name:str, health:int, currenthp:int, extrahp:int, mana:int, currentmp:int,extramana:int, defense:int,extradefense:int, intelligence:int,extraintelligence:int, strength:int,extrastrength:int, speed:int,extraspeed:int, xp:int, xpcontainer:int, level:int, coins:int, area:area, weapon:items, helmet:items, chestplate:items, leggings:items, boots:items, inv:list, attackmoves:list):
         self.rpgclass = rpgclass
         self.name = name
-        self.maxhp = maxhp #self refers to the object
-        self.hp = hp
+        self.health = health #self refers to the object
+        self.currenthp =  currenthp
         self.extrahp=extrahp
-        self.maxmana = maxmana
         self.mana = mana
+        self.currentmp = currentmp
         self.extramana=extramana
         self.defense = defense
         self.extradefense=extradefense
@@ -82,14 +82,14 @@ class characters: #class is used to make an object
     
     # Restores health and mana
     def restore(self):
-        self.mana=self.maxmana
-        self.hp=self.maxhp
+        self.currentmp=self.mana
+        self.currenthp=self.health
 
     # Adds the stats from equipped items 
     def applystats(self):
         # Resets base level stats
-        self.maxhp-=self.extrahp
-        self.maxmana-=self.extramana
+        self.health-=self.extrahp
+        self.mana-=self.extramana
         self.defense-=self.extradefense
         self.intelligence-=self.extraintelligence
         self.strength-=self.extrastrength
@@ -147,8 +147,8 @@ class characters: #class is used to make an object
         self.extrastrength+=stats["strength"]
         self.extraspeed+=stats["speed"]
         # Adds stored buffs to actual stats
-        self.maxhp+=self.extrahp
-        self.maxmana+=self.extramana
+        self.health+=self.extrahp
+        self.mana+=self.extramana
         self.defense+=self.extradefense
         self.intelligence+=self.extraintelligence
         self.strength+=self.extrastrength
@@ -212,8 +212,8 @@ class characters: #class is used to make an object
         print("Class: "+self.rpgclass)
         print("Level "+str(self.level)+" <-> "+str(self.xp)+"/"+str(self.xpcontainer)+" XP until next level")
         print(Fore.LIGHTYELLOW_EX+"Coins: "+str(self.coins))
-        print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+"     Helmet: "+self.helmet.color+str(self.helmet.name))
-        print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+"/"+str(self.maxmana)+Style.RESET_ALL+"       Chestplate: "+self.chestplate.color+str(self.chestplate.name))
+        print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.currenthp)+"/"+str(self.health)+Style.RESET_ALL+"     Helmet: "+self.helmet.color+str(self.helmet.name))
+        print(Fore.BLUE+"🕮  Mana: "+str(self.currentmp)+"/"+str(self.mana)+Style.RESET_ALL+"       Chestplate: "+self.chestplate.color+str(self.chestplate.name))
         print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+Style.RESET_ALL+"           Leggings: "+self.leggings.color+str(self.leggings.name))
         print(Fore.LIGHTBLUE_EX+"✎ Intelligence: "+str(self.intelligence)+Style.RESET_ALL+"        Boots: "+self.boots.color+str(self.boots.name))
         print(Fore.RED+"❁ Strength: "+str(self.strength)+Style.RESET_ALL+"         Weapon: "+self.weapon.color+str(self.weapon.name))
@@ -362,14 +362,14 @@ class characters: #class is used to make an object
             statsincrease=[]
             for i in range(6):
                 statsincrease.append(random.randint(3,6))
-            print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.maxhp)+" +"+str(statsincrease[0]))
-            print(Fore.BLUE+"🕮  Mana: "+str(self.maxmana)+" +"+str(statsincrease[1]))
+            print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.health)+" +"+str(statsincrease[0]))
+            print(Fore.BLUE+"🕮  Mana: "+str(self.mana)+" +"+str(statsincrease[1]))
             print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+" +"+str(statsincrease[2]))
             print(Fore.LIGHTBLUE_EX+"✎ Intelligence: "+str(self.intelligence)+" +"+str(statsincrease[3]))
             print(Fore.RED+"❁ Strength: "+str(self.strength)+" +"+str(statsincrease[4]))
             print("✦ Speed: "+str(self.speed)+" +"+str(statsincrease[5]))
-            self.maxhp+=statsincrease[0]
-            self.maxmana+=statsincrease[1]
+            self.health+=statsincrease[0]
+            self.mana+=statsincrease[1]
             self.defense+=statsincrease[2]
             self.intelligence+=statsincrease[3]
             self.strength+=statsincrease[4]
@@ -387,9 +387,9 @@ class characters: #class is used to make an object
                     print("I SAID you have "+Style.BRIGHT+str(points)+Style.RESET_ALL+" extra points to spend")
                     pointspent=0
                 elif stat=="health":
-                    self.maxhp+=pointspent
+                    self.health+=pointspent
                 elif stat=="mana":
-                    self.maxmana+=pointspent
+                    self.mana+=pointspent
                 elif stat=="defense":
                     self.defense+=pointspent
                 elif stat=="intelligence":
@@ -418,7 +418,7 @@ class characters: #class is used to make an object
 
     # Returns true if health<=0
     def isDead(self):
-        if self.hp<1:
+        if self.currenthp<1:
             return True
         else:
             return False
@@ -432,8 +432,8 @@ class characters: #class is used to make an object
                     pos=self.inv.index(i)
                     self.inv[pos].amount-1
                     i=vars(i)
-                    self.hp+=i["hp"]
-                    self.mana+=i["mana"]
+                    self.currenthp+=i["hp"]
+                    self.currentmp+=i["mana"]
                     self.defense+=i["defense"]
                     self.strength+=i["strength"]
                     self.intelligence+=i["intelligence"]
@@ -476,7 +476,7 @@ class characters: #class is used to make an object
         elif attack.type=="Magic":
             buff=(self.intelligence/5)/100
             damage=int((1-(receiver.defense/(receiver.defense+180)))*int(attack.damage*(buff+1)))
-            self.mana-=attack.manacost
+            self.currentmp-=attack.manacost
         else:
             print("ERROR")
         if crit:
@@ -524,12 +524,12 @@ class characters: #class is used to make an object
         m.applystats()
         m.restore()
         print(Fore.LIGHTBLUE_EX+self.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
-        while self.hp>0 and m.hp>0:
+        while self.currenthp>0 and m.currenthp>0:
             # Player selection of moves
             print()
-            print("1: Attack                "+Fore.RED+"❤  "+str(m.hp)+"/"+str(m.maxhp)+Style.RESET_ALL+" The "+m.name)
+            print("1: Attack                "+Fore.RED+"❤  "+str(m.currenthp)+"/"+str(m.health)+Style.RESET_ALL+" The "+m.name)
             print("2: Use an item")
-            print("3: Status                "+Fore.RED+"❤  "+str(self.hp)+"/"+str(self.maxhp)+Style.RESET_ALL+" "+self.name)
+            print("3: Status                "+Fore.RED+"❤  "+str(self.currenthp)+"/"+str(self.health)+Style.RESET_ALL+" "+self.name)
             print("4: Run")
             battleinput=inputcheck("What would you like to do? ")
             if battleinput==1:
@@ -552,12 +552,12 @@ class characters: #class is used to make an object
                 print()
                 # If player speed> monster speed: player attacks first
                 if self.speed>m.speed:
-                    m.hp-=move[0]
+                    m.currenthp-=move[0]
                     # Printing the attack move and then checking for death
                     print(move[1])
                     if self.battleCheck(m):
                         break
-                    self.hp-=monmove[0]
+                    self.currenthp-=monmove[0]
                     # Printing the attack move and then checking for death
                     print("The "+m.name+monmove[1])
                     if self.battleCheck(m):
@@ -565,18 +565,18 @@ class characters: #class is used to make an object
                     print()
                 # If monster speed > player speed: monster attacks first
                 elif m.speed>self.speed:
-                    self.hp-=monmove[0]
+                    self.currenthp-=monmove[0]
                     print("The "+m.name+monmove[1])               
                     if self.battleCheck(m):
                         break
-                    m.hp-=move[0]
+                    m.currenthp-=move[0]
                     print(move[1])
                     if self.battleCheck(m):
                         break
                 # If monster speed==player speed(process of elimination): attack at the same time
                 else:
-                    self.hp-=monmove[0]
-                    m.hp-=move[0]
+                    self.currenthp-=monmove[0]
+                    m.currenthp-=move[0]
                     print(move[1])
                     print("The "+m.name+monmove[1])
                     if self.battleCheck(m):
@@ -593,7 +593,7 @@ class characters: #class is used to make an object
                     elif self.use(item):
                         monmove=monMoveSelect(m)
                         monmove=m.attackCalc(monmove, self)
-                        self.hp-=monmove[0]
+                        self.currenthp-=monmove[0]
                         print("The "+m.name+monmove[1])
                         break
             elif battleinput==3:
@@ -608,7 +608,7 @@ class characters: #class is used to make an object
                     print("You weren't able to escape")
                     monmove=monMoveSelect(m)
                     monmove=m.attackCalc(monmove, self)
-                    self.hp-=monmove[0]
+                    self.currenthp-=monmove[0]
                     print("The "+m.name+monmove[1])
                     self.battleCheck(m)
             else:
