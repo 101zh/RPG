@@ -17,7 +17,7 @@ def inputcheck(message:str):
             break
         except ValueError:
             print("Try again with a num")
-    return message.lower()
+    return message
 
 def monMoveSelect(m):
     while True:
@@ -358,7 +358,55 @@ class characters: #class is used to make an object
             self.level+=1
             self.xpcontainer=int(self.xpcontainer*1.5)
             print(Fore.YELLOW+"You Leveled Up!"+Style.RESET_ALL+"      You are now level: "+Fore.YELLOW+str(self.level))
+            # Random distribution of stats increases
+            statsincrease=[]
+            for i in range(6):
+                statsincrease.append(random.randint(3,6))
+            print(Fore.LIGHTRED_EX+"❤  Health: "+str(self.maxhp)+" +"+str(statsincrease[0]))
+            print(Fore.BLUE+"🕮  Mana: "+str(self.maxmana)+" +"+str(statsincrease[1]))
+            print(Fore.LIGHTGREEN_EX+"❈ Defense: "+str(self.defense)+" +"+str(statsincrease[2]))
+            print(Fore.LIGHTBLUE_EX+"✎ Intelligence: "+str(self.intelligence)+" +"+str(statsincrease[3]))
+            print(Fore.RED+"❁ Strength: "+str(self.strength)+" +"+str(statsincrease[4]))
+            print("✦ Speed: "+str(self.speed)+" +"+str(statsincrease[5]))
+            self.maxhp+=statsincrease[0]
+            self.maxmana+=statsincrease[1]
+            self.defense+=statsincrease[2]
+            self.intelligence+=statsincrease[3]
+            self.strength+=statsincrease[4]
+            self.speed+=statsincrease[5]
+            input()
+            # Allows player to pick where to spend points
+            points=10
+            while points>0:
+                self.restore()
+                print("You have "+Style.BRIGHT+str(points)+Style.RESET_ALL+" extra points to spend")
+                self.stats()
+                stat=input("What stat do you want to add points to? ").replace(" ","").lower()
+                pointspent=inputcheck("How much points do you want to spend? ")
+                if pointspent>points:
+                    print("I SAID you have "+Style.BRIGHT+str(points)+Style.RESET_ALL+" extra points to spend")
+                    pointspent=0
+                elif stat=="health":
+                    self.maxhp+=pointspent
+                elif stat=="mana":
+                    self.maxmana+=pointspent
+                elif stat=="defense":
+                    self.defense+=pointspent
+                elif stat=="intelligence":
+                    self.intelligence+=pointspent
+                elif stat=="strength":
+                    self.strength+=pointspent
+                elif stat=="speed":
+                    self.speed+=pointspent
+                else:
+                    print("That's not a valid stat")
+                    pointspent=0
+                points-=pointspent
             self.checkLevel()
+            self.restore
+            print("\n"*150)
+            print("This is what you look like now")
+            self.stats
 
     # Displays and attack menu
     def attackMenu(self):
@@ -579,6 +627,12 @@ characters("Monster", "Goblin", 80, 80,0, 40, 40,0, 15, 0,5,0, 20,0,25,0, 0,0,3,
 characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,20,areaDict[1],itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 
 characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,areaDict[2],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["calciumdrink"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
-# characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[2])
+
+# characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[3], )
+
+p=characters.mageSetup("aa")
+p.xp=100
+p.levelup()
+
 
 
