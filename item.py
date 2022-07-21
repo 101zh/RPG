@@ -60,7 +60,7 @@ items("Wizard Robe              ",True,"chestplate", 5, 20, -5, 5, -5, 4, 20, 1,
 items("Wizard Pants             ",True,"leggings", 5, 20, -5, 5, -5, 4, 20, 1,[2],Fore.LIGHTCYAN_EX)
 items("Wizard Boots             ",True,"boots", 5, 20, -5, 5, -5, 4, 20, 1,[2],Fore.LIGHTCYAN_EX)
 
-items("Necromancer Wand         ",False,"weapon", 0, 20, 0, 20, 0, 5, 25, 1,[1],Fore.MAGENTA)
+items("Necromancer Wand         ",False,"weapon", 0, 20, 0, 20, 0, 5, 25, 1,[3],Fore.MAGENTA)
 items("Necromancer Hood         ",False,"helmet", 10, 20, 2, 10, 0, -2, 25, 1,[3],Fore.MAGENTA)
 items("Necromancer Robe         ",False,"chestplate", 15, 30, 12, 15, -5, -4, 30, 1,[3],Fore.MAGENTA)
 items("Necromancer Trousers     ",False,"leggings", 12, 25, 8, 10, 0, 8, 30, 1,[3],Fore.MAGENTA)
