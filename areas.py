@@ -13,7 +13,7 @@ class area:
         for i in monlist:
             if i.area.areanum==self.areanum:
                 self.monsters.append(i)
-        for keu,data in itemDict.items():
+        for key,data in itemDict.items():
             for i in data.area:
                 if i==self.areanum:
                     self.items.append(data)

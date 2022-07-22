@@ -19,20 +19,9 @@ def inputcheck(message:str):
             print("Try again with a num")
     return message
 
-def monMoveSelect(m):
-    while True:
-        monmove:attacks=random.randint(0,3)
-        if not m.attackmoves[monmove].type=="nonexistent":
-            monmove=m.attackmoves[monmove]
-            break
-    return monmove
-
 def monsterSelection(player):
-    while True:
-        m=random.randint(0,len(monlist))
-        if m.area==player.area:
-            m=monlist[m]
-            return m
+    return player.area.monsters[random.randint(0,(len(player.area.monsters)-1))]
+
 
 
 class characters: #class is used to make an object
@@ -58,6 +47,7 @@ class characters: #class is used to make an object
         self.level = level
         self.coins = coins
         self.area= area
+        self.area.init(monlist,itemDict)
         self.weapon= weapon
         self.helmet=helmet
         self.chestplate=chestplate
@@ -84,6 +74,13 @@ class characters: #class is used to make an object
     def restore(self):
         self.currentmp=self.mana
         self.currenthp=self.health
+
+    #Makes sure that hp isn't over maxhp
+    def check(self):
+        if self.currenthp>self.health:
+            self.currenthp=self.health
+        if self.currentmp>self.mana:
+            self.currentmp=self.mana
 
     # Adds the stats from equipped items 
     def applystats(self):
@@ -182,7 +179,7 @@ class characters: #class is used to make an object
         for key, value in attackDict.items():
             temp=value
             testattacks.append(temp)
-        return characters("Human", name, 100, 100,0, 100, 100,0, 100,0, 100,0, 100,0, 100,0, 100, 100, 100, 100,areaDict[1], itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
+        return characters("Human", name, 100, 100,0, 100, 100,0, 100,0, 100,0, 100,0, 100,0, 100, 100, 100, 100,areaDict[3], itemDict["null"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"], inv, testattacks)
 
     # Goes through character creation
     def createCharacter():
@@ -424,68 +421,102 @@ class characters: #class is used to make an object
             return False
     
     # allows user to regen mana and health by drinking potions
-    def use(self, item:str):
-        for i in self.inv:
-            i:items
-            if i.name.replace(" ","").lower().__contains__(item.replace(" ", "").lower()):
-                if i.typeofitem=="usable":
-                    pos=self.inv.index(i)
-                    self.inv[pos].amount-1
-                    i=vars(i)
-                    self.currenthp+=i["hp"]
-                    self.currentmp+=i["mana"]
-                    self.defense+=i["defense"]
-                    self.strength+=i["strength"]
-                    self.intelligence+=i["intelligence"]
-                    self.speed+=i["speed"]
+    def use(self, reqeditem:str):
+        for item in self.inv:
+            item:items
+            if reqeditem.replace(" ","").lower()==item.name.replace(" ","").lower():
+                if item.typeofitem=="usable":
+                    pos=self.inv.index(item)
+                    self.inv[pos].amount-=1
+                    item=vars(item)
+                    self.currenthp+=item["hp"]
+                    self.currentmp+=item["mana"]
+                    self.defense+=item["defense"]
+                    self.strength+=item["strength"]
+                    self.intelligence+=item["intelligence"]
+                    self.speed+=item["speed"]
                     usestr="You gained "
-                    if i["hp"]>0:
-                        usestr+=Fore.RED+str(i["hp"])+" health"+Style.RESET_ALL+" and "
-                    if i["mana"]>0:
-                        usestr+=Fore.BLUE+str(i["mana"])+" mana"+Style.RESET_ALL+" and "
-                    if i["defense"]>0:
-                        usestr+=Fore.LIGHTGREEN_EX+str(i["defense"])+" permanent defense"+Style.RESET_ALL+" and "
-                    if i["intelligence"]>0:
-                        usestr+=Fore.LIGHTBLUE_EX+str(i["intelligence"])+" permanent intelligence"+Style.RESET_ALL+" and "
-                    if i["strength"]>0:
-                        usestr+=Fore.RED+str(i["strength"])+" permanent strength"+Style.RESET_ALL+" and "
-                    if i["speed"]>0:
-                        usestr+=str(i["speed"])+" permanent speed"+Style.RESET_ALL+" and "
+                    if item["hp"]>0:
+                        usestr+=Fore.RED+str(item["hp"])+" health"+Style.RESET_ALL+" and "
+                    if item["mana"]>0:
+                        usestr+=Fore.BLUE+str(item["mana"])+" mana"+Style.RESET_ALL+" and "
+                    if item["defense"]>0:
+                        usestr+=Fore.LIGHTGREEN_EX+str(item["defense"])+" permanent defense"+Style.RESET_ALL+" and "
+                    if item["intelligence"]>0:
+                        usestr+=Fore.LIGHTBLUE_EX+str(item["intelligence"])+" permanent intelligence"+Style.RESET_ALL+" and "
+                    if item["strength"]>0:
+                        usestr+=Fore.RED+str(item["strength"])+" permanent strength"+Style.RESET_ALL+" and "
+                    if item["speed"]>0:
+                        usestr+=str(item["speed"])+" permanent speed"+Style.RESET_ALL+" and "
                     print(usestr.rstrip("and "))
                     self.mergeItems()
+                    self.check()
                     return True
                 else:
                     print("Cannot use this item")
-            else:
-                print("Couldn't find this item")
+                    break
         return False
 
+    # How the monster selects a move
+    def monMoveSelect(self):
+        while True:
+            monmove=random.randint(0,3)
+            if not self.attackmoves[monmove].type=="nonexistent":
+                monmove:attacks=self.attackmoves[monmove]
+                if not monmove.manacost>self.currentmp:
+                    return monmove
+                else:
+                    while True:
+                        item=random.randint(0,len(self.inv)-1)
+                        item:items=self.inv[item]
+                        if item.typeofitem=="usable":
+                            itemstats=vars(item)
+                            self.currenthp+=itemstats["hp"]
+                            self.currentmp+=itemstats["mana"]
+                            self.defense+=itemstats["defense"]
+                            self.strength+=itemstats["strength"]
+                            self.intelligence+=itemstats["intelligence"]
+                            self.speed+=itemstats["speed"]
+                            self.check()
+                            return item
+
     # calculates the damage of an attack
-    def attackCalc(self, attack:attacks, receiver):
-        mondescrip=0
-        if self.rpgclass=="Monster":
-            mondescrip=3
-        crit=random.randint(1,1000)
-        crit=crit<self.speed*8
-        miss=random.randint(1,1000)
-        miss=miss<receiver.speed*2
-        attackmessage=attack.descrip[0+mondescrip]
-        if attack.type=="Physical":
-            buff=int(self.strength/2.25)
-            damage=int((1-(receiver.defense/(receiver.defense+180)))*int(attack.damage+buff))
-        elif attack.type=="Magic":
-            buff=(self.intelligence/5)/100
-            damage=int((1-(receiver.defense/(receiver.defense+180)))*int(attack.damage*(buff+1)))
-            self.currentmp-=attack.manacost
+    def attackCalc(self, move:attacks, receiver):
+        # when monmoveSelect() does its thing it may return a items object instead of attacks
+        if type(move) == attacks:
+            mondescrip=0
+            # This is to separate the player and monster description of attacks
+            if self.rpgclass=="Monster":
+                mondescrip=3
+            # Determines if there is a crit
+            crit=random.randint(1,1000)
+            crit=crit<self.speed*8
+            # Determines if there is a miss
+            miss=random.randint(1,1000)
+            miss=miss<receiver.speed*2
+            # Description of attack
+            attackmessage=move.descrip[0+mondescrip]
+            # Calculates damage
+            if move.type=="Physical":
+                buff=int(self.strength/2.25)
+                damage=int((1-(receiver.defense/(receiver.defense+180)))*int(move.damage+buff))
+            elif move.type=="Magic":
+                buff=(self.intelligence/5)/100
+                damage=int((1-(receiver.defense/(receiver.defense+180)))*int(move.damage*(buff+1)))
+                self.currentmp-=move.manacost
+            else:
+                print("ERROR")
+            if crit:
+                attackmessage=move.descrip[1+mondescrip]
+                damage=int(damage*1.6)
+            if miss:
+                # 2 is the index of player miss description
+                # for monster the index is 5, so if you add 3 then it gets the monster descriptioon
+                return [0,move.descrip[2+mondescrip]]
+            else:
+                return [damage,attackmessage+str(damage)+" damage"]
         else:
-            print("ERROR")
-        if crit:
-            attackmessage=attack.descrip[1+mondescrip]
-            damage=int(damage*1.6)
-        if miss:
-            return [0,attack.descrip[2+mondescrip]+"0 damage"]
-        else:
-            return [damage,attackmessage+str(damage)+" damage"]
+            return [0, " used a "+move.color+move.name] 
 
     # Checks if anyone has died yet
     def battleCheck(self,m):
@@ -521,8 +552,8 @@ class characters: #class is used to make an object
     
     def battle(self):
         m:characters=monsterSelection(self)
-        m.applystats()
         m.restore()
+        monmove=m.monMoveSelect()
         print(Fore.LIGHTBLUE_EX+self.name+Style.RESET_ALL+" encounters a "+Fore.YELLOW+m.name)
         while self.currenthp>0 and m.currenthp>0:
             # Player selection of moves
@@ -532,6 +563,7 @@ class characters: #class is used to make an object
             print("3: Status                "+Fore.RED+"❤  "+str(self.currenthp)+"/"+str(self.health)+Style.RESET_ALL+" "+self.name)
             print("4: Run")
             battleinput=inputcheck("What would you like to do? ")
+            # Attack
             if battleinput==1:
                 self.attackMenu()
                 while True:
@@ -540,12 +572,14 @@ class characters: #class is used to make an object
                         move:attacks=self.attackmoves[move-1]
                         if not move.type=="nonexistent":
                             break
+                        elif move.manacost>self.currentmp:
+                            print("You don't have enough mana for this move")
                         else:
                             print("Try again with a valid move")
                     except IndexError:
                         print("Try again with a valid move")
                 # Monster selecion of moves
-                monmove=monMoveSelect(m)
+                monmove=m.monMoveSelect()
                 # Calculates damage for both sides
                 monmove=m.attackCalc(monmove, self)
                 move=self.attackCalc(move, m)
@@ -581,23 +615,28 @@ class characters: #class is used to make an object
                     print("The "+m.name+monmove[1])
                     if self.battleCheck(m):
                         break
+            # Use item
             elif battleinput==2:
                 while True:
                     self.showInv()
-                    item=input("What item do you want to use?(l to leave) ")
-                    if item.replace(" ","").lower()[:1]=="l":
+                    reqeditem=input("What item do you want to use?(l to leave) ")
+                    if reqeditem.replace(" ","").lower()[:2]=="le":
                         break
-                    elif item[:4]=="info":
-                        items.itemInfo(item.replace(" ","").lower()[4:])
+                    elif reqeditem[:4]=="info":
+                        items.itemInfo(reqeditem.replace(" ","").replace("info", '').lower())
                         input()
-                    elif self.use(item):
-                        monmove=monMoveSelect(m)
+                    elif self.use(reqeditem):
+                        monmove=m.monMoveSelect()
                         monmove=m.attackCalc(monmove, self)
                         self.currenthp-=monmove[0]
                         print("The "+m.name+monmove[1])
                         break
+                    else:
+                        print("weird")
+            # Show stats
             elif battleinput==3:
                 self.stats()
+            # Run away
             elif battleinput==4:
                 escapechance=random.randint(1,1000)
                 if self.speed*25<escapechance:
@@ -606,7 +645,7 @@ class characters: #class is used to make an object
                     break
                 else:
                     print("You weren't able to escape")
-                    monmove=monMoveSelect(m)
+                    monmove=m.monMoveSelect()
                     monmove=m.attackCalc(monmove, self)
                     self.currenthp-=monmove[0]
                     print("The "+m.name+monmove[1])
@@ -616,23 +655,21 @@ class characters: #class is used to make an object
 
     def moveArea(self, areas):
         try:
-            self.area=areaDict[areas]
+            self.area=areaDict[areas].init(monlist,itemDict)
         except KeyError:
             print("That area doesn't exist")
 
 
 # Monsters
-characters("Monster", "Slime", 75, 75, 0, 50, 50,0, 20,0, 5,0, 12,0,18,0, 0,0,3,15,areaDict[1],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
+characters("Monster", "Slime", 75, 75, 0, 50, 50,0, 20,0, 5,0, 12,0,18,0, 0,0,3,15,areaDict[1],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["pounce"],attackDict[""],attackDict[""],attackDict[""]])
 characters("Monster", "Goblin", 80, 80,0, 40, 40,0, 15, 0,5,0, 20,0,25,0, 0,0,3,20,areaDict[1],itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 characters("Monster", "Orc", 120, 120,0, 30, 30,0, 25,0, 5,0, 38,0, 15,0, 0,0,3,20,areaDict[1],itemDict["rogue'sdagger"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["smallhealthpotion"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 
 characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0,3,15,areaDict[2],itemDict["skeletonsword"], itemDict["starterhelmet"], itemDict["starterchestplate"], itemDict["starterleggings"], itemDict["starterboots"],[itemDict["calciumdrink"]],[attackDict["slash"],attackDict[""],attackDict[""],attackDict[""]])
 
-# characters("Monster", "Necromancer", 150, 105,0,100, 100, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[3], )
-
-p=characters.mageSetup("aa")
-p.xp=100
-p.levelup()
+characters("Monster", "Necromancer", 150, 150,0,100, 0, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[3], itemDict["necromancerwand"], itemDict["necromancerhood"], itemDict["necromancerrobe"],itemDict["necromancertrousers"],itemDict["necromancerboots"],[itemDict["smallhealthpotion"],itemDict["smallmanapotion"],itemDict["largerestorationpotion"]],[attackDict["fireball"],attackDict[""],attackDict[""],attackDict[""]] )
 
 
+player=characters.testSetup("")
+player.battle()
 
