@@ -65,10 +65,17 @@ class characters: #class is used to make an object
                 self.inv.remove(item)
             for i in self.inv:
                 if i.name==item.name:
-                    if not self.inv.index(i) ==self.inv.index(item):
-                        self.inv.remove(item)
+                    print(self.inv.index(i))
+                    lastitemindex=len(self.inv) -self.inv[-1::-1].index(i) - 1
+                    print(lastitemindex)
+                    if not self.inv.index(i) ==lastitemindex:
+                        self.inv.pop(lastitemindex)
                         itempos=self.inv.index(i)
+                        print("Item index: "+Fore.YELLOW+str(itempos))
+                        print("Last item amount: "+Fore.YELLOW+str(item.amount))
                         self.inv[itempos].amount+=item.amount
+                        self.showInv()
+                        break
     
     # Restores health and mana
     def restore(self):
@@ -173,6 +180,7 @@ class characters: #class is used to make an object
         # Giving test character all items
         for key, value in itemDict.items():
             temp = value
+            inv.append(temp)
             inv.append(temp)
             inv.append(temp)
         # Giving test character all attacks
@@ -670,6 +678,12 @@ characters("Monster", "Skeleton", 120, 120,0, 20, 20,0,25,0, 0,0, 20,0,25,0, 0,0
 characters("Monster", "Necromancer", 150, 150,0,100, 0, 0, 18, 0, 28, 0, 18, 0, 20, 0, 0,0,8, 10, areaDict[3], itemDict["necromancerwand"], itemDict["necromancerhood"], itemDict["necromancerrobe"],itemDict["necromancertrousers"],itemDict["necromancerboots"],[itemDict["smallhealthpotion"],itemDict["smallmanapotion"],itemDict["largerestorationpotion"]],[attackDict["fireball"],attackDict[""],attackDict[""],attackDict[""]] )
 
 
-player=characters.testSetup("")
-player.battle()
+player=characters.mageSetup("")
+# player.battle()
+player.inv.append(itemDict["smallhealthpotion"])
+player.inv.append(itemDict["smallhealthpotion"])
+player.inv.append(itemDict["smallhealthpotion"])
+player.showInv()
+player.mergeItems()
+player.showInv()
 
